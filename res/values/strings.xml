@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DotA2图谱</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">设置</string>
+
+    <!-- Main Activity ActionBar Tab -->
+    <string name="main_actionBar_tab_hero">英雄</string>
+    <string name="main_actionBar_tab_item">物品</string>
+    <string name="main_actionBar_tab_skill">技巧</string>
+    <string name="main_actionBar_tab_favorite">收藏</string>
+
+    <!-- Main Activity ActionBar Tab -->
+    <string name="menu_hero_role">按定位</string>
+    <string name="menu_hero_attack">按攻击</string>
+    <string name="menu_hero_factions">按阵营</string>
+    <string name="menu_hero_type">按类型</string>
+    <string name="menu_items_qual">按品质</string>
+    <string name="menu_items_itemcat">按分类</string>
+    <string name="action_bar_search">搜索</string>
+    <string name="title_activity_items_detail">物品详细</string>
+    <string name="title_activity_hero_detail">英雄详细</string>
+    <string name="text_items_mana_label">魔法消耗:</string>
+    <string name="text_items_cd_label">冷却时间:</string>
+    <string name="text_items_components_label">合成所需物品:</string>
+    <string name="text_items_tocomponents_label">可合成物品:</string>
+    <string name="text_hero_abilities_label">技能:</string>
+    <string name="text_hero_itembuilds_starting_label">出门装备:</string>
+    <string name="text_hero_itembuilds_early_label">前期装备:</string>
+    <string name="text_hero_itembuilds_core_label">核心装备:</string>
+    <string name="text_hero_itembuilds_luxury_label">可选装备:</string>
+    <string name="text_division_label">/</string>
+
+</resources>

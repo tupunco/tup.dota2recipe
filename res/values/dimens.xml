@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margins_base">6dp</dimen>
+    <dimen name="margins_text">2dp</dimen>
+    <dimen name="margins_text4">4dp</dimen>
+
+</resources>

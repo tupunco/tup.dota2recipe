@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/simplegridview_selector_background"
+    android:orientation="vertical"
+    android:padding="@dimen/margins_base" >
+
+    <ImageView
+        android:id="@+id/image_items"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/loading" />
+
+    <TextView
+        android:id="@+id/text_items_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="@dimen/margins_text"
+        android:singleLine="true"
+        android:text="@string/app_name" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+        <ImageView
+            android:id="@+id/image_items_gold"
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margins_text"
+            android:contentDescription="@string/hello_world"
+            android:scaleType="fitStart"
+            android:src="@drawable/gold" />
+
+        <TextView
+            android:id="@+id/text_items_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margins_text"
+            android:layout_toRightOf="@+id/image_items_gold"
+            android:text="@string/hello_world"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+
+</LinearLayout>

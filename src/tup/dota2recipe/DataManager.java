@@ -1,0 +1,452 @@
+/**
+ * 
+ */
+package tup.dota2recipe;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import tup.dota2recipe.entity.AbilityItem;
+import tup.dota2recipe.entity.HeroDetailItem;
+import tup.dota2recipe.entity.HeroItem;
+import tup.dota2recipe.entity.ItemsItem;
+import android.content.Context;
+import android.support.v4.util.LruCache;
+import android.text.TextUtils;
+import android.util.Log;
+
+/**
+ * @author tupunco
+ * 
+ */
+final class DataManager {
+    private static List<HeroItem> mHeroList = new ArrayList<HeroItem>();
+    private static LruCache<String, HeroDetailItem> mHeroDetailCache =
+            new LruCache<String, HeroDetailItem>(50);
+    private static List<ItemsItem> mItemsList = new ArrayList<ItemsItem>();
+    private static Map<String, ItemsItem> mItemsMap = new HashMap<String, ItemsItem>();
+
+    /**
+     * 获取英雄列表数据
+     * 
+     * @param cContext
+     * @return
+     * @throws JSONException
+     * @throws IOException
+     */
+    public synchronized static List<HeroItem> getHeroList(Context cContext)
+            throws JSONException, IOException {
+        tryLoadHeroData(cContext);
+        return mHeroList;
+    }
+
+    /**
+     * 获取物品列表数据
+     * 
+     * @param cContext
+     * @return
+     * @throws JSONException
+     * @throws IOException
+     */
+    public synchronized static List<ItemsItem> getItemsList(Context cContext)
+            throws JSONException, IOException {
+        tryLoadItemsData(cContext);
+        return (List<ItemsItem>) CollectionUtils.select(mItemsList, new Predicate<ItemsItem>() {
+            @Override
+            public boolean evaluate(ItemsItem cObject) {
+                return cObject.ispublic;
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param cContext
+     * @param heroItemKeyName
+     * @return
+     * @throws IOException
+     * @throws JSONException
+     */
+    public synchronized static HeroDetailItem getHeroDetailItem(Context cContext, String keyName)
+            throws IOException, JSONException {
+        tryLoadHeroDetailItem(cContext, keyName);
+        return mHeroDetailCache.get(keyName);
+    }
+
+    /**
+     * 
+     * @param cContext
+     * @param keyName
+     * @return
+     * @throws IOException
+     * @throws JSONException
+     */
+    public synchronized static ItemsItem getItemsItem(Context cContext, String keyName)
+            throws IOException, JSONException {
+        tryLoadItemsData(cContext);
+
+        if (TextUtils.isEmpty(keyName))
+            return null;
+
+        return mItemsMap.get(keyName);
+    }
+
+    /**
+     * 加载英雄列表数据
+     * 
+     * @param cContext
+     * @throws IOException
+     * @throws JSONException
+     */
+    private static void tryLoadHeroData(Context cContext)
+            throws IOException, JSONException {
+        if (mHeroList.size() > 0)
+            return;
+
+        final JSONObject json = loadJsonObjectFromAssets(cContext, "herolist.json");
+
+        @SuppressWarnings("unchecked")
+        final Iterator<String> keyIterator = (Iterator<String>) json.keys();
+        HeroItem cItem = null;
+        String cKeyName = null;
+        while (keyIterator.hasNext()) {
+            cKeyName = keyIterator.next();
+            cItem = extractHeroItem(cKeyName, json.getJSONObject(cKeyName), null);
+            if (cItem != null) {
+                mHeroList.add(cItem);
+            }
+        }
+        Collections.sort(mHeroList, ALPHA_COMPARATOR);
+    }
+
+    /**
+     * 
+     * @param cContext
+     * @param keyName
+     */
+    private static void tryLoadHeroDetailItem(Context cContext, String keyName)
+            throws IOException, JSONException {
+        if (TextUtils.isEmpty(keyName) || mHeroDetailCache.get(keyName) != null)
+            return;
+
+        final String path = String.format("hero_detail/hero-%s.json", keyName);
+        final JSONObject json = loadJsonObjectFromAssets(cContext, path);
+
+        if (json == null || json.length() <= 0)
+            return;
+
+        final HeroDetailItem cItem = new HeroDetailItem();
+        extractHeroItem(keyName, json, cItem);
+        extractHeroDetailItem(json, cItem);
+        mHeroDetailCache.put(keyName, cItem);
+    }
+
+    /**
+     * 加载物品列表数据
+     * 
+     * @param cContext
+     * @throws IOException
+     * @throws JSONException
+     */
+    private static void tryLoadItemsData(Context cContext)
+            throws IOException, JSONException {
+        if (mItemsList.size() > 0)
+            return;
+
+        final JSONObject json = loadJsonObjectFromAssets(cContext, "itemslist.json");
+
+        @SuppressWarnings("unchecked")
+        final Iterator<String> keyIterator = (Iterator<String>) json.keys();
+        ItemsItem cItem = null;
+        String cKeyName = null;
+        while (keyIterator.hasNext()) {
+            cKeyName = keyIterator.next();
+            cItem = extractItemsItem(cKeyName, json.getJSONObject(cKeyName));
+            if (cItem != null) {
+                mItemsList.add(cItem);
+                mItemsMap.put(cItem.keyName, cItem);
+            }
+        }
+        // ------------fill components
+        if (mItemsList != null && mItemsList.size() > 0) {
+            for (ItemsItem ccItem : mItemsList) {
+                ccItem.components_i = fillItemsInfo(ccItem.components);
+                ccItem.tocomponents_i = fillItemsInfo(ccItem.tocomponents);
+            }
+        }
+        // Collections.sort(mHeroList, ALPHA_COMPARATOR);
+    }
+
+    /**
+     * 
+     * @param cItems
+     * @return
+     */
+    private static List<ItemsItem> fillItemsInfo(String[] cItems) {
+        if (cItems == null || cItems.length <= 0)
+            return null;
+
+        //TODO----------------
+        //recipe_necronomicon:死灵书 卷轴
+        //recipe_dagon:达贡之神力 卷轴
+        final List<ItemsItem> outList = new ArrayList<ItemsItem>(cItems.length);
+        ItemsItem tItems = null;
+        for (String ccKeyName : cItems) {
+            tItems = mItemsMap.get(ccKeyName);
+            if (tItems != null)
+                outList.add(tItems);
+            else
+                Log.e("DataManager", "-fillItemsInfo-----NULL-" + ccKeyName);
+        }
+        return outList;
+    }
+
+    /**
+     * 
+     */
+    private static final Comparator<HeroItem> ALPHA_COMPARATOR = new Comparator<HeroItem>() {
+        private final Collator sCollator = Collator.getInstance();
+
+        @Override
+        public int compare(HeroItem object1, HeroItem object2) {
+            return sCollator.compare(object1.keyName, object2.keyName);
+        }
+    };
+
+    /**
+     * 
+     * @param cHeroKey
+     * @param cJsonObj
+     * @param inItem
+     * @return
+     */
+    private static HeroItem extractHeroItem(String cHeroKey, JSONObject cJsonObj, HeroItem inItem) {
+        if (cJsonObj == null || TextUtils.isEmpty(cHeroKey))
+            return null;
+
+        final HeroItem cItem = inItem == null ? (new HeroItem()) : inItem;
+        cItem.keyName = cHeroKey;
+        cItem.hp = cJsonObj.optString("hp");
+        cItem.faction = cJsonObj.optString("faction");
+
+        cItem.name = cJsonObj.optString("name");
+        cItem.name_l = cJsonObj.optString("name_l");
+
+        cItem.atk = cJsonObj.optString("atk");
+        cItem.atk_l = cJsonObj.optString("atk_l");
+
+        cItem.roles = toStringArray(cJsonObj.optJSONArray("roles"));
+        cItem.roles_l = toStringArray(cJsonObj.optJSONArray("roles_l"));
+        return cItem;
+    }
+
+    /**
+     * 
+     * @param cJsonObj
+     * @param inItem
+     */
+    private static void extractHeroDetailItem(JSONObject cJsonObj, HeroDetailItem inItem) {
+        if (cJsonObj == null || inItem == null)
+            return;
+
+        inItem.bio = cJsonObj.optString("bio");
+        inItem.bio_l = cJsonObj.optString("bio_l");
+        inItem.stats = cJsonObj.optString("stats");
+        inItem.detailstats = cJsonObj.optString("detailstats");
+        inItem.detailstats1 = toStringArray2(cJsonObj.optJSONArray("detailstats1"));
+        inItem.detailstats2 = toStringArray2(cJsonObj.optJSONArray("detailstats2"));
+        inItem.itembuilds = toStringArray(cJsonObj.optJSONObject("itembuilds"));
+        if (inItem.itembuilds != null && inItem.itembuilds.size() > 0) {
+            inItem.itembuilds_i = new HashMap<String, List<ItemsItem>>();
+            for (String cItembuildsKey : inItem.itembuilds.keySet()) {
+                inItem.itembuilds_i.put(cItembuildsKey,
+                        fillItemsInfo(inItem.itembuilds.get(cItembuildsKey)));
+            }
+        }
+
+        // ---------abilities------------
+        final JSONArray cJsonArray = cJsonObj.optJSONArray("abilities");
+        if (cJsonArray == null || cJsonArray.length() <= 0)
+            return;
+        final int len = cJsonArray.length();
+        final List<AbilityItem> outList = new ArrayList<AbilityItem>(len);
+        AbilityItem cAbilityItem = null;
+        for (int index = 0; index < len; index++) {
+            cAbilityItem = extractHeroAbilityItem(cJsonArray.optJSONObject(index));
+            if (cAbilityItem != null)
+                outList.add(cAbilityItem);
+        }
+        inItem.abilities = outList;
+    }
+
+    /**
+     * 
+     * @param cJsonObj
+     * @return
+     */
+    private static AbilityItem extractHeroAbilityItem(JSONObject cJsonObj) {
+        if (cJsonObj == null)
+            return null;
+
+        final AbilityItem cItem = new AbilityItem();
+        cItem.keyName = cJsonObj.optString("key_name");
+        cItem.dname = cJsonObj.optString("dname");
+        cItem.affects = cJsonObj.optString("affects");
+        cItem.attrib = cJsonObj.optString("attrib");
+        cItem.desc = cJsonObj.optString("desc");
+        cItem.dmg = cJsonObj.optString("dmg");
+        cItem.cmb = cJsonObj.optString("cmb");
+        cItem.lore = cJsonObj.optString("lore");
+        cItem.hurl = cJsonObj.optString("hurl");
+        return cItem;
+    }
+
+    /**
+     * 
+     * @param cItemsKey
+     * @param cJsonObj
+     * @return
+     */
+    private static ItemsItem extractItemsItem(String cItemsKey, JSONObject cJsonObj) {
+        if (cJsonObj == null || TextUtils.isEmpty(cItemsKey))
+            return null;
+
+        final ItemsItem cItem = new ItemsItem();
+        cItem.keyName = cItemsKey;
+        cItem.dname = cJsonObj.optString("dname");
+        cItem.dname_l = cJsonObj.optString("dname_l");
+
+        cItem.qual = cJsonObj.optString("qual");
+        cItem.qual_l = cJsonObj.optString("qual_l");
+
+        cItem.itembasecat = cJsonObj.optString("itembasecat");
+        cItem.itemcat = cJsonObj.optString("itemcat");
+        cItem.itemcat_l = cJsonObj.optString("itemcat_l");
+
+        cItem.created = cJsonObj.optBoolean("created");
+        cItem.ispublic = cJsonObj.optBoolean("ispublic");
+        // --------------ItemsDetail----------
+        cItem.cost = cJsonObj.optInt("cost");
+        cItem.desc = cJsonObj.optString("desc");
+        cItem.attrib = cJsonObj.optString("attrib");
+        cItem.mc = cJsonObj.optString("mc");
+        cItem.cd = cJsonObj.optInt("cd");
+        cItem.lore = cJsonObj.optString("lore");
+        cItem.components = toStringArray(cJsonObj.optJSONArray("components"));
+        cItem.tocomponents = toStringArray(cJsonObj.optJSONArray("tocomponents"));
+        return cItem;
+    }
+
+    /**
+     * 
+     * @param cContext
+     * @return
+     * @throws IOException
+     * @throws JSONException
+     */
+    private static JSONObject loadJsonObjectFromAssets(Context cContext, String fileName)
+            throws IOException, JSONException {
+        final InputStream in = cContext.getAssets().open(fileName);
+        final JSONObject json = new JSONObject(streamToString(in));
+        return json;
+    }
+
+    /**
+     * 
+     * @param in
+     * @return
+     */
+    private static String streamToString(InputStream in) {
+        if (in == null)
+            return null;
+
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        final StringBuffer sb = new StringBuffer();
+        final char[] buffer = new char[1024];
+        int len = -1;
+        try {
+            while ((len = reader.read(buffer)) > 0) {
+                sb.append(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 
+     * @param jsonArray
+     * @return
+     */
+    private static String[] toStringArray(JSONArray jsonArray) {
+        if (jsonArray == null || jsonArray.length() <= 0)
+            return null;
+
+        final int len = jsonArray.length();
+        final String[] outList = new String[len];
+        for (int index = 0; index < len; index++) {
+            outList[index] = jsonArray.optString(index);
+        }
+        return outList;
+    }
+
+    /**
+     * 
+     * @param jsonArray
+     * @return
+     */
+    private static List<String[]> toStringArray2(JSONArray jsonArray) {
+        if (jsonArray == null || jsonArray.length() <= 0)
+            return null;
+
+        final int len = jsonArray.length();
+        final List<String[]> outList = new ArrayList<String[]>(len);
+        for (int index = 0; index < len; index++) {
+            outList.add(toStringArray(jsonArray.optJSONArray(index)));
+        }
+        return outList;
+    }
+
+    /**
+     * 
+     * @param jsonObject
+     * @return
+     */
+    private static Map<String, String[]> toStringArray(JSONObject jsonObject) {
+        if (jsonObject == null || jsonObject.length() <= 0)
+            return null;
+
+        @SuppressWarnings("unchecked")
+        final Iterator<String> keyIterator = (Iterator<String>) jsonObject.keys();
+        final Map<String, String[]> outMap = new HashMap<String, String[]>(jsonObject.length());
+        String cKeyName = null;
+        while (keyIterator.hasNext()) {
+            cKeyName = keyIterator.next();
+            outMap.put(cKeyName, toStringArray(jsonObject.optJSONArray(cKeyName)));
+        }
+        return outMap;
+    }
+}

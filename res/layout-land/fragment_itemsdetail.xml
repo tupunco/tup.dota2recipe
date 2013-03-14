@@ -1,0 +1,225 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ItemsDetailActivity"
+    tools:ignore="NestedScrolling" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margins_base"
+        android:layout_marginRight="@dimen/margins_base"
+        android:layout_marginTop="@dimen/margins_base"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margins_base"
+            android:baselineAligned="false" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/image_items"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margins_base"
+                    android:adjustViewBounds="false"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/loading" />
+
+                <TextView
+                    android:id="@+id/text_items_dname_l"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/image_items"
+                    android:text="@string/hello_world"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/text_items_dname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_items_dname_l"
+                    android:layout_marginTop="@dimen/margins_text"
+                    android:layout_toRightOf="@+id/image_items"
+                    android:text="@string/hello_world" />
+
+                <ImageView
+                    android:id="@+id/image_items_gold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/text_items_dname"
+                    android:layout_below="@+id/text_items_dname"
+                    android:layout_marginTop="@dimen/margins_text"
+                    android:contentDescription="@string/hello_world"
+                    android:src="@drawable/gold" />
+
+                <TextView
+                    android:id="@+id/text_items_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/image_items_gold"
+                    android:layout_marginLeft="@dimen/margins_text"
+                    android:layout_toRightOf="@+id/image_items_gold"
+                    android:text="@string/hello_world" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margins_base"
+                android:layout_marginTop="@dimen/margins_base"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/rlayout_items_mana"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <ImageView
+                        android:id="@+id/image_items_mana"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/hello_world"
+                        android:src="@drawable/mana" />
+
+                    <TextView
+                        android:id="@+id/text_items_mana_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/margins_text"
+                        android:layout_toRightOf="@+id/image_items_mana"
+                        android:text="@string/text_items_mana_label" />
+
+                    <TextView
+                        android:id="@+id/text_items_mana"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/margins_text"
+                        android:layout_toRightOf="@+id/text_items_mana_label"
+                        android:text="@string/hello_world" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlayout_items_cd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margins_base" >
+
+                    <ImageView
+                        android:id="@+id/image_items_cd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/hello_world"
+                        android:src="@drawable/cooldown" />
+
+                    <TextView
+                        android:id="@+id/text_items_cd_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/margins_text"
+                        android:layout_toRightOf="@+id/image_items_cd"
+                        android:text="@string/text_items_cd_label" />
+
+                    <TextView
+                        android:id="@+id/text_items_cd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margins_text"
+                        android:layout_toRightOf="@+id/text_items_cd_label"
+                        android:text="@string/hello_world" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_items_attrib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margins_base"
+            android:text="@string/hello_world" />
+
+        <TextView
+            android:id="@+id/text_items_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margins_base"
+            android:text="@string/hello_world" />
+
+        <TextView
+            android:id="@+id/text_items_lore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_world" />
+
+        <LinearLayout
+            android:id="@+id/llayout_items_components"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margins_base"
+            android:baselineAligned="false"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/text_items_components_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_items_components_label" />
+
+            <GridView
+                android:id="@+id/grid_items_components"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnWidth="75dp"
+                android:numColumns="auto_fit"
+                android:padding="1dp"
+                android:stretchMode="columnWidth" >
+            </GridView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llayout_items_tocomponents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margins_base"
+            android:baselineAligned="false"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/text_items_tocomponents_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_items_tocomponents_label" />
+
+            <GridView
+                android:id="@+id/grid_items_tocomponents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnWidth="75dp"
+                android:numColumns="auto_fit"
+                android:padding="1dp"
+                android:stretchMode="columnWidth" >
+            </GridView>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

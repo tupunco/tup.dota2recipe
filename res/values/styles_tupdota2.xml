@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <style name="Theme.tupdota2" parent="@style/Theme.Sherlock">
+        <item name="actionBarItemBackground">@drawable/selectable_background_tupdota2</item>
+        <item name="popupMenuStyle">@style/tupdota2_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/tupdota2_DropDownListView</item>
+        <item name="actionBarTabStyle">@style/tupdota2_ActionBarTabStyle</item>
+        <item name="actionDropDownStyle">@style/tupdota2_DropDownNav</item>
+        <item name="actionBarStyle">@style/tupdota2_solid_ActionBar</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_tupdota2</item>
+        <item name="android:popupMenuStyle">@style/tupdota2_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/tupdota2_DropDownListView</item>
+        <item name="android:actionBarTabStyle">@style/tupdota2_ActionBarTabStyle</item>
+        <item name="android:actionDropDownStyle">@style/tupdota2_DropDownNav</item>
+        <item name="android:actionBarStyle">@style/tupdota2_solid_ActionBar</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_tupdota2</item>
+        <item name="android:editTextStyle">@style/EditTextTupDotA2</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewTupDotA2</item>
+        <item name="android:checkboxStyle">@style/CheckBoxTupDotA2</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonTupDotA2</item>
+        <item name="android:buttonStyle">@style/ButtonTupDotA2</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonTupDotA2</item>
+        <item name="android:spinnerStyle">@style/SpinnerTupDotA2</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerTupDotA2.DropDown</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemTupDotA2</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarTupDotA2</item>
+        <item name="android:seekBarStyle">@style/SeekBarTupDotA2</item>
+        <item name="android:buttonStyleToggle">@style/ToggleTupDotA2</item>
+        <item name="android:listViewStyle">@style/ListViewTupDotA2</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewTupDotA2.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemTupDotA2</item>
+    </style>
+
+    <style name="tupdota2_solid_ActionBar" parent="@style/Widget.Sherlock.ActionBar.Solid">
+        <item name="background">@drawable/ab_solid_tupdota2</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_tupdota2</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_tupdota2</item>
+        <item name="progressBarStyle">@style/tupdota2_ProgressBar</item>
+        <item name="android:background">@drawable/ab_solid_tupdota2</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_tupdota2</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_tupdota2</item>
+        <item name="android:progressBarStyle">@style/tupdota2_ProgressBar</item>
+    </style>
+
+    <style name="tupdota2_transparent_ActionBar" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/ab_transparent_tupdota2</item>
+        <item name="progressBarStyle">@style/tupdota2_ProgressBar</item>
+        <item name="android:background">@drawable/ab_transparent_tupdota2</item>
+        <item name="android:progressBarStyle">@style/tupdota2_ProgressBar</item>
+    </style>
+
+    <style name="tupdota2_PopupMenu" parent="@style/Widget.Sherlock.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_tupdota2</item>
+    </style>
+
+    <style name="tupdota2_DropDownListView" parent="@style/Widget.Sherlock.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_tupdota2</item>
+    </style>
+
+    <style name="tupdota2_ActionBarTabStyle" parent="@style/Widget.Sherlock.ActionBar.TabView">
+        <item name="background">@drawable/tab_indicator_ab_tupdota2</item>
+        <item name="android:background">@drawable/tab_indicator_ab_tupdota2</item>
+    </style>
+
+    <style name="tupdota2_DropDownNav" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
+        <item name="background">@drawable/spinner_background_ab_tupdota2</item>
+        <item name="android:background">@drawable/spinner_background_ab_tupdota2</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_tupdota2</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_tupdota2</item>
+    </style>
+
+    <style name="tupdota2_ProgressBar" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_tupdota2</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.tupdota2.widget" parent="@style/Theme.Sherlock">
+        <item name="popupMenuStyle">@style/tupdota2_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/tupdota2_DropDownListView</item>
+        <item name="android:popupMenuStyle">@style/tupdota2_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/tupdota2_DropDownListView</item>
+    </style>
+
+</resources>

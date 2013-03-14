@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- fragment hero -->
+    <!-- 按类型 -->
+    <string-array name="menu_hero_type_keys">
+        <item>==所有==</item>
+        <item>力量</item>
+        <item>敏捷</item>
+        <item>智力</item>
+    </string-array>
+    <string-array name="menu_hero_type_values">
+        <item>all</item>
+        <item>strength</item>
+        <item>agility</item>
+        <item>intelligence</item>
+    </string-array>
+
+    <!-- 按定位 -->
+    <string-array name="menu_hero_role_keys">
+        <item>==所有==</item>
+        <item>核心</item>
+        <item>控制</item>
+        <item>对线辅助</item>
+        <item>先手</item>
+        <item>打野</item>
+        <item>辅助</item>
+        <item>耐久</item>
+        <item>爆发</item>
+        <item>推进</item>
+        <item>逃生</item>
+    </string-array>
+    <string-array name="menu_hero_role_values">
+        <item>all</item>
+        <item>Carry</item>
+        <item>Disabler</item>
+        <item>LaneSupport</item>
+        <item>Initiator</item>
+        <item>Jungler</item>
+        <item>Support</item>
+        <item>Durable</item>
+        <item>Nuker</item>
+        <item>Pusher</item>
+        <item>Escape</item>
+    </string-array>
+
+    <!-- 按攻击 -->
+    <string-array name="menu_hero_attack_keys">
+        <item>==所有==</item>
+        <item>近战</item>
+        <item>远程</item>
+    </string-array>
+    <string-array name="menu_hero_attack_values">
+        <item>all</item>
+        <item>melee</item>
+        <item>ranged</item>
+    </string-array>
+
+    <!-- 按阵营 -->
+    <string-array name="menu_hero_factions_keys">
+        <item>==所有==</item>
+        <item>天辉</item>
+        <item>夜魇</item>
+    </string-array>
+    <string-array name="menu_hero_factions_values">
+        <item>all</item>
+        <item>radiant</item>
+        <item>dire</item>
+    </string-array>
+
+    <!-- fragment items -->
+    <!-- 按品质 -->
+    <string-array name="menu_items_qual_keys">
+        <item>==所有==</item>
+        <item>组件</item>
+        <item>史诗</item>
+        <item>辅助</item>
+        <item>消耗品</item>
+        <item>神秘商店</item>
+        <item>稀有</item>
+        <item>圣物</item>
+    </string-array>
+    <string-array name="menu_items_qual_values">
+        <item>all</item>
+        <item>component</item>
+        <item>epic</item>
+        <item>common</item>
+        <item>consumable</item>
+        <item>secret_shop</item>
+        <item>rare</item>
+        <item>artifact</item>
+    </string-array>
+
+    <!-- 按分类 -->
+    <string-array name="menu_items_itemcat_keys">
+        <item>==所有==</item>
+        <item>基础物品</item>
+        <item>升级物品</item>
+        <!-- <item>神秘物品</item> -->
+        <item>消耗品</item>
+        <item>属性</item>
+        <item>军备</item>
+        <item>奥术</item>
+        <item>普通</item>
+        <item>辅助</item>
+        <item>法器</item>
+        <item>武器</item>
+        <item>防具</item>
+        <item>圣物</item>
+        <item>神秘商店</item>
+    </string-array>
+    <string-array name="menu_items_itemcat_values">
+        <item>all</item>
+        <item>basics</item>
+        <item>upgrades</item>
+        <!-- <item>secrets</item> -->
+        <item>consumables</item>
+        <item>attributes</item>
+        <item>armaments</item>
+        <item>arcane</item>
+        <item>common</item>
+        <item>support</item>
+        <item>caster</item>
+        <item>weapons</item>
+        <item>armor</item>
+        <item>artifacts</item>
+        <item>secret</item>
+    </string-array>
+
+</resources>

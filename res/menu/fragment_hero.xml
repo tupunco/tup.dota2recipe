@@ -1,0 +1,38 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_hero_type"
+        android:showAsAction="always|withText"
+        android:title="@string/menu_hero_type">
+        <menu>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_hero_role"
+        android:showAsAction="always|withText"
+        android:title="@string/menu_hero_role">
+        <menu>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_hero_attack"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_hero_attack">
+        <menu>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_hero_factions"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_hero_factions">
+        <menu>
+        </menu>
+    </item>
+   
+    <item
+        android:id="@+id/action_search"
+        android:actionViewClass="com.actionbarsherlock.widget.SearchView"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="ifRoom|collapseActionView"
+        android:title="@string/action_bar_search"/>
+</menu>
