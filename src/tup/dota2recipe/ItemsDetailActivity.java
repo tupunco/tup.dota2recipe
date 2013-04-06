@@ -38,6 +38,10 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
      * 物品名称 Intent 参数
      */
     public final static String KEY_ITEMS_DETAIL_KEY_NAME = "KEY_ITEMS_DETAIL_KEY_NAME";
+    /**
+     * 父物品名称(合成卷轴使用) Intent 参数
+     */
+    public final static String KEY_ITEMS_DETAIL_PARENT_KEY_NAME = "KEY_ITEMS_DETAIL_PARENT_KEY_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,8 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Utils.fillFragment(this, ItemsDetailFragment.newInstance(
-                this.getIntent().getStringExtra(KEY_ITEMS_DETAIL_KEY_NAME)));
+                this.getIntent().getStringExtra(KEY_ITEMS_DETAIL_KEY_NAME),
+                this.getIntent().getStringExtra(KEY_ITEMS_DETAIL_PARENT_KEY_NAME)));
     }
 
     @Override
@@ -66,15 +71,23 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
             implements SimpleGridView.OnItemClickListener {
         private DisplayImageOptions mImageLoadOptions;
 
+        static ItemsDetailFragment newInstance(String items_keyName) {
+            return newInstance(items_keyName, null);
+        }
+
         /**
          * 
          * @param items_keyName
+         * @param items_parent_keyName
          * @return
          */
-        static ItemsDetailFragment newInstance(String items_keyName) {
+        static ItemsDetailFragment newInstance(String items_keyName, String items_parent_keyName) {
             final ItemsDetailFragment f = new ItemsDetailFragment();
             final Bundle b = new Bundle();
             b.putString(KEY_ITEMS_DETAIL_KEY_NAME, items_keyName);
+            if (!TextUtils.isEmpty(items_parent_keyName)) {
+                b.putString(KEY_ITEMS_DETAIL_PARENT_KEY_NAME, items_parent_keyName);
+            }
             f.setArguments(b);
             return f;
         }
@@ -85,10 +98,16 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
 
             mImageLoadOptions = Utils.createDisplayImageOptions();
 
-            final String items_keyName = this.getArguments().getString(KEY_ITEMS_DETAIL_KEY_NAME);
-            Log.v(TAG, "arg.items_keyName=" + items_keyName);
+            final Bundle arg = this.getArguments();
+            final String items_keyName = arg.getString(KEY_ITEMS_DETAIL_KEY_NAME);
+            final String items_parent_keyName = arg.containsKey(KEY_ITEMS_DETAIL_PARENT_KEY_NAME) ?
+                    arg.getString(KEY_ITEMS_DETAIL_PARENT_KEY_NAME) : null;
+
+            Log.v(TAG, "arg.items_keyName=" + items_keyName
+                    + " arg.items_parent_keyName" + items_parent_keyName);
+
             if (!TextUtils.isEmpty(items_keyName)) {
-                Utils.executeAsyncTask(mLoaderTask, items_keyName);
+                Utils.executeAsyncTask(mLoaderTask, items_keyName, items_parent_keyName);
             }
         }
 
@@ -99,6 +118,7 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
         }
 
         /**
+         * 绑定物品视图
          * 
          * @param cItem
          */
@@ -117,6 +137,20 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
             ((TextView) v.findViewById(R.id.text_items_dname)).setText(cItem.dname);
             ((TextView) v.findViewById(R.id.text_items_dname_l)).setText(cItem.dname_l);
             ((TextView) v.findViewById(R.id.text_items_cost)).setText(String.valueOf(cItem.cost));
+
+            // 合成卷轴处理
+            if (cItem.isrecipe) {
+                final View layout_items_desc = v.findViewById(R.id.layout_items_desc);
+                layout_items_desc.setVisibility(View.GONE);
+                
+                final View layout_items_desc1 = v.findViewById(R.id.layout_items_desc1);
+                if (layout_items_desc1 != null) {
+                    layout_items_desc1.setVisibility(View.GONE);
+                }
+                
+                return;
+            }
+
             ((TextView) v.findViewById(R.id.text_items_desc)).setText(Html.fromHtml(cItem.desc));
             ((TextView) v.findViewById(R.id.text_items_lore)).setText(cItem.lore);
             ((TextView) v.findViewById(R.id.text_items_attrib))
@@ -163,15 +197,34 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
         }
 
         /**
-         * 
+         * 物品详细 LoaderTask
          */
         private final AsyncTask<String, Void, ItemsItem> mLoaderTask = new AsyncTask<String, Void, ItemsItem>() {
 
             @Override
             protected ItemsItem doInBackground(String... params) {
                 try {
-                    return DataManager.getItemsItem(ItemsDetailFragment.this.getSherlockActivity(),
-                            params[0]);
+                    String keyName = params[0];
+                    final boolean isrecipe = keyName.contentEquals("recipe");
+                    if (isrecipe) {
+                        keyName = params[1];
+                    }
+                    final ItemsItem cItem = DataManager.getItemsItem(
+                            ItemsDetailFragment.this.getSherlockActivity(), keyName);
+                    // 合成卷轴数据合并
+                    if (isrecipe) {
+                        final ItemsItem recipeItem =
+                                cItem.components_i.get(cItem.components_i.size() - 1);
+                        final ItemsItem resRecipeItem = new ItemsItem();
+                        resRecipeItem.cost = recipeItem.cost;
+                        resRecipeItem.dname = cItem.dname + " " + recipeItem.dname;
+                        resRecipeItem.dname_l = cItem.dname_l + recipeItem.dname_l;
+                        resRecipeItem.isrecipe = true;
+                        resRecipeItem.keyName = recipeItem.keyName;
+                        resRecipeItem.parent_keyName = recipeItem.parent_keyName;
+                        return resRecipeItem;
+                    }
+                    return cItem;
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {

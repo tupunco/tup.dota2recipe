@@ -27,7 +27,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -108,6 +111,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
         }
 
         /**
+         * 绑定视图
          * 
          * @param cHeroItem
          */
@@ -144,10 +148,11 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                             R.array.menu_hero_type_keys,
                             R.array.menu_hero_type_values, cItem.hp));
 
-            ((TextView) v.findViewById(R.id.text_hero_stats))
-                    .setText(Html.fromHtml(cItem.stats, mImageGetter, null));
-            // ((TextView) v.findViewById(R.id.text_hero_detailstats))
-            // .setText(Html.fromHtml(cItem.detailstats));
+            // cItem.stats
+            bindStatsView(v, cItem);
+            // cItem.detailstats
+            bindDetailstatsView(v, cItem);
+
             ((TextView) v.findViewById(R.id.text_hero_bio)).setText(cItem.bio_l);
 
             // cItem.itembuilds
@@ -173,10 +178,133 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             else {
                 v.findViewById(R.id.llayout_hero_abilities).setVisibility(View.GONE);
             }
-
         }
 
         /**
+         * 绑定视图-统计信息
+         * 
+         * @param cView
+         * @param cItem
+         */
+        private void bindStatsView(View cView, HeroDetailItem cItem) {
+            if (cItem == null || cItem.stats1 == null || cItem.stats1.size() != 6) {
+                return;
+            }
+
+            final LinearLayout layoutStats1 = (LinearLayout) cView
+                    .findViewById(R.id.layout_hero_stats1);
+            final LinearLayout layoutStats2 = (LinearLayout) cView
+                    .findViewById(R.id.layout_hero_stats2);
+            if (layoutStats1 == null || layoutStats2 == null) {
+                return;
+            }
+
+            final Context context = cView.getContext();
+            final Resources res = context.getResources();
+            final String[] labels = res.getStringArray(R.array.array_hero_stats);
+            final int[] resIds = new int[] {
+                    R.drawable.overviewicon_int, R.drawable.overviewicon_agi,
+                    R.drawable.overviewicon_str, R.drawable.overviewicon_attack,
+                    R.drawable.overviewicon_speed, R.drawable.overviewicon_defense
+            };
+
+            final LayoutInflater inflater = LayoutInflater.from(context);
+            final int hpIndex = (cItem.hp.contentEquals("intelligence") ? 0 : (cItem.hp
+                    .contentEquals("agility") ? 1 : 2));
+            ViewGroup cParent = layoutStats1;
+            View view = null;
+            TextView text = null;
+            ImageView image = null;
+            for (int i = 0; i < cItem.stats1.size(); i++) {
+                cParent = (i <= 2 ? layoutStats1 : layoutStats2);
+                view = inflater.inflate(R.layout.fragment_herodetail_stats_list_item, cParent,
+                        false);
+
+                text = (TextView) view.findViewById(R.id.text_hero_stats_label);
+                text.setText(labels[i]);
+
+                image = (ImageView) view.findViewById(R.id.image_hero_stats_icon);
+                image.setImageResource(resIds[i]);
+
+                text = (TextView) view.findViewById(R.id.text_hero_stats_value);
+                text.setText(cItem.stats1.get(i)[2]);
+                if (hpIndex == i) {
+                    image = (ImageView) view.findViewById(R.id.image_hero_stats_icon_primary);
+                    image.setVisibility(View.VISIBLE);
+                }
+                cParent.addView(view);
+            }
+        }
+
+        /**
+         * 绑定视图-详细统计信息
+         * 
+         * @param cView
+         * @param cItem
+         */
+        @SuppressWarnings("deprecation")
+        private void bindDetailstatsView(View cView, HeroDetailItem cItem) {
+            if (cItem == null || cItem.detailstats1 == null || cItem.detailstats1.size() != 5
+                    || cItem.detailstats2 == null || cItem.detailstats2.size() != 3) {
+                return;
+            }
+
+            final TableLayout table = (TableLayout) cView
+                    .findViewById(R.id.table_hero_detailstats);
+            if (table == null) {
+                return;
+            }
+
+            final Context context = cView.getContext();
+            final TableRow.LayoutParams rowLayout = new TableRow.LayoutParams();
+            rowLayout.weight = 1f;
+            final TableLayout.LayoutParams tableLayout = new TableLayout.LayoutParams();
+            final String[] detailstatsLabel = context.getResources().getStringArray(
+                    R.array.array_hero_detailstats);
+            final Drawable rowBg = context.getResources().getDrawable(
+                    R.drawable.hero_detailstats_table_bg);
+            int count = cItem.detailstats1.size();
+            int iCount = 0;
+            String[] iItem = null;
+            TableRow row = null;
+            TextView text = null;
+            // --detailstats1
+            for (int i = 0; i < count; i++) {
+                row = new TableRow(context);
+                iItem = cItem.detailstats1.get(i);
+                iCount = iItem.length;
+                for (int ii = 0; ii < iCount; ii++) {
+                    text = new TextView(context);
+                    text.setPadding(0, 3, 0, 3);
+                    text.setText(ii == 0 ? detailstatsLabel[i] : iItem[ii]);
+                    row.addView(text, rowLayout);
+                }
+                if (i % 2 == 1) {
+                    row.setBackgroundDrawable(rowBg);
+                }
+                table.addView(row, tableLayout);
+            }
+            // --detailstats2
+            count = cItem.detailstats2.size();
+            for (int i = 0; i < count; i++) {
+                row = new TableRow(context);
+                iItem = cItem.detailstats2.get(i);
+                iCount = iItem.length;
+                for (int ii = 0; ii < iCount; ii++) {
+                    text = new TextView(context);
+                    text.setPadding(0, 3, 0, 3);
+                    text.setText(ii == 0 ? detailstatsLabel[i + 5] : iItem[ii]);
+                    row.addView(text, rowLayout);
+                }
+                if (i % 2 == 0) {
+                    row.setBackgroundDrawable(rowBg);
+                }
+                table.addView(row, tableLayout);
+            }
+        }
+
+        /**
+         * 绑定视图-推荐出装
          * 
          * @param key
          * @param layoutResId
@@ -210,19 +338,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             public Drawable getDrawable(String source) {
                 final Resources res = getSherlockActivity().getResources();
                 Drawable drawable = null;
-                if (source.contentEquals("Int"))
-                    drawable = res.getDrawable(R.drawable.overviewicon_int);
-                else if (source.contentEquals("Agi"))
-                    drawable = res.getDrawable(R.drawable.overviewicon_agi);
-                else if (source.contentEquals("Str"))
-                    drawable = res.getDrawable(R.drawable.overviewicon_str);
-                else if (source.contentEquals("Attack"))
-                    drawable = res.getDrawable(R.drawable.overviewicon_attack);
-                else if (source.contentEquals("Speed"))
-                    drawable = res.getDrawable(R.drawable.overviewicon_speed);
-                else if (source.contentEquals("Defense"))
-                    drawable = res.getDrawable(R.drawable.overviewicon_defense);
-                else if (source.contentEquals("mana"))
+                if (source.contentEquals("mana"))
                     drawable = res.getDrawable(R.drawable.mana);
                 else if (source.contentEquals("cooldown"))
                     drawable = res.getDrawable(R.drawable.cooldown);

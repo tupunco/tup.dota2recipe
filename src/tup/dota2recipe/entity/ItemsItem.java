@@ -10,6 +10,10 @@ import java.util.List;
 public final class ItemsItem {
     public String keyName;
     /**
+     * 合成目标keyName(合成卷轴使用)
+     */
+    public String parent_keyName;
+    /**
      * 物品名称
      */
     public String dname;
@@ -30,7 +34,14 @@ public final class ItemsItem {
     public String itembasecat;
 
     public boolean created;
+    /**
+     * 是否是公开(物品列表UI内显示)物品
+     */
     public boolean ispublic;
+    /**
+     * 是否当前物品是合成卷轴
+     */
+    public boolean isrecipe;
     
     // -------------------ItemsDetail
     public int cost;
@@ -39,8 +50,14 @@ public final class ItemsItem {
     public String mc;
     public int cd;
     public String lore;
+    /**
+     * 合成所需物品
+     */
     public String[] components;
     public List<ItemsItem> components_i;
+    /**
+     * 可合成物品
+     */
     public String[] tocomponents;
     public List<ItemsItem> tocomponents_i;
 

@@ -1,6 +1,7 @@
 package tup.dota2recipe;
 
 import tup.dota2recipe.util.AbstractTabsAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -13,13 +14,14 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 
  * @author tupunco
- *
+ * 
  */
 public class MainActivity extends SherlockFragmentActivity {
     TabsAdapter mTabsAdapter;
@@ -31,9 +33,9 @@ public class MainActivity extends SherlockFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        
+
         setContentView(R.layout.activity_main);
 
         final ActionBar actionBar = this.getSupportActionBar();
@@ -47,15 +49,15 @@ public class MainActivity extends SherlockFragmentActivity {
                 HeroListFragment.class, null);
         mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_item),
                 ItemsListFragment.class, null);
-        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_skill),
-                DummySectionFragment.class, null);
+//        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_skill),
+//                DummySectionFragment.class, null);
         mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_favorite),
                 DummySectionFragment.class, null);
 
-        //        if (savedInstanceState != null) {
-        //            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
-        //                    "tab", 0));
-        //        }
+        // if (savedInstanceState != null) {
+        // actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
+        // "tab", 0));
+        // }
     }
 
     @Override
@@ -65,11 +67,22 @@ public class MainActivity extends SherlockFragmentActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menu_about:
+            this.startActivity(new Intent(this, AboutActivity.class));
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        //            outState.putInt("tab", getSupportActionBar()
-        //                    .getSelectedNavigationIndex());
+        // outState.putInt("tab", getSupportActionBar()
+        // .getSelectedNavigationIndex());
 
         instanceStateSaved = true;
     }
@@ -134,10 +147,10 @@ public class MainActivity extends SherlockFragmentActivity {
                 Bundle savedInstanceState) {
             // Create a new TextView and set its text to the fragment's section
             // number argument value.
-            //            TextView textView = new TextView(getActivity());
-            //            textView.setGravity(Gravity.CENTER);
-            //            textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
-            //            return textView;
+            // TextView textView = new TextView(getActivity());
+            // textView.setGravity(Gravity.CENTER);
+            // textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+            // return textView;
             return inflater.inflate(R.layout.fragment_main, container, false);
         }
     }

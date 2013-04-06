@@ -76,6 +76,7 @@ final class DataManager {
     }
 
     /**
+     * 获取指定英雄详细数据
      * 
      * @param cContext
      * @param heroItemKeyName
@@ -90,6 +91,7 @@ final class DataManager {
     }
 
     /**
+     * 获取指定物品数据
      * 
      * @param cContext
      * @param keyName
@@ -136,6 +138,7 @@ final class DataManager {
     }
 
     /**
+     * 加载英雄详细数据
      * 
      * @param cContext
      * @param keyName
@@ -186,7 +189,7 @@ final class DataManager {
         // ------------fill components
         if (mItemsList != null && mItemsList.size() > 0) {
             for (ItemsItem ccItem : mItemsList) {
-                ccItem.components_i = fillItemsInfo(ccItem.components);
+                ccItem.components_i = fillItemsInfo(cContext, ccItem, ccItem.components, true);
                 ccItem.tocomponents_i = fillItemsInfo(ccItem.tocomponents);
             }
         }
@@ -194,31 +197,61 @@ final class DataManager {
     }
 
     /**
+     * 填充物品详细信息
      * 
-     * @param cItems
+     * @param cFillItems
      * @return
      */
-    private static List<ItemsItem> fillItemsInfo(String[] cItems) {
-        if (cItems == null || cItems.length <= 0)
+    private static List<ItemsItem> fillItemsInfo(String[] cFillItems) {
+        return fillItemsInfo(null, null, cFillItems, false);
+    }
+
+    /**
+     * 填充物品详细信息
+     * 
+     * @param cItem
+     * @param cFillItems
+     * @param calcRecipe
+     *            是否计算合成卷轴
+     * @return
+     */
+    private static List<ItemsItem> fillItemsInfo(Context cContext, ItemsItem cItem,
+            String[] cFillItems, boolean calcRecipe) {
+        if (cFillItems == null || cFillItems.length <= 0)
             return null;
 
-        //TODO----------------
-        //recipe_necronomicon:死灵书 卷轴
-        //recipe_dagon:达贡之神力 卷轴
-        final List<ItemsItem> outList = new ArrayList<ItemsItem>(cItems.length);
+        // TODO----------------
+        // recipe_necronomicon:死灵书 卷轴
+        // recipe_dagon:达贡之神力 卷轴
+        final List<ItemsItem> outList = new ArrayList<ItemsItem>(cFillItems.length);
         ItemsItem tItems = null;
-        for (String ccKeyName : cItems) {
+        int totalCost = 0;
+        for (String ccKeyName : cFillItems) {
             tItems = mItemsMap.get(ccKeyName);
-            if (tItems != null)
+            if (tItems != null) {
                 outList.add(tItems);
-            else
+                totalCost += tItems.cost;
+            }
+            else {
                 Log.e("DataManager", "-fillItemsInfo-----NULL-" + ccKeyName);
+            }
+        }
+
+        // 计算合成卷轴
+        if (cContext != null && cItem != null && calcRecipe && cItem.cost > totalCost) {
+            final ItemsItem recipeItems = new ItemsItem();
+            recipeItems.cost = cItem.cost - totalCost;
+            recipeItems.isrecipe = true;
+            recipeItems.keyName = recipeItems.dname = "recipe";
+            recipeItems.dname_l = cContext.getResources().getString(R.string.text_items_repice_name);
+            recipeItems.parent_keyName = cItem.keyName;
+            outList.add(recipeItems);
         }
         return outList;
     }
 
     /**
-     * 
+     * HeroItem 对比 Comparator
      */
     private static final Comparator<HeroItem> ALPHA_COMPARATOR = new Comparator<HeroItem>() {
         private final Collator sCollator = Collator.getInstance();
@@ -230,6 +263,7 @@ final class DataManager {
     };
 
     /**
+     * 反序列化 JSON HeroItem(英雄) 项
      * 
      * @param cHeroKey
      * @param cJsonObj
@@ -257,6 +291,7 @@ final class DataManager {
     }
 
     /**
+     * 反序列化 JSON HeroDetailItem(英雄详细) 项
      * 
      * @param cJsonObj
      * @param inItem
@@ -268,8 +303,10 @@ final class DataManager {
         inItem.bio = cJsonObj.optString("bio");
         inItem.bio_l = cJsonObj.optString("bio_l");
         inItem.stats = cJsonObj.optString("stats");
+        inItem.stats1 = toStringArray2(cJsonObj.optJSONArray("stats1"));
         inItem.detailstats = cJsonObj.optString("detailstats");
         inItem.detailstats1 = toStringArray2(cJsonObj.optJSONArray("detailstats1"));
+        inItem.detailstats1.add(0, new String[] { "Level", "1", "15", "25" });
         inItem.detailstats2 = toStringArray2(cJsonObj.optJSONArray("detailstats2"));
         inItem.itembuilds = toStringArray(cJsonObj.optJSONObject("itembuilds"));
         if (inItem.itembuilds != null && inItem.itembuilds.size() > 0) {
@@ -296,6 +333,7 @@ final class DataManager {
     }
 
     /**
+     * 反序列化 JSON AbilityItem(技能) 项
      * 
      * @param cJsonObj
      * @return
@@ -318,6 +356,7 @@ final class DataManager {
     }
 
     /**
+     * 反序列化 JSON ItemsItem(物品) 项
      * 
      * @param cItemsKey
      * @param cJsonObj
@@ -354,6 +393,7 @@ final class DataManager {
     }
 
     /**
+     * 从 Assets 内加载指定 JSON 文件
      * 
      * @param cContext
      * @return
@@ -368,6 +408,7 @@ final class DataManager {
     }
 
     /**
+     * Stream To String
      * 
      * @param in
      * @return

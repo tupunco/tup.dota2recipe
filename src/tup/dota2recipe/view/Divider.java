@@ -37,16 +37,17 @@ public class Divider extends View {
 
     @SuppressLint("InlinedApi")
     protected void init(Context context, AttributeSet attrs, int defStyle) {
-        TypedArray a = context.obtainStyledAttributes(attrs,
+        final TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.Divider, defStyle, 0);
 
-        boolean vertical = a.getInt(R.styleable.Divider_android_orientation,
+        final boolean vertical = a.getInt(R.styleable.Divider_android_orientation,
                 android.widget.LinearLayout.VERTICAL) == android.widget.LinearLayout.VERTICAL;
         this.topMargin = a.getDimensionPixelSize(R.styleable.Divider_marginTop, 6);
         this.bottomMargin = a.getDimensionPixelSize(R.styleable.Divider_marginBottom, 6);
 
         a.recycle();
-        TypedValue value = new TypedValue();
+        
+        final TypedValue value = new TypedValue();
         context.getTheme().resolveAttribute(
                 vertical ? R.attr.dividerVertical : R.attr.dividerHorizontal,
                 value, true);
@@ -54,7 +55,7 @@ public class Divider extends View {
             setBackgroundResource(value.resourceId);
         }
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0, topMargin, 0, bottomMargin);

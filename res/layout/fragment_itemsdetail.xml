@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/image_items"
-                android:text="@string/hello_world"
+                android:text="name"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_below="@+id/text_items_dname_l"
                 android:layout_marginTop="@dimen/margins_text"
                 android:layout_toRightOf="@+id/image_items"
-                android:text="@string/hello_world" />
+                android:text="name" />
 
             <ImageView
                 android:id="@+id/image_items_gold"
@@ -63,151 +63,158 @@
                 android:layout_alignTop="@+id/image_items_gold"
                 android:layout_marginLeft="@dimen/margins_text"
                 android:layout_toRightOf="@+id/image_items_gold"
-                android:text="@string/hello_world" />
+                android:text="cost" />
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/layout_items_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:baselineAligned="false" >
-
-            <RelativeLayout
-                android:id="@+id/rlayout_items_mana"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:id="@+id/image_items_mana"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/hello_world"
-                    android:src="@drawable/mana" />
-
-                <TextView
-                    android:id="@+id/text_items_mana_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="@dimen/margins_text"
-                    android:layout_toRightOf="@+id/image_items_mana"
-                    android:text="@string/text_items_mana_label" />
-
-                <TextView
-                    android:id="@+id/text_items_mana"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="@dimen/margins_text"
-                    android:layout_toRightOf="@+id/text_items_mana_label"
-                    android:text="@string/hello_world" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rlayout_items_cd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:id="@+id/image_items_cd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/hello_world"
-                    android:src="@drawable/cooldown" />
-
-                <TextView
-                    android:id="@+id/text_items_cd_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="@dimen/margins_text"
-                    android:layout_toRightOf="@+id/image_items_cd"
-                    android:text="@string/text_items_cd_label" />
-
-                <TextView
-                    android:id="@+id/text_items_cd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margins_text"
-                    android:layout_toRightOf="@+id/text_items_cd_label"
-                    android:text="@string/hello_world" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/text_items_attrib"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:text="@string/hello_world" />
-
-        <TextView
-            android:id="@+id/text_items_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:text="@string/hello_world" />
-
-        <TextView
-            android:id="@+id/text_items_lore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_world" />
-
-        <LinearLayout
-            android:id="@+id/llayout_items_components"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:baselineAligned="false"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/text_items_components_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_items_components_label"
-                android:textStyle="bold" />
-
-            <tup.dota2recipe.view.SimpleGridView
-                android:id="@+id/grid_items_components"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                myview:horizontalSpacing="@dimen/margins_base"
-                myview:verticalSpacing="@dimen/margins_base" >
-            </tup.dota2recipe.view.SimpleGridView>
-        </LinearLayout>
+                android:layout_marginTop="@dimen/margins_base"
+                android:baselineAligned="false" >
 
-        <LinearLayout
-            android:id="@+id/llayout_items_tocomponents"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:baselineAligned="false"
-            android:orientation="vertical" >
+                <RelativeLayout
+                    android:id="@+id/rlayout_items_mana"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/image_items_mana"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/hello_world"
+                        android:src="@drawable/mana" />
+
+                    <TextView
+                        android:id="@+id/text_items_mana_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/margins_text"
+                        android:layout_toRightOf="@+id/image_items_mana"
+                        android:text="@string/text_items_mana_label" />
+
+                    <TextView
+                        android:id="@+id/text_items_mana"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/margins_text"
+                        android:layout_toRightOf="@+id/text_items_mana_label"
+                        android:text="mana" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlayout_items_cd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/image_items_cd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/hello_world"
+                        android:src="@drawable/cooldown" />
+
+                    <TextView
+                        android:id="@+id/text_items_cd_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/margins_text"
+                        android:layout_toRightOf="@+id/image_items_cd"
+                        android:text="@string/text_items_cd_label" />
+
+                    <TextView
+                        android:id="@+id/text_items_cd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margins_text"
+                        android:layout_toRightOf="@+id/text_items_cd_label"
+                        android:text="cd" />
+                </RelativeLayout>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/text_items_tocomponents_label"
+                android:id="@+id/text_items_attrib"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_items_tocomponents_label"
-                android:textStyle="bold" />
+                android:layout_marginTop="@dimen/margins_base"
+                android:text="attrib" />
 
-            <tup.dota2recipe.view.SimpleGridView
-                android:id="@+id/grid_items_tocomponents"
+            <TextView
+                android:id="@+id/text_items_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margins_base"
+                android:text="desc" />
+
+            <TextView
+                android:id="@+id/text_items_lore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lore" />
+
+            <LinearLayout
+                android:id="@+id/llayout_items_components"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                myview:horizontalSpacing="@dimen/margins_base"
-                myview:verticalSpacing="@dimen/margins_base" >
-            </tup.dota2recipe.view.SimpleGridView>
+                android:layout_marginTop="@dimen/margins_base"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/text_items_components_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_items_components_label"
+                    android:textStyle="bold" />
+
+                <tup.dota2recipe.view.SimpleGridView
+                    android:id="@+id/grid_items_components"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    myview:horizontalSpacing="@dimen/margins_base"
+                    myview:verticalSpacing="@dimen/margins_base" >
+                </tup.dota2recipe.view.SimpleGridView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llayout_items_tocomponents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margins_base"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/text_items_tocomponents_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_items_tocomponents_label"
+                    android:textStyle="bold" />
+
+                <tup.dota2recipe.view.SimpleGridView
+                    android:id="@+id/grid_items_tocomponents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    myview:horizontalSpacing="@dimen/margins_base"
+                    myview:verticalSpacing="@dimen/margins_base" >
+                </tup.dota2recipe.view.SimpleGridView>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

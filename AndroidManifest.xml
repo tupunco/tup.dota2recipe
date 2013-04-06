@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tup.dota2recipe"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="0.5" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -41,6 +41,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name="tup.dota2recipe.AboutActivity"
+            android:label="@string/title_activity_about" android:theme="@style/Theme.Sherlock.Dialog">
         </activity>
     </application>
 

@@ -1,17 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:myview="http://schemas.android.com/apk/res/tup.dota2recipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ItemsDetailActivity"
     tools:ignore="NestedScrolling" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margins_base"
-        android:layout_marginRight="@dimen/margins_base"
-        android:layout_marginTop="@dimen/margins_base"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="@dimen/margins_base" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,8 +27,8 @@
 
                 <ImageView
                     android:id="@+id/image_items"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="85dp"
+                    android:layout_height="64dp"
                     android:layout_marginRight="@dimen/margins_base"
                     android:adjustViewBounds="false"
                     android:contentDescription="@string/app_name"
@@ -73,6 +74,7 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/layout_items_desc1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins_base"
@@ -151,74 +153,77 @@
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_items_attrib"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:text="@string/hello_world" />
-
-        <TextView
-            android:id="@+id/text_items_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:text="@string/hello_world" />
-
-        <TextView
-            android:id="@+id/text_items_lore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_world" />
-
         <LinearLayout
-            android:id="@+id/llayout_items_components"
+            android:id="@+id/layout_items_desc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margins_base"
-            android:baselineAligned="false"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/text_items_components_label"
+                android:id="@+id/text_items_attrib"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_items_components_label" />
-
-            <GridView
-                android:id="@+id/grid_items_components"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnWidth="75dp"
-                android:numColumns="auto_fit"
-                android:padding="1dp"
-                android:stretchMode="columnWidth" >
-            </GridView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llayout_items_tocomponents"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margins_base"
-            android:baselineAligned="false"
-            android:orientation="vertical" >
+                android:layout_marginTop="@dimen/margins_base"
+                android:text="@string/hello_world" />
 
             <TextView
-                android:id="@+id/text_items_tocomponents_label"
+                android:id="@+id/text_items_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_items_tocomponents_label" />
+                android:layout_marginTop="@dimen/margins_base"
+                android:text="@string/hello_world" />
 
-            <GridView
-                android:id="@+id/grid_items_tocomponents"
+            <TextView
+                android:id="@+id/text_items_lore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_world" />
+
+            <LinearLayout
+                android:id="@+id/llayout_items_components"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:columnWidth="75dp"
-                android:numColumns="auto_fit"
-                android:padding="1dp"
-                android:stretchMode="columnWidth" >
-            </GridView>
+                android:layout_marginTop="@dimen/margins_base"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/text_items_components_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_items_components_label" />
+
+                <tup.dota2recipe.view.SimpleGridView
+                    android:id="@+id/grid_items_components"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    myview:horizontalSpacing="@dimen/margins_base"
+                    myview:verticalSpacing="@dimen/margins_base" >
+                </tup.dota2recipe.view.SimpleGridView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llayout_items_tocomponents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margins_base"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/text_items_tocomponents_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_items_tocomponents_label" />
+
+                <tup.dota2recipe.view.SimpleGridView
+                    android:id="@+id/grid_items_tocomponents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    myview:horizontalSpacing="@dimen/margins_base"
+                    myview:verticalSpacing="@dimen/margins_base" >
+                </tup.dota2recipe.view.SimpleGridView>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

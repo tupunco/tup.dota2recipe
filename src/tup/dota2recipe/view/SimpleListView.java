@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 
 /**
- * 简单 ListView
+ * Simple ListView
  * 
  * @author tupunco
  */

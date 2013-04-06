@@ -17,6 +17,10 @@ public final class HeroDetailItem extends HeroItem {
      */
     public String stats;
     /**
+     * 统计信息-格式化后的
+     */
+    public List<String[]> stats1;
+    /**
      * 详细统计信息
      */
     public String detailstats;

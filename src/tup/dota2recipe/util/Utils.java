@@ -6,7 +6,7 @@ import tup.dota2recipe.R;
 import tup.dota2recipe.entity.HeroItem;
 import tup.dota2recipe.entity.ItemsItem;
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 /**
- * 工具类
+ * Utils
  * 
  * @author tupunco
  * 
@@ -56,67 +56,72 @@ public final class Utils {
     }
 
     /**
-     * 开始 HeroDetail Activity
+     * start HeroDetail Activity
      * 
-     * @param activity
+     * @param packageContext
      * @param cItem
      */
-    public static void startHeroDetailActivity(Activity activity, HeroItem cItem) {
+    public static void startHeroDetailActivity(Context packageContext, HeroItem cItem) {
         if (cItem == null) {
             return;
         }
 
-        startHeroDetailActivity(activity, cItem.keyName);
+        startHeroDetailActivity(packageContext, cItem.keyName);
     }
 
     /**
-     * 开始 HeroDetail Activity
+     * start HeroDetail Activity
      * 
-     * @param activity
+     * @param packageContext
      * @param cItem
      */
-    public static void startHeroDetailActivity(Activity activity, String cItemKeyName) {
-        if (activity == null || cItemKeyName == null) {
+    private static void startHeroDetailActivity(Context packageContext, String cItemKeyName) {
+        if (packageContext == null || cItemKeyName == null) {
             return;
         }
 
-        final Intent intent = new Intent(activity, HeroDetailActivity.class);
+        final Intent intent = new Intent(packageContext, HeroDetailActivity.class);
         intent.putExtra(HeroDetailActivity.KEY_HERO_DETAIL_KEY_NAME, cItemKeyName);
-        activity.startActivity(intent);
+        packageContext.startActivity(intent);
     }
 
     /**
-     * 开始 ItemsDetail Activity
+     * start ItemsDetail Activity
      * 
-     * @param activity
+     * @param packageContext
      * @param cItem
      */
-    public static void startItemsDetailActivity(Activity activity, ItemsItem cItem) {
+    public static void startItemsDetailActivity(Context packageContext, ItemsItem cItem) {
         if (cItem == null) {
             return;
         }
 
-        startItemsDetailActivity(activity, cItem.keyName);
+        startItemsDetailActivity(packageContext, cItem.keyName, cItem.parent_keyName);
     }
 
     /**
-     * 开始 ItemsDetail Activity
+     * start ItemsDetail Activity
      * 
-     * @param activity
+     * @param packageContext
      * @param cItem
      */
-    public static void startItemsDetailActivity(Activity activity, String cItemKeyName) {
-        if (activity == null || cItemKeyName == null) {
+    private static void startItemsDetailActivity(Context packageContext, String cItemKeyName,
+            String cItemParentKeyName) {
+        if (packageContext == null || cItemKeyName == null) {
             return;
         }
 
-        final Intent intent = new Intent(activity, ItemsDetailActivity.class);
+        final Intent intent = new Intent(packageContext, ItemsDetailActivity.class);
         intent.putExtra(ItemsDetailActivity.KEY_ITEMS_DETAIL_KEY_NAME, cItemKeyName);
-        activity.startActivity(intent);
+        if (!TextUtils.isEmpty(cItemParentKeyName)) {
+            intent.putExtra(ItemsDetailActivity.KEY_ITEMS_DETAIL_PARENT_KEY_NAME,
+                    cItemParentKeyName);
+        }
+        packageContext.startActivity(intent);
     }
 
     /**
-     * 填充 Fragment 到 FragmentActivity
+     * fill Fragment to FragmentActivity
      * 
      * @param fragmentActivity
      * @param cFragment
@@ -145,7 +150,7 @@ public final class Utils {
     }
 
     /**
-     * 执行 AsyncTask
+     * execute AsyncTask
      * 
      * @param task
      */
@@ -165,6 +170,7 @@ public final class Utils {
 
     /**
      * 字符串数组内指定项存在与否
+     * 
      * @param collection
      * @param predicate
      * @return
@@ -182,6 +188,7 @@ public final class Utils {
 
     /**
      * 字符串数组内指定项的索引
+     * 
      * @param collection
      * @param predicate
      * @return

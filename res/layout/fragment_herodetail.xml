@@ -34,8 +34,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/image_hero"
-                android:text="@string/hello_world"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textIsSelectable="false" />
 
             <TextView
                 android:id="@+id/text_hero_name"
@@ -43,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_hero_name_l"
                 android:layout_toRightOf="@+id/image_hero"
-                android:text="@string/hello_world" />
+                android:text="name"
+                android:textIsSelectable="false" />
 
             <TextView
                 android:id="@+id/text_hero_roles"
@@ -51,68 +53,88 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_hero_name"
                 android:layout_toRightOf="@+id/image_hero"
-                android:text="@string/hello_world" />
+                android:text="roles"
+                android:textIsSelectable="false" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_hero_roles"
+                android:layout_toRightOf="@+id/image_hero" >
+
+                <TextView
+                    android:id="@+id/text_hero_hp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hp"
+                    android:textIsSelectable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margins_text"
+                    android:text="@string/text_division_label" />
+
+                <TextView
+                    android:id="@+id/text_hero_faction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margins_text"
+                    android:text="faction"
+                    android:textIsSelectable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margins_text"
+                    android:text="@string/text_division_label" />
+
+                <TextView
+                    android:id="@+id/text_hero_atk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margins_text"
+                    android:text="atk"
+                    android:textIsSelectable="false" />
+            </LinearLayout>
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:baselineAligned="false" >
+            android:baselineAligned="true"
+            android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/text_hero_hp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout_hero_stats1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hello_world" />
+                android:layout_weight="1"
+                android:orientation="vertical" >
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout_hero_stats2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margins_text"
-                android:text="@string/text_division_label" />
-
-            <TextView
-                android:id="@+id/text_hero_faction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margins_text"
-                android:text="@string/hello_world" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margins_text"
-                android:text="@string/text_division_label" />
-
-            <TextView
-                android:id="@+id/text_hero_atk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margins_text"
-                android:text="@string/hello_world" />
+                android:layout_weight="1"
+                android:orientation="vertical" >
+            </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_hero_stats"
+        <TableLayout
+            android:id="@+id/table_hero_detailstats"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:text="@string/hello_world" />
-
-        <TextView
-            android:id="@+id/text_hero_detailstats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:text="@string/hello_world" />
+            android:layout_height="wrap_content" >
+        </TableLayout>
 
         <TextView
             android:id="@+id/text_hero_bio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margins_base"
-            android:text="@string/hello_world" />
+            android:text="bio"
+            android:textIsSelectable="false" />
 
         <!-- ====出装==== -->
 

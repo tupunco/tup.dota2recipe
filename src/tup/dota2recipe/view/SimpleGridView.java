@@ -9,7 +9,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.ListAdapter;
 
 /**
- * 简单 GridView
+ * Simple GridView
  * 
  * @author tupunco
  */
