@@ -35,7 +35,6 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
         setContentView(R.layout.activity_main);
 
         final ActionBar actionBar = this.getSupportActionBar();
@@ -49,8 +48,8 @@ public class MainActivity extends SherlockFragmentActivity {
                 HeroListFragment.class, null);
         mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_item),
                 ItemsListFragment.class, null);
-//        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_skill),
-//                DummySectionFragment.class, null);
+        // mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_skill),
+        // DummySectionFragment.class, null);
         mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_favorite),
                 DummySectionFragment.class, null);
 

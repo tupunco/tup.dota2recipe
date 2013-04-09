@@ -2,7 +2,7 @@ package tup.dota2recipe;
 
 import java.io.IOException;
 
-import org.json.JSONException;
+import org.json2.JSONException;
 
 import tup.dota2recipe.adapter.ItemsImagesAdapter;
 import tup.dota2recipe.entity.ItemsItem;
@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -47,6 +48,7 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Utils.fillFragment(this, ItemsDetailFragment.newInstance(
@@ -142,12 +144,12 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
             if (cItem.isrecipe) {
                 final View layout_items_desc = v.findViewById(R.id.layout_items_desc);
                 layout_items_desc.setVisibility(View.GONE);
-                
+
                 final View layout_items_desc1 = v.findViewById(R.id.layout_items_desc1);
                 if (layout_items_desc1 != null) {
                     layout_items_desc1.setVisibility(View.GONE);
                 }
-                
+
                 return;
             }
 
@@ -200,6 +202,21 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
          * 物品详细 LoaderTask
          */
         private final AsyncTask<String, Void, ItemsItem> mLoaderTask = new AsyncTask<String, Void, ItemsItem>() {
+            @Override
+            protected void onPreExecute() {
+                ItemsDetailFragment.this.getSherlockActivity()
+                        .setSupportProgressBarIndeterminateVisibility(true);
+
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+
+                ItemsDetailFragment.this.getSherlockActivity()
+                        .setSupportProgressBarIndeterminateVisibility(false);
+            }
 
             @Override
             protected ItemsItem doInBackground(String... params) {
@@ -236,7 +253,10 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
             @Override
             protected void onPostExecute(ItemsItem result) {
                 super.onPostExecute(result);
+
                 ItemsDetailFragment.this.bindItemsItemView(result);
+                ItemsDetailFragment.this.getSherlockActivity()
+                        .setSupportProgressBarIndeterminateVisibility(false);
             }
         };
 

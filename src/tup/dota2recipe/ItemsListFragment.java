@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.json.JSONException;
+import org.json2.JSONException;
 
 import tup.dota2recipe.entity.ItemsItem;
 import tup.dota2recipe.util.AbstractArrayAdapter;
@@ -156,7 +156,8 @@ public class ItemsListFragment extends SherlockFragment
     private void setupItemsSearchView(MenuItem searchItem) {
         mSearchView = (SearchView) searchItem.getActionView();
         // TODO SearchableInfo
-        mSearchView.setOnQueryTextListener(this);
+        if (mSearchView != null)
+            mSearchView.setOnQueryTextListener(this);
     }
 
     /**
@@ -268,14 +269,14 @@ public class ItemsListFragment extends SherlockFragment
 
     @Override
     public Loader<List<ItemsItem>> onCreateLoader(int arg0, Bundle arg1) {
-        this.getSherlockActivity().setProgressBarIndeterminateVisibility(true);
+        this.getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
         return new ItemsListLoader(this.getSherlockActivity(), this.menu_items_query_keys);
     }
 
     @Override
     public void onLoadFinished(Loader<List<ItemsItem>> loader, List<ItemsItem> data) {
         mAdapter.setData(data);
-        this.getSherlockActivity().setProgressBarIndeterminateVisibility(false);
+        this.getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
     }
 
     @Override
@@ -356,7 +357,7 @@ public class ItemsListFragment extends SherlockFragment
             } else {
                 holder = (ViewHolder) view.getTag();
             }
-            
+
             final ItemsItem item = getItem(position);
             ImageLoader.getInstance().displayImage(Utils.getItemsImageUri(item.keyName),
                     holder.image, mImageLoadOptions);

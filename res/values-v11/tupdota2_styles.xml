@@ -20,6 +20,10 @@
         <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
     </style>
 
+    <style name="SpinnerTupDotA2.DropDown">
+        <item name="android:spinnerMode">dropdown</item>
+    </style>
+    
     <style name="ProgressBarTupDotA2" parent="android:Widget.Holo.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_holo_dark</item>
         <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_holo_dark</item>
@@ -29,10 +33,6 @@
         <item name="android:progressDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
         <item name="android:indeterminateDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
         <item name="android:thumb">@drawable/scrubber_control_selector_holo_dark</item>
-    </style>
-
-    <style name="ToggleTupDotA2" parent="android:Widget.Holo.Button.Toggle">
-        <item name="android:background">@drawable/btn_toggle_holo_dark</item>
     </style>
 
 </resources>

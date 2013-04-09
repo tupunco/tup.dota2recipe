@@ -18,9 +18,9 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json2.JSONArray;
+import org.json2.JSONException;
+import org.json2.JSONObject;
 
 import tup.dota2recipe.entity.AbilityItem;
 import tup.dota2recipe.entity.HeroDetailItem;
@@ -123,7 +123,6 @@ final class DataManager {
 
         final JSONObject json = loadJsonObjectFromAssets(cContext, "herolist.json");
 
-        @SuppressWarnings("unchecked")
         final Iterator<String> keyIterator = (Iterator<String>) json.keys();
         HeroItem cItem = null;
         String cKeyName = null;
@@ -174,7 +173,6 @@ final class DataManager {
 
         final JSONObject json = loadJsonObjectFromAssets(cContext, "itemslist.json");
 
-        @SuppressWarnings("unchecked")
         final Iterator<String> keyIterator = (Iterator<String>) json.keys();
         ItemsItem cItem = null;
         String cKeyName = null;
@@ -480,7 +478,6 @@ final class DataManager {
         if (jsonObject == null || jsonObject.length() <= 0)
             return null;
 
-        @SuppressWarnings("unchecked")
         final Iterator<String> keyIterator = (Iterator<String>) jsonObject.keys();
         final Map<String, String[]> outMap = new HashMap<String, String[]>(jsonObject.length());
         String cKeyName = null;

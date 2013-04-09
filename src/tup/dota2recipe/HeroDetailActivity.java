@@ -3,7 +3,7 @@ package tup.dota2recipe;
 import java.io.IOException;
 import java.util.List;
 
-import org.json.JSONException;
+import org.json2.JSONException;
 
 import tup.dota2recipe.adapter.ItemsImagesAdapter;
 import tup.dota2recipe.entity.AbilityItem;
@@ -36,6 +36,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -55,6 +56,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Utils.fillFragment(this, HeroDetailFragment.newInstance(
@@ -358,6 +360,22 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
          */
         private final AsyncTask<String, Void, HeroDetailItem> mLoaderTask = new AsyncTask<String, Void, HeroDetailItem>() {
             @Override
+            protected void onPreExecute() {
+                HeroDetailFragment.this.getSherlockActivity()
+                        .setSupportProgressBarIndeterminateVisibility(true);
+
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+
+                HeroDetailFragment.this.getSherlockActivity()
+                        .setSupportProgressBarIndeterminateVisibility(false);
+            }
+
+            @Override
             protected HeroDetailItem doInBackground(String... params) {
                 try {
                     return DataManager.getHeroDetailItem(
@@ -374,7 +392,10 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             @Override
             protected void onPostExecute(HeroDetailItem result) {
                 super.onPostExecute(result);
+
                 HeroDetailFragment.this.bindHeroItemView(result);
+                HeroDetailFragment.this.getSherlockActivity()
+                        .setSupportProgressBarIndeterminateVisibility(false);
             }
         };
 

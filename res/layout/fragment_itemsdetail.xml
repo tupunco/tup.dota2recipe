@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context=".ItemsDetailActivity"
-    tools:ignore="NestedScrolling" >
+    tools:ignore="NestedScrolling,HardcodedText" >
 
     <LinearLayout
         android:layout_width="match_parent"

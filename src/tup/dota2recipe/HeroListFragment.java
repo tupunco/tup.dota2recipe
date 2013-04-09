@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.json.JSONException;
+import org.json2.JSONException;
 
 import tup.dota2recipe.entity.HeroItem;
 import tup.dota2recipe.util.AbstractArrayAdapter;
@@ -180,7 +180,8 @@ public class HeroListFragment extends SherlockFragment
     private void setupHeroSearchView(MenuItem searchItem) {
         mSearchView = (SearchView) searchItem.getActionView();
         // TODO SearchableInfo
-        mSearchView.setOnQueryTextListener(this);
+        if (mSearchView != null)
+            mSearchView.setOnQueryTextListener(this);
     }
 
     /**
@@ -306,14 +307,14 @@ public class HeroListFragment extends SherlockFragment
 
     @Override
     public Loader<List<HeroItem>> onCreateLoader(int arg0, Bundle arg1) {
-        this.getSherlockActivity().setProgressBarIndeterminateVisibility(true);
+        this.getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
         return new HeroListLoader(this.getSherlockActivity(), this.menu_hero_query_keys);
     }
 
     @Override
     public void onLoadFinished(Loader<List<HeroItem>> loader, List<HeroItem> data) {
         mAdapter.setData(data);
-        this.getSherlockActivity().setProgressBarIndeterminateVisibility(false);
+        this.getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
     }
 
     @Override

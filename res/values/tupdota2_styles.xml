@@ -37,10 +37,6 @@
         <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
     </style>
 
-    <style name="SpinnerTupDotA2.DropDown">
-        <item name="android:spinnerMode">dropdown</item>
-    </style>
-
     <style name="SpinnerDropDownItemTupDotA2" parent="android:Widget.DropDownItem.Spinner">
         <item name="android:checkMark">@drawable/btn_radio_holo_dark</item>
     </style>
@@ -61,12 +57,6 @@
         <item name="android:thumbOffset">16dip</item>
         <item name="android:paddingLeft">16dip</item>
         <item name="android:paddingRight">16dip</item>
-    </style>
-
-    <style name="ToggleTupDotA2" parent="android:Widget.Button.Toggle">
-        <item name="android:background">@drawable/btn_toggle_holo_dark</item>
-        <item name="android:minHeight">48dip</item>
-        <item name="android:textColor">#ffffff</item>
     </style>
 
     <style name="ListViewTupDotA2" parent="android:Widget.ListView">
