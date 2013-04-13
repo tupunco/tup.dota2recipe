@@ -16,7 +16,6 @@
 
 package org.json2;
 
-import org.json2.JSONException;
 
 class JSON {
     /**

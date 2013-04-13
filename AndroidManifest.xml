@@ -45,8 +45,7 @@
         </activity>
         <activity
             android:name="tup.dota2recipe.AboutActivity"
-            android:label="@string/title_activity_about"
-            android:theme="@style/Theme.Sherlock.Dialog" >
+            android:label="@string/title_activity_about" >
         </activity>
     </application>
 

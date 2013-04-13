@@ -1,0 +1,111 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<style type="text/css">
+* {
+	font-family: Helvetica;
+}
+
+header {
+	font-size: 14pt;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 500px;
+}
+
+versiontag {
+	color: gray;
+}
+
+h1 {
+	font-size: 15pt;
+}
+
+h1.title {
+	text-align: center;
+}
+
+h2 {
+	font-size: 13pt;
+}
+
+a {
+	font-size: 14px;
+	color: #801111;
+	text-decoration: none;
+}
+</style>
+<title>关于 Dota2 图谱</title>
+</head>
+<body>
+	<h1 class="title" id="title">Dota2 图谱</h1>
+	<div id="header">
+		<p>
+			Version: <span id="version"></span>
+		</p>
+		<p>
+			by TUPUNCO <br /> (<a href="mailto:tupunco@gmail.com"
+				title="tupunco@gmail.com"
+				onclick="javascript:mailTo('tupunco@gmail.com');return false;">
+				tupunco@gmail.com</a> / <a href="http://weibo.com/tupunco"
+				title="Sina Weibo">@TUPUNCO</a>)
+		</p>
+
+		<p>
+			开放源代码许可: Apache 2.0 license <a href="LICENSE.html">(View)</a>
+		</p>
+		<p>
+			项目主页: https://github.com/tupunco/tup.dota2recipe<a
+				href="https://github.com/tupunco/tup.dota2recipe" target="_blank"
+				title="Link">(Link)</a>
+		</p>
+	</div>
+	<h1>第三方类库</h1>
+	<h2>
+		ActionBarSherlock <a href="http://actionbarsherlock.com"
+			target="_blank" title="Link">(Link)</a>
+	</h2>
+	by Jake Wharton, licensed under the Apache 2.0 license
+
+	<h2>
+		Universal Image Loader for Android <a
+			href="https://github.com/nostra13/Android-Universal-Image-Loader"
+			target="_blank" title="Link">(Link)</a>
+	</h2>
+	by Sergey Tarasevich, Licensed under the BSD 3-clause
+
+	<h2>
+		Apache Commons Collections <a href="http://commons.apache.org/"
+			target="_blank" title="Link">(Link)</a>
+	</h2>
+	by The Apache Software Foundation, licensed under the Apache 2.0
+	license
+
+	<h2>org.json</h2>
+	licensed under the Apache 2.0 license
+
+	<h2>
+		Android flow layout <a
+			href="https://github.com/ApmeM/android-flowlayout" target="_blank"
+			title="Link">(Link)</a>
+	</h2>
+	Created by Artem Votincev (apmem.org) Distributed under BSD license
+	<div id="error"></div>
+	<script type="text/javascript">
+		function getVersion() {
+			document.getElementById('version').innerHTML = aboutCallback
+					.getVersion();
+		}
+		function mailTo(to) {
+			aboutCallback
+					.mailTo(to, document.getElementById('title').innerHTML);
+		}
+		window.onerror = function(e) {
+			document.getElementById('error').innerHTML = e;
+			return false;
+		};
+		getVersion();
+	</script>
+</body>
+</html>

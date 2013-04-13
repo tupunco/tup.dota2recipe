@@ -21,12 +21,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.json2.JSONArray;
-import org.json2.JSONException;
-import org.json2.JSONObject;
-import org.json2.JSONStringer;
-import org.json2.JSONTokener;
-
 // Note: this class was written without inspecting the non-free org.json sourcecode.
 
 /**

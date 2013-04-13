@@ -1,20 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/activity_margin"
-    tools:context=".AboutActivity" >
+    tools:context=".AboutActivity"
+    tools:ignore="HardcodedText" >
 
-    <TextView
+    <WebView
+        android:id="@+id/webv_about_desc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_about_desc" />
+        android:layout_height="wrap_content" 
+        android:background="#DDEEEEEE" />
 
 </LinearLayout>
