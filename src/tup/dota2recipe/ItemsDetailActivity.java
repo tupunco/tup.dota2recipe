@@ -222,7 +222,7 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
             protected ItemsItem doInBackground(String... params) {
                 try {
                     String keyName = params[0];
-                    final boolean isrecipe = keyName.contentEquals("recipe");
+                    final boolean isrecipe = keyName.equals("recipe");
                     if (isrecipe) {
                         keyName = params[1];
                     }

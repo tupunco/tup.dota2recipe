@@ -53,10 +53,10 @@ public class MainActivity extends SherlockFragmentActivity {
         mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_favorite),
                 DummySectionFragment.class, null);
 
-        // if (savedInstanceState != null) {
-        // actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
-        // "tab", 0));
-        // }
+		if (savedInstanceState != null) {
+			actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
+					"tab", 0));
+		}
     }
 
     @Override
@@ -80,8 +80,8 @@ public class MainActivity extends SherlockFragmentActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // outState.putInt("tab", getSupportActionBar()
-        // .getSelectedNavigationIndex());
+		outState.putInt("tab", getSupportActionBar()
+				.getSelectedNavigationIndex());
 
         instanceStateSaved = true;
     }

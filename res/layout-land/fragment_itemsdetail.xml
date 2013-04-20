@@ -4,6 +4,7 @@
     xmlns:myview="http://schemas.android.com/apk/res/tup.dota2recipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_margin"
     android:fillViewport="true"
     tools:context=".ItemsDetailActivity"
     tools:ignore="NestedScrolling" >

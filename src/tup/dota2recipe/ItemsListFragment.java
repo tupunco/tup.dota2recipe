@@ -187,7 +187,7 @@ public class ItemsListFragment extends SherlockFragment
 
         // 设置菜单默认值
         final String queryKey = menu_items_query_keys[cMenuQueryKeyId];
-        if (!queryKey.contentEquals(KEY_MENU_ITEMS_QUERY_ALL) && cSubMenuKeys != null) {
+        if (!queryKey.equals(KEY_MENU_ITEMS_QUERY_ALL) && cSubMenuKeys != null) {
             final int queryValueIndex = Utils.indexOf(cSubMenuValues, queryKey);
             if (queryValueIndex >= 0 && cSubMenuKeys.length > queryValueIndex) {
                 cMenu.setTitle(cSubMenuKeys[queryValueIndex]);
@@ -218,11 +218,11 @@ public class ItemsListFragment extends SherlockFragment
                 cHeroMenuItemKeyId,
                 cItem.getItemId(), cMenuQueryValue, cMenuValue));
 
-        if (!cMenuQueryValue.contentEquals(cMenuValue)) {
+        if (!cMenuQueryValue.equals(cMenuValue)) {
             menu_items_query_keys[cHeroMenuItemKeyId] = cMenuValue;
             getLoaderManager().restartLoader(0, null, this);
         }
-        if (cMenuValue.contentEquals(KEY_MENU_ITEMS_QUERY_ALL)) {
+        if (cMenuValue.equals(KEY_MENU_ITEMS_QUERY_ALL)) {
             cParentItem.setTitle(cMenuItemDefaultTitleId);
         }
     }
@@ -405,8 +405,8 @@ public class ItemsListFragment extends SherlockFragment
             final String cQueryKey_qual = cQueryKeys[KEY_MENU_ITEMS_QUAL];
             final String cQueryKey_itemcat = cQueryKeys[KEY_MENU_ITEMS_ITEMCAT];
 
-            if (!cQueryKey_qual.contentEquals(KEY_MENU_ITEMS_QUERY_ALL)
-                    || !cQueryKey_itemcat.contentEquals(KEY_MENU_ITEMS_QUERY_ALL))
+            if (!cQueryKey_qual.equals(KEY_MENU_ITEMS_QUERY_ALL)
+                    || !cQueryKey_itemcat.equals(KEY_MENU_ITEMS_QUERY_ALL))
             {
                 return (ArrayList<ItemsItem>) CollectionUtils.select(mOriginalList,
                         new Predicate<ItemsItem>() {
@@ -414,15 +414,15 @@ public class ItemsListFragment extends SherlockFragment
                             public boolean evaluate(ItemsItem cObject) {
                                 int cQuery = -1; //
                                 final String key_all = KEY_MENU_ITEMS_QUERY_ALL;
-                                if (!cQueryKey_qual.contentEquals(key_all)
+                                if (!cQueryKey_qual.equals(key_all)
                                         && !TextUtils.isEmpty(cObject.qual)) {
-                                    cQuery = cObject.qual.contentEquals(cQueryKey_qual) ? 1
+                                    cQuery = cObject.qual.equals(cQueryKey_qual) ? 1
                                             : 0;
                                 }
-                                if (cQuery != 0 && !cQueryKey_itemcat.contentEquals(key_all)
+                                if (cQuery != 0 && !cQueryKey_itemcat.equals(key_all)
                                         && !TextUtils.isEmpty(cObject.itemcat)) {
-                                    cQuery = (cObject.itemcat.contentEquals(cQueryKey_itemcat)
-                                            || cObject.itembasecat.contentEquals(cQueryKey_itemcat))
+                                    cQuery = (cObject.itemcat.equals(cQueryKey_itemcat)
+                                            || cObject.itembasecat.equals(cQueryKey_itemcat))
                                             ? 1 : 0;
                                 }
                                 return cQuery == 1;

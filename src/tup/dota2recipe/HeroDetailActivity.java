@@ -211,8 +211,8 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             };
 
             final LayoutInflater inflater = LayoutInflater.from(context);
-            final int hpIndex = (cItem.hp.contentEquals("intelligence") ? 0 : (cItem.hp
-                    .contentEquals("agility") ? 1 : 2));
+            final int hpIndex = (cItem.hp.equals("intelligence") ? 0 : (cItem.hp
+                    .equals("agility") ? 1 : 2));
             ViewGroup cParent = layoutStats1;
             View view = null;
             TextView text = null;
@@ -340,9 +340,9 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             public Drawable getDrawable(String source) {
                 final Resources res = getSherlockActivity().getResources();
                 Drawable drawable = null;
-                if (source.contentEquals("mana"))
+                if (source.equals("mana"))
                     drawable = res.getDrawable(R.drawable.mana);
-                else if (source.contentEquals("cooldown"))
+                else if (source.equals("cooldown"))
                     drawable = res.getDrawable(R.drawable.cooldown);
 
                 if (drawable != null) {

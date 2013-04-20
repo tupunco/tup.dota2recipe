@@ -178,7 +178,7 @@ public final class Utils {
     public static boolean exists(String[] collection, String predicate) {
         if (collection != null && predicate != null) {
             for (String cItem : collection) {
-                if (predicate.contentEquals(cItem)) {
+                if (predicate.equals(cItem)) {
                     return true;
                 }
             }
@@ -196,7 +196,7 @@ public final class Utils {
     public static int indexOf(String[] collection, String predicate) {
         if (collection != null && collection.length > 0 && predicate != null) {
             for (int i = 0; i < collection.length; i++) {
-                if (collection[i].contentEquals(predicate)) {
+                if (collection[i].equals(predicate)) {
                     return i;
                 }
             }
@@ -237,7 +237,7 @@ public final class Utils {
             return null;
         }
         for (int i = 0; i < values.length; i++) {
-            if (values[i].contentEquals(value)) {
+            if (values[i].equals(value)) {
                 return keys[i];
             }
         }

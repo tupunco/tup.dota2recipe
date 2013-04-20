@@ -214,7 +214,7 @@ public class HeroListFragment extends SherlockFragment
 
         // 设置菜单默认值
         final String queryKey = menu_hero_query_keys[cMenuQueryKeyId];
-        if (!queryKey.contentEquals(KEY_MENU_HERO_QUERY_ALL) && cSubMenuKeys != null) {
+        if (!queryKey.equals(KEY_MENU_HERO_QUERY_ALL) && cSubMenuKeys != null) {
             final int queryValueIndex = Utils.indexOf(cSubMenuValues, queryKey);
             if (queryValueIndex >= 0 && cSubMenuKeys.length > queryValueIndex) {
                 cMenu.setTitle(cSubMenuKeys[queryValueIndex]);
@@ -245,11 +245,11 @@ public class HeroListFragment extends SherlockFragment
                 cHeroMenuItemKeyId,
                 cItem.getItemId(), cMenuQueryValue, cMenuValue));
 
-        if (!cMenuQueryValue.contentEquals(cMenuValue)) {
+        if (!cMenuQueryValue.equals(cMenuValue)) {
             menu_hero_query_keys[cHeroMenuItemKeyId] = cMenuValue;
             getLoaderManager().restartLoader(0, null, this);
         }
-        if (cMenuValue.contentEquals(KEY_MENU_HERO_QUERY_ALL)) {
+        if (cMenuValue.equals(KEY_MENU_HERO_QUERY_ALL)) {
             cParentItem.setTitle(cMenuItemDefaultTitleId);
         }
     }
@@ -465,10 +465,10 @@ public class HeroListFragment extends SherlockFragment
             final String cquerykey_attack = cQueryKeys[KEY_MENU_HERO_ATTACK];
             final String cquerykey_factions = cQueryKeys[KEY_MENU_HERO_FACTIONS];
 
-            if (!cQueryKey_role.contentEquals(KEY_MENU_HERO_QUERY_ALL)
-                    || !cQueryKey_type.contentEquals(KEY_MENU_HERO_QUERY_ALL)
-                    || !cquerykey_attack.contentEquals(KEY_MENU_HERO_QUERY_ALL)
-                    || !cquerykey_factions.contentEquals(KEY_MENU_HERO_QUERY_ALL))
+            if (!cQueryKey_role.equals(KEY_MENU_HERO_QUERY_ALL)
+                    || !cQueryKey_type.equals(KEY_MENU_HERO_QUERY_ALL)
+                    || !cquerykey_attack.equals(KEY_MENU_HERO_QUERY_ALL)
+                    || !cquerykey_factions.equals(KEY_MENU_HERO_QUERY_ALL))
             {
                 return (ArrayList<HeroItem>) CollectionUtils.select(mOriginalList,
                         new Predicate<HeroItem>() {
@@ -476,17 +476,17 @@ public class HeroListFragment extends SherlockFragment
                             public boolean evaluate(HeroItem cObject) {
                                 int cQuery = -1; //
                                 final String key_all = KEY_MENU_HERO_QUERY_ALL;
-                                if (!cQueryKey_role.contentEquals(key_all)) {
+                                if (!cQueryKey_role.equals(key_all)) {
                                     cQuery = Utils.exists(cObject.roles, cQueryKey_role) ? 1 : 0;
                                 }
-                                if (cQuery != 0 && !cquerykey_attack.contentEquals(key_all)) {
-                                    cQuery = cObject.atk.contentEquals(cquerykey_attack) ? 1 : 0;
+                                if (cQuery != 0 && !cquerykey_attack.equals(key_all)) {
+                                    cQuery = cObject.atk.equals(cquerykey_attack) ? 1 : 0;
                                 }
-                                if (cQuery != 0 && !cQueryKey_type.contentEquals(key_all)) {
-                                    cQuery = cObject.hp.contentEquals(cQueryKey_type) ? 1 : 0;
+                                if (cQuery != 0 && !cQueryKey_type.equals(key_all)) {
+                                    cQuery = cObject.hp.equals(cQueryKey_type) ? 1 : 0;
                                 }
-                                if (cQuery != 0 && !cquerykey_factions.contentEquals(key_all)) {
-                                    cQuery = cObject.faction.contentEquals(cquerykey_factions) ? 1
+                                if (cQuery != 0 && !cquerykey_factions.equals(key_all)) {
+                                    cQuery = cObject.faction.equals(cquerykey_factions) ? 1
                                             : 0;
                                 }
                                 return cQuery == 1;
