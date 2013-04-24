@@ -42,7 +42,7 @@ public final class ItemsItem {
      * 是否当前物品是合成卷轴
      */
     public boolean isrecipe;
-    
+
     // -------------------ItemsDetail
     public int cost;
     public String desc;
@@ -60,6 +60,12 @@ public final class ItemsItem {
      */
     public String[] tocomponents;
     public List<ItemsItem> tocomponents_i;
+
+    /**
+     * 是否已经收藏
+     * -1 未加载, 0 否, 1 是
+     */
+    public int hasCollection = -1;
 
     @Override
     public String toString() {

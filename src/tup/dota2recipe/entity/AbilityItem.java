@@ -18,6 +18,7 @@ public final class AbilityItem {
 
     @Override
     public String toString() {
-        return String.format("[AbilityItem keyName:%s,dname:%s]", keyName, dname);
+        return String.format("[AbilityItem keyName:%s,dname:%s]",
+                keyName, dname);
     }
 }

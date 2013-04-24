@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 
+import com.actionbarsherlock.view.MenuItem;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 /**
@@ -53,6 +54,38 @@ public final class Utils {
      */
     public static String getAbilitiesImageUri(String keyName) {
         return String.format(s_AbilitiesImage_Format, keyName);
+    }
+
+    /**
+     * 
+     * @param menu
+     */
+    public static void configureStarredMenuItem(MenuItem menu) {
+        configureStarredMenuItem(menu, false);
+    }
+
+    /**
+     * 
+     * @param menu
+     * @param isRecipe
+     *            物品页面,当前物品是否是合成卷轴
+     */
+    public static void configureStarredMenuItem(MenuItem menu, boolean isRecipe) {
+        if (menu == null || !menu.isCheckable()) {
+            return;
+        }
+        if (isRecipe) {
+            menu.setVisible(false);
+            return;
+        }
+
+        if (menu.isChecked()) {
+            menu.setIcon(R.drawable.btn_star_on_normal_holo_dark);
+            menu.setTitle(R.string.menu_removecollection);
+        } else {
+            menu.setIcon(R.drawable.btn_star_off_normal_holo_dark);
+            menu.setTitle(R.string.menu_addcollection);
+        }
     }
 
     /**
@@ -232,8 +265,8 @@ public final class Utils {
      * @return
      */
     public static String getMenuValue(String[] keys, String[] values, String value) {
-        if (keys == null || values == null || TextUtils.isEmpty(value)
-                || keys.length <= 0 || keys.length != values.length) {
+        if (keys == null || values == null || TextUtils.isEmpty(value) || keys.length <= 0
+                || keys.length != values.length) {
             return null;
         }
         for (int i = 0; i < values.length; i++) {

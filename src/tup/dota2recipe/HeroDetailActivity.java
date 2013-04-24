@@ -5,13 +5,16 @@ import java.util.List;
 
 import org.json2.JSONException;
 
+import tup.dota2recipe.adapter.DBAdapter;
 import tup.dota2recipe.adapter.ItemsImagesAdapter;
 import tup.dota2recipe.entity.AbilityItem;
+import tup.dota2recipe.entity.CollectionItem;
 import tup.dota2recipe.entity.HeroDetailItem;
 import tup.dota2recipe.entity.ItemsItem;
 import tup.dota2recipe.util.Utils;
 import tup.dota2recipe.view.SimpleGridView;
 import tup.dota2recipe.view.SimpleListView;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -35,6 +38,8 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -66,9 +71,9 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case android.R.id.home:
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -79,6 +84,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
     public static class HeroDetailFragment extends SherlockFragment
             implements SimpleGridView.OnItemClickListener {
         private DisplayImageOptions mImageLoadOptions;
+        private HeroDetailItem mHeroDetailItem;
 
         /**
          * 
@@ -97,9 +103,11 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
+            setHasOptionsMenu(true);
             mImageLoadOptions = Utils.createDisplayImageOptions();
 
-            final String hero_keyName = this.getArguments().getString(KEY_HERO_DETAIL_KEY_NAME);
+            final String hero_keyName = this.getArguments().getString(
+                    KEY_HERO_DETAIL_KEY_NAME);
             Log.v(TAG, "arg.hero_keyName=" + hero_keyName);
             if (!TextUtils.isEmpty(hero_keyName)) {
                 Utils.executeAsyncTask(mLoaderTask, hero_keyName);
@@ -109,7 +117,54 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_herodetail, container, false);
+            return inflater.inflate(R.layout.fragment_herodetail, container,
+                    false);
+        }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            super.onCreateOptionsMenu(menu, inflater);
+
+            inflater.inflate(R.menu.fragment_herodetail, menu);
+        }
+
+        @Override
+        public void onPrepareOptionsMenu(Menu menu) {
+            super.onPrepareOptionsMenu(menu);
+
+            // ----加收藏按钮---
+            if (mHeroDetailItem == null) {
+                return;
+            }
+            final MenuItem check =
+                    menu.findItem(R.id.menu_check_addcollection);
+            if (check == null) {
+                return;
+            }
+
+            check.setChecked(mHeroDetailItem.hasCollection == 1);
+            Utils.configureStarredMenuItem(check);
+            check.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                @SuppressLint("NewApi")
+                public boolean onMenuItemClick(MenuItem item) {
+                    final boolean isChecked = !item.isChecked();
+                    final HeroDetailItem hero = mHeroDetailItem;
+                    item.setChecked(isChecked);
+
+                    Utils.configureStarredMenuItem(item);
+                    hero.hasCollection = isChecked ? 1 : 0;
+                    if (isChecked) {
+                        final CollectionItem c = new CollectionItem();
+                        c.keyName = hero.keyName;
+                        c.type = CollectionItem.KEY_TYPE_HERO;
+                        DBAdapter.getInstance().addCollection(c);
+                    } else {
+                        DBAdapter.getInstance().deleteCollection(hero.keyName);
+                    }
+                    return true;
+                }
+            });
         }
 
         /**
@@ -117,30 +172,43 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
          * 
          * @param cHeroItem
          */
-        private void bindHeroItemView(HeroDetailItem cItem) {
+        @SuppressLint("NewApi")
+        private void bindHeroItemView(final HeroDetailItem cItem) {
             if (cItem == null) {
                 return;
             }
 
-            this.getSherlockActivity().setTitle(cItem.name_l);
+            mHeroDetailItem = cItem;
+            final SherlockFragmentActivity cContext = this
+                    .getSherlockActivity();
+            cContext.invalidateOptionsMenu();
+            cContext.setTitle(cItem.name_l);
 
             final View v = this.getView();
             final Resources cRes = this.getResources();
 
-            ImageLoader.getInstance().displayImage(Utils.getHeroImageUri(cItem.keyName),
-                    ((ImageView) v.findViewById(R.id.image_hero)), mImageLoadOptions);
+            ImageLoader.getInstance().displayImage(
+                    Utils.getHeroImageUri(cItem.keyName),
+                    ((ImageView) v.findViewById(R.id.image_hero)),
+                    mImageLoadOptions);
 
-            ((TextView) v.findViewById(R.id.text_hero_name)).setText(cItem.name);
-            ((TextView) v.findViewById(R.id.text_hero_name_l)).setText(cItem.name_l);
+            ((TextView) v.findViewById(R.id.text_hero_name))
+                    .setText(cItem.name);
+            ((TextView) v.findViewById(R.id.text_hero_name_l))
+                    .setText(cItem.name_l);
 
             if (cItem.roles_l != null && cItem.roles_l.length > 0) {
-                ((TextView) v.findViewById(R.id.text_hero_roles)).setText(TextUtils.join(
-                        cRes.getString(R.string.text_division_label), cItem.roles_l));
+                ((TextView) v.findViewById(R.id.text_hero_roles))
+                        .setText(TextUtils.join(
+                                cRes.getString(R.string.text_division_label),
+                                cItem.roles_l));
             } else {
-                ((TextView) v.findViewById(R.id.text_hero_roles)).setVisibility(View.GONE);
+                ((TextView) v.findViewById(R.id.text_hero_roles))
+                        .setVisibility(View.GONE);
             }
 
-            ((TextView) v.findViewById(R.id.text_hero_atk)).setText(cItem.atk_l);
+            ((TextView) v.findViewById(R.id.text_hero_atk))
+                    .setText(cItem.atk_l);
             ((TextView) v.findViewById(R.id.text_hero_faction))
                     .setText(Utils.getMenuValue(cRes,
                             R.array.menu_hero_factions_keys,
@@ -155,22 +223,27 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             // cItem.detailstats
             bindDetailstatsView(v, cItem);
 
-            ((TextView) v.findViewById(R.id.text_hero_bio)).setText(cItem.bio_l);
+            ((TextView) v.findViewById(R.id.text_hero_bio))
+                    .setText(cItem.bio_l);
 
             // cItem.itembuilds
             bindItembuildsItems(v, cItem, "Starting",
-                    R.id.llayout_hero_itembuilds_starting, R.id.grid_hero_itembuilds_starting);
+                    R.id.llayout_hero_itembuilds_starting,
+                    R.id.grid_hero_itembuilds_starting);
             bindItembuildsItems(v, cItem, "Early",
-                    R.id.llayout_hero_itembuilds_early, R.id.grid_hero_itembuilds_early);
+                    R.id.llayout_hero_itembuilds_early,
+                    R.id.grid_hero_itembuilds_early);
             bindItembuildsItems(v, cItem, "Core",
-                    R.id.llayout_hero_itembuilds_core, R.id.grid_hero_itembuilds_core);
+                    R.id.llayout_hero_itembuilds_core,
+                    R.id.grid_hero_itembuilds_core);
             bindItembuildsItems(v, cItem, "Luxury",
-                    R.id.llayout_hero_itembuilds_luxury, R.id.grid_hero_itembuilds_luxury);
+                    R.id.llayout_hero_itembuilds_luxury,
+                    R.id.grid_hero_itembuilds_luxury);
 
             // abilities
             if (cItem.abilities != null && cItem.abilities.size() > 0) {
                 final HeroAbilitiesAdapter adapter = new HeroAbilitiesAdapter(
-                        this.getSherlockActivity(), cItem.abilities);
+                        cContext, cItem.abilities);
 
                 final SimpleListView list = (SimpleListView) v
                         .findViewById(R.id.list_hero_abilities);
@@ -178,7 +251,8 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                 // list.setOnItemClickListener(this);
             }
             else {
-                v.findViewById(R.id.llayout_hero_abilities).setVisibility(View.GONE);
+                v.findViewById(R.id.llayout_hero_abilities)
+                        .setVisibility(View.GONE);
             }
         }
 
@@ -189,7 +263,8 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
          * @param cItem
          */
         private void bindStatsView(View cView, HeroDetailItem cItem) {
-            if (cItem == null || cItem.stats1 == null || cItem.stats1.size() != 6) {
+            if (cItem == null || cItem.stats1 == null
+                    || cItem.stats1.size() != 6) {
                 return;
             }
 
@@ -203,35 +278,41 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
 
             final Context context = cView.getContext();
             final Resources res = context.getResources();
-            final String[] labels = res.getStringArray(R.array.array_hero_stats);
+            final String[] labels = res
+                    .getStringArray(R.array.array_hero_stats);
             final int[] resIds = new int[] {
                     R.drawable.overviewicon_int, R.drawable.overviewicon_agi,
-                    R.drawable.overviewicon_str, R.drawable.overviewicon_attack,
-                    R.drawable.overviewicon_speed, R.drawable.overviewicon_defense
+                    R.drawable.overviewicon_str,
+                    R.drawable.overviewicon_attack,
+                    R.drawable.overviewicon_speed,
+                    R.drawable.overviewicon_defense
             };
 
             final LayoutInflater inflater = LayoutInflater.from(context);
-            final int hpIndex = (cItem.hp.equals("intelligence") ? 0 : (cItem.hp
-                    .equals("agility") ? 1 : 2));
+            final int hpIndex = (cItem.hp.equals("intelligence") ? 0
+                    : (cItem.hp.equals("agility") ? 1 : 2));
             ViewGroup cParent = layoutStats1;
             View view = null;
             TextView text = null;
             ImageView image = null;
             for (int i = 0; i < cItem.stats1.size(); i++) {
                 cParent = (i <= 2 ? layoutStats1 : layoutStats2);
-                view = inflater.inflate(R.layout.fragment_herodetail_stats_list_item, cParent,
+                view = inflater.inflate(
+                        R.layout.fragment_herodetail_stats_list_item, cParent,
                         false);
 
                 text = (TextView) view.findViewById(R.id.text_hero_stats_label);
                 text.setText(labels[i]);
 
-                image = (ImageView) view.findViewById(R.id.image_hero_stats_icon);
+                image = (ImageView) view
+                        .findViewById(R.id.image_hero_stats_icon);
                 image.setImageResource(resIds[i]);
 
                 text = (TextView) view.findViewById(R.id.text_hero_stats_value);
                 text.setText(cItem.stats1.get(i)[2]);
                 if (hpIndex == i) {
-                    image = (ImageView) view.findViewById(R.id.image_hero_stats_icon_primary);
+                    image = (ImageView) view
+                            .findViewById(R.id.image_hero_stats_icon_primary);
                     image.setVisibility(View.VISIBLE);
                 }
                 cParent.addView(view);
@@ -246,8 +327,10 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
          */
         @SuppressWarnings("deprecation")
         private void bindDetailstatsView(View cView, HeroDetailItem cItem) {
-            if (cItem == null || cItem.detailstats1 == null || cItem.detailstats1.size() != 5
-                    || cItem.detailstats2 == null || cItem.detailstats2.size() != 3) {
+            if (cItem == null || cItem.detailstats1 == null
+                    || cItem.detailstats1.size() != 5
+                    || cItem.detailstats2 == null
+                    || cItem.detailstats2.size() != 3) {
                 return;
             }
 
@@ -261,8 +344,9 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             final TableRow.LayoutParams rowLayout = new TableRow.LayoutParams();
             rowLayout.weight = 1f;
             final TableLayout.LayoutParams tableLayout = new TableLayout.LayoutParams();
-            final String[] detailstatsLabel = context.getResources().getStringArray(
-                    R.array.array_hero_detailstats);
+            final String[] detailstatsLabel = context.getResources()
+                    .getStringArray(
+                            R.array.array_hero_detailstats);
             final Drawable rowBg = context.getResources().getDrawable(
                     R.drawable.hero_detailstats_table_bg);
             int count = cItem.detailstats1.size();
@@ -312,18 +396,22 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
          * @param layoutResId
          * @param itemsGridResId
          */
-        private void bindItembuildsItems(View cView, HeroDetailItem cItem, String cItembuildsKey,
+        private void bindItembuildsItems(View cView, HeroDetailItem cItem,
+                String cItembuildsKey,
                 int layoutResId, int itemsGridResId) {
             if (cItem.itembuilds_i == null || cItem.itembuilds_i.size() <= 0
                     || TextUtils.isEmpty(cItembuildsKey))
                 return;
 
-            final List<ItemsItem> cItembuilds = cItem.itembuilds_i.get(cItembuildsKey);
+            final List<ItemsItem> cItembuilds = cItem.itembuilds_i
+                    .get(cItembuildsKey);
             if (cItembuilds == null || cItembuilds.size() <= 0)
                 return;
 
-            final SimpleGridView grid = (SimpleGridView) cView.findViewById(itemsGridResId);
-            final ItemsImagesAdapter adapter = new ItemsImagesAdapter(this.getSherlockActivity(),
+            final SimpleGridView grid = (SimpleGridView) cView
+                    .findViewById(itemsGridResId);
+            final ItemsImagesAdapter adapter = new ItemsImagesAdapter(
+                    this.getSherlockActivity(),
                     mImageLoadOptions, cItembuilds);
             grid.setAdapter(adapter);
             grid.setOnItemClickListener(this);
@@ -378,9 +466,15 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             @Override
             protected HeroDetailItem doInBackground(String... params) {
                 try {
-                    return DataManager.getHeroDetailItem(
+                    final HeroDetailItem date = DataManager.getHeroDetailItem(
                             HeroDetailFragment.this.getSherlockActivity(),
                             params[0]);
+                    if (date != null && date.hasCollection < 0) {
+                        final boolean has = DBAdapter.getInstance()
+                                .hasCollection(params[0]);
+                        date.hasCollection = has ? 1 : 0;
+                    }
+                    return date;
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -417,7 +511,8 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             private final LayoutInflater mInflater;
             private final List<AbilityItem> mAbilities;
 
-            public HeroAbilitiesAdapter(Context context, List<AbilityItem> abilities) {
+            public HeroAbilitiesAdapter(Context context,
+                    List<AbilityItem> abilities) {
                 super();
 
                 mInflater = (LayoutInflater) context
@@ -447,24 +542,34 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                 final ViewHolder holder;
                 if (convertView == null) {
                     view = mInflater.inflate(
-                            R.layout.fragment_herodetail_abilities_list_item, parent, false);
+                            R.layout.fragment_herodetail_abilities_list_item,
+                            parent, false);
 
                     holder = new ViewHolder();
-                    holder.affects = (TextView) view.findViewById(R.id.text_abilities_affects);
-                    holder.attrib = (TextView) view.findViewById(R.id.text_abilities_attrib);
-                    holder.dname = (TextView) view.findViewById(R.id.text_abilities_dname);
-                    holder.cmb = (TextView) view.findViewById(R.id.text_abilities_cmb);
-                    holder.desc = (TextView) view.findViewById(R.id.text_abilities_desc);
-                    holder.dmg = (TextView) view.findViewById(R.id.text_abilities_dmg);
-                    holder.lore = (TextView) view.findViewById(R.id.text_abilities_lore);
-                    holder.image = (ImageView) view.findViewById(R.id.image_abilities);
+                    holder.affects = (TextView) view
+                            .findViewById(R.id.text_abilities_affects);
+                    holder.attrib = (TextView) view
+                            .findViewById(R.id.text_abilities_attrib);
+                    holder.dname = (TextView) view
+                            .findViewById(R.id.text_abilities_dname);
+                    holder.cmb = (TextView) view
+                            .findViewById(R.id.text_abilities_cmb);
+                    holder.desc = (TextView) view
+                            .findViewById(R.id.text_abilities_desc);
+                    holder.dmg = (TextView) view
+                            .findViewById(R.id.text_abilities_dmg);
+                    holder.lore = (TextView) view
+                            .findViewById(R.id.text_abilities_lore);
+                    holder.image = (ImageView) view
+                            .findViewById(R.id.image_abilities);
 
                     view.setTag(holder);
                 } else
                     holder = (ViewHolder) view.getTag();
 
                 final AbilityItem item = (AbilityItem) getItem(position);
-                ImageLoader.getInstance().displayImage(Utils.getAbilitiesImageUri(item.keyName),
+                ImageLoader.getInstance().displayImage(
+                        Utils.getAbilitiesImageUri(item.keyName),
                         holder.image, mImageLoadOptions);
 
                 bindHtmlTextView(holder.affects, item.affects);
@@ -493,7 +598,8 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
              * @param fieldValue
              * @param cImageGetter
              */
-            private void bindHtmlTextView(TextView text, String fieldValue, ImageGetter cImageGetter) {
+            private void bindHtmlTextView(TextView text, String fieldValue,
+                    ImageGetter cImageGetter) {
                 if (!TextUtils.isEmpty(fieldValue)) {
                     text.setText(Html.fromHtml(fieldValue, cImageGetter, null));
                 } else {
@@ -503,7 +609,8 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
         }
 
         @Override
-        public void onItemClick(ListAdapter parent, View view, int position, long id) {
+        public void onItemClick(ListAdapter parent, View view, int position,
+                long id) {
             // Utils.startHeroDetailActivity(this.getSherlockActivity(),
             // (HeroDetailItem) parent.getItemAtPosition(position));
             final Object cItem = parent.getItem(position);

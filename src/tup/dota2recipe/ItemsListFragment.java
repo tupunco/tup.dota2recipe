@@ -96,8 +96,10 @@ public class ItemsListFragment extends SherlockFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_itemsdata, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        final View v = inflater.inflate(R.layout.fragment_itemsdata, container,
+                false);
 
         mAdapter = new ItemsListAdapter(this.getSherlockActivity());
         mAdapter.setFilterAccepter(mItemsListFilterAccepter);
@@ -113,7 +115,8 @@ public class ItemsListFragment extends SherlockFragment
      * 物品网格项 点击动作
      */
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+            long id) {
         Utils.startItemsDetailActivity(this.getSherlockActivity(),
                 (ItemsItem) parent.getItemAtPosition(position));
     }
@@ -121,7 +124,8 @@ public class ItemsListFragment extends SherlockFragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArray(KEY_STATE_MENU_ITEMS_QUERY_KEYS, this.menu_items_query_keys);
+        outState.putStringArray(KEY_STATE_MENU_ITEMS_QUERY_KEYS,
+                this.menu_items_query_keys);
     }
 
     @Override
@@ -133,13 +137,15 @@ public class ItemsListFragment extends SherlockFragment
         final Resources cRes = this.getResources();
         // 按品质
         menu_items_qual = menu.findItem(R.id.menu_items_qual);
-        menu_items_qual_values = cRes.getStringArray(R.array.menu_items_qual_values);
+        menu_items_qual_values = cRes
+                .getStringArray(R.array.menu_items_qual_values);
         createHeroOptionsSubMenu(menu_items_qual, KEY_MENU_ITEMS_QUAL,
                 R.array.menu_items_qual_keys, menu_items_qual_values,
                 mMenuItemsQualMenuItemClickListener);
         // 按分类
         menu_items_itemcat = menu.findItem(R.id.menu_items_itemcat);
-        menu_items_itemcat_values = cRes.getStringArray(R.array.menu_items_itemcat_values);
+        menu_items_itemcat_values = cRes
+                .getStringArray(R.array.menu_items_itemcat_values);
         createHeroOptionsSubMenu(menu_items_itemcat, KEY_MENU_ITEMS_ITEMCAT,
                 R.array.menu_items_itemcat_keys, menu_items_itemcat_values,
                 mMenuItemsItemcatMenuItemClickListener);
@@ -170,14 +176,17 @@ public class ItemsListFragment extends SherlockFragment
      * @param menuItemClickListener
      *            创建后的子菜单单击监听
      */
-    private void createHeroOptionsSubMenu(MenuItem cMenu, int cMenuQueryKeyId, int cSubMenuKeysId,
-            String[] cSubMenuValues, MenuItem.OnMenuItemClickListener menuItemClickListener) {
+    private void createHeroOptionsSubMenu(MenuItem cMenu, int cMenuQueryKeyId,
+            int cSubMenuKeysId,
+            String[] cSubMenuValues,
+            MenuItem.OnMenuItemClickListener menuItemClickListener) {
         if (cMenu == null || menuItemClickListener == null) {
             return;
         }
 
         final SubMenu cSubMenu = cMenu.getSubMenu();
-        final String[] cSubMenuKeys = this.getResources().getStringArray(cSubMenuKeysId);
+        final String[] cSubMenuKeys = this.getResources().getStringArray(
+                cSubMenuKeysId);
         MenuItem cMenuItem = null;
         int cIndex = 0;
         for (String cMenuKey : cSubMenuKeys) {
@@ -207,16 +216,19 @@ public class ItemsListFragment extends SherlockFragment
      * @param cMenuHeroValues
      *            所属父菜单所有子项的值数组
      */
-    private void doMenuHeroMenuItemClickListener(MenuItem cItem, MenuItem cParentItem,
-            int cHeroMenuItemKeyId, String[] cMenuHeroValues, int cMenuItemDefaultTitleId) {
+    private void doMenuHeroMenuItemClickListener(MenuItem cItem,
+            MenuItem cParentItem,
+            int cHeroMenuItemKeyId, String[] cMenuHeroValues,
+            int cMenuItemDefaultTitleId) {
         cParentItem.setTitle(cItem.getTitle());
 
         final String cMenuQueryValue = menu_items_query_keys[cHeroMenuItemKeyId];
         final String cMenuValue = cMenuHeroValues[cItem.getItemId()];
-        Log.v(TAG, String.format(
-                "MenuItemsMenuItemClickListener-Key:%s-ID:%d-OldValue:%s-NewValue:%s",
-                cHeroMenuItemKeyId,
-                cItem.getItemId(), cMenuQueryValue, cMenuValue));
+        Log.v(TAG,
+                String.format(
+                        "MenuItemsMenuItemClickListener-Key:%s-ID:%d-OldValue:%s-NewValue:%s",
+                        cHeroMenuItemKeyId,
+                        cItem.getItemId(), cMenuQueryValue, cMenuValue));
 
         if (!cMenuQueryValue.equals(cMenuValue)) {
             menu_items_query_keys[cHeroMenuItemKeyId] = cMenuValue;
@@ -233,7 +245,8 @@ public class ItemsListFragment extends SherlockFragment
     private MenuItem.OnMenuItemClickListener mMenuItemsQualMenuItemClickListener = new MenuItem.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            doMenuHeroMenuItemClickListener(item, menu_items_qual, KEY_MENU_ITEMS_QUAL,
+            doMenuHeroMenuItemClickListener(item, menu_items_qual,
+                    KEY_MENU_ITEMS_QUAL,
                     menu_items_qual_values, R.string.menu_items_qual);
 
             return true;
@@ -245,7 +258,8 @@ public class ItemsListFragment extends SherlockFragment
     private MenuItem.OnMenuItemClickListener mMenuItemsItemcatMenuItemClickListener = new MenuItem.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            doMenuHeroMenuItemClickListener(item, menu_items_itemcat, KEY_MENU_ITEMS_ITEMCAT,
+            doMenuHeroMenuItemClickListener(item, menu_items_itemcat,
+                    KEY_MENU_ITEMS_ITEMCAT,
                     menu_items_itemcat_values, R.string.menu_items_itemcat);
 
             return true;
@@ -269,14 +283,18 @@ public class ItemsListFragment extends SherlockFragment
 
     @Override
     public Loader<List<ItemsItem>> onCreateLoader(int arg0, Bundle arg1) {
-        this.getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-        return new ItemsListLoader(this.getSherlockActivity(), this.menu_items_query_keys);
+        this.getSherlockActivity()
+                .setSupportProgressBarIndeterminateVisibility(true);
+        return new ItemsListLoader(this.getSherlockActivity(),
+                this.menu_items_query_keys);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<ItemsItem>> loader, List<ItemsItem> data) {
+    public void onLoadFinished(Loader<List<ItemsItem>> loader,
+            List<ItemsItem> data) {
         mAdapter.setData(data);
-        this.getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+        this.getSherlockActivity()
+                .setSupportProgressBarIndeterminateVisibility(false);
     }
 
     @Override
@@ -330,7 +348,8 @@ public class ItemsListFragment extends SherlockFragment
 
         public ItemsListAdapter(Context context) {
             super(context);
-            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mInflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             setNotifyOnChange(true);
         }
 
@@ -347,10 +366,12 @@ public class ItemsListFragment extends SherlockFragment
 
             final ViewHolder holder;
             if (convertView == null) {
-                view = mInflater.inflate(R.layout.fragment_itemsdata_grid_item, parent, false);
+                view = mInflater.inflate(R.layout.fragment_itemsdata_grid_item,
+                        parent, false);
 
                 holder = new ViewHolder();
-                holder.text = (TextView) view.findViewById(R.id.text_items_name);
+                holder.text = (TextView) view
+                        .findViewById(R.id.text_items_name);
                 holder.image = (ImageView) view.findViewById(R.id.image_items);
 
                 view.setTag(holder);
@@ -359,7 +380,8 @@ public class ItemsListFragment extends SherlockFragment
             }
 
             final ItemsItem item = getItem(position);
-            ImageLoader.getInstance().displayImage(Utils.getItemsImageUri(item.keyName),
+            ImageLoader.getInstance().displayImage(
+                    Utils.getItemsImageUri(item.keyName),
                     holder.image, mImageLoadOptions);
             holder.text.setText(item.dname_l);
 
@@ -370,7 +392,8 @@ public class ItemsListFragment extends SherlockFragment
     /**
      * 
      */
-    public static class ItemsListLoader extends AbstractAsyncTaskLoader<ItemsItem> {
+    public static class ItemsListLoader extends
+            AbstractAsyncTaskLoader<ItemsItem> {
         final String[] menu_items_query_keys;
 
         public ItemsListLoader(Context context, String[] queryKeys) {
@@ -408,7 +431,8 @@ public class ItemsListFragment extends SherlockFragment
             if (!cQueryKey_qual.equals(KEY_MENU_ITEMS_QUERY_ALL)
                     || !cQueryKey_itemcat.equals(KEY_MENU_ITEMS_QUERY_ALL))
             {
-                return (ArrayList<ItemsItem>) CollectionUtils.select(mOriginalList,
+                return (ArrayList<ItemsItem>) CollectionUtils.select(
+                        mOriginalList,
                         new Predicate<ItemsItem>() {
                             @Override
                             public boolean evaluate(ItemsItem cObject) {
@@ -416,13 +440,17 @@ public class ItemsListFragment extends SherlockFragment
                                 final String key_all = KEY_MENU_ITEMS_QUERY_ALL;
                                 if (!cQueryKey_qual.equals(key_all)
                                         && !TextUtils.isEmpty(cObject.qual)) {
-                                    cQuery = cObject.qual.equals(cQueryKey_qual) ? 1
+                                    cQuery = cObject.qual
+                                            .equals(cQueryKey_qual) ? 1
                                             : 0;
                                 }
-                                if (cQuery != 0 && !cQueryKey_itemcat.equals(key_all)
+                                if (cQuery != 0
+                                        && !cQueryKey_itemcat.equals(key_all)
                                         && !TextUtils.isEmpty(cObject.itemcat)) {
-                                    cQuery = (cObject.itemcat.equals(cQueryKey_itemcat)
-                                            || cObject.itembasecat.equals(cQueryKey_itemcat))
+                                    cQuery = (cObject.itemcat
+                                            .equals(cQueryKey_itemcat)
+                                            || cObject.itembasecat
+                                            .equals(cQueryKey_itemcat))
                                             ? 1 : 0;
                                 }
                                 return cQuery == 1;

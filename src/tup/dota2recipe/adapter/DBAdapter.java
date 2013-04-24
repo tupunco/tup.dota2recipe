@@ -1,13 +1,19 @@
 package tup.dota2recipe.adapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json2.JSONException;
+
+import tup.dota2recipe.DataManager;
 import tup.dota2recipe.DefaultApplication;
 import tup.dota2recipe.entity.CollectionItem;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DataSetObservable;
+import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -21,7 +27,7 @@ import android.util.Log;
  */
 public class DBAdapter {
     private static final String TAG = "DBAdapter";
-    private static final int DATABASE_VERSION = 0;
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "dota2recipe.db";
 
     public static final String KEY_ID = "id";
@@ -40,6 +46,7 @@ public class DBAdapter {
     private static final String[] SELECT_COLLECTION_COLUMNS = new String[] {
             KEY_ID, KEY_KEYNAME, KEY_COLLECT_TYPE };
 
+    private DataSetObservable mDataSetObservable = new DataSetObservable();
     private static DBAdapter singleton = null;
     private SQLiteDatabase wsd = null;
     private SQLiteDatabase rsd = null;
@@ -54,7 +61,8 @@ public class DBAdapter {
      */
     public synchronized static DBAdapter getInstance() {
         if (singleton == null) {
-            final DBHelper helper = new DBHelper(DefaultApplication.getInstance(),
+            final DBHelper helper = new DBHelper(
+                    DefaultApplication.getInstance(),
                     DATABASE_NAME, null, DATABASE_VERSION);
             singleton = new DBAdapter();
             singleton.wsd = helper.getWritableDatabase();
@@ -65,19 +73,50 @@ public class DBAdapter {
     }
 
     /**
+     * 注册收藏列表改变监视器
+     * 
+     * @param observer
+     */
+    public void registerCollectionObserver(DataSetObserver observer) {
+        if (observer != null)
+            mDataSetObservable.registerObserver(observer);
+    }
+
+    /**
+     * 取消注册收藏列表改变监视器
+     * 
+     * @param observer
+     */
+    public void unregisterCollectionObserver(DataSetObserver observer) {
+        if (observer != null)
+            mDataSetObservable.unregisterObserver(observer);
+    }
+
+    /**
      * 获取收藏列表
      * 
      * @return
      */
     public List<CollectionItem> getCollections() {
         final List<CollectionItem> list = new ArrayList<CollectionItem>();
-        final Cursor c = rsd.query(TABLE_NAME_COLLECTIONS, SELECT_COLLECTION_COLUMNS,
+        final Cursor c = rsd.query(TABLE_NAME_COLLECTIONS,
+                SELECT_COLLECTION_COLUMNS,
                 null, null, null, null, null);
         while (c.moveToNext()) {
             list.add(extractCollectionItem(c));
         }
         c.close();
         return list;
+    }
+
+    /**
+     * 
+     * @param keyName
+     * @return
+     */
+    public boolean hasCollection(String keyName) {
+        final CollectionItem c = getCollectionByKeyName(keyName);
+        return c != null;
     }
 
     /**
@@ -88,8 +127,10 @@ public class DBAdapter {
      */
     public CollectionItem getCollectionByKeyName(String keyName) {
         if (!TextUtils.isEmpty(keyName)) {
-            final Cursor c = rsd.query(TABLE_NAME_COLLECTIONS, SELECT_COLLECTION_COLUMNS,
-                    KEY_KEYNAME + "=?", new String[] { keyName }, null, null, null);
+            final Cursor c = rsd.query(TABLE_NAME_COLLECTIONS,
+                    SELECT_COLLECTION_COLUMNS,
+                    KEY_KEYNAME + "=?", new String[] { keyName }, null, null,
+                    null);
             if (c.moveToNext()) {
                 return extractCollectionItem(c);
             }
@@ -108,14 +149,18 @@ public class DBAdapter {
         if (TextUtils.isEmpty(keyName))
             return -1;
 
-        return wsd.delete(TABLE_NAME_COLLECTIONS, KEY_KEYNAME + "=?", new String[] { keyName });
+        final int res = wsd.delete(TABLE_NAME_COLLECTIONS, KEY_KEYNAME + "=?",
+                new String[] { keyName });
+        if (res > 0) {
+            mDataSetObservable.notifyChanged();
+        }
+        return res;
     }
 
     /**
      * 添加收藏项
      * 
-     * @param keyName
-     * @param collect_type
+     * @param cItem
      * @return
      */
     public long addCollection(CollectionItem cItem) {
@@ -128,7 +173,11 @@ public class DBAdapter {
         ContentValues values = new ContentValues();
         values.put(KEY_KEYNAME, cItem.keyName);
         values.put(KEY_COLLECT_TYPE, cItem.type);
-        return wsd.insert(TABLE_NAME_COLLECTIONS, null, values);
+        final long resId = wsd.insert(TABLE_NAME_COLLECTIONS, null, values);
+        if (resId >= 0L) {
+            mDataSetObservable.notifyChanged();
+        }
+        return resId;
     }
 
     /**
@@ -147,6 +196,22 @@ public class DBAdapter {
 
         colid = c.getColumnIndex(KEY_COLLECT_TYPE);
         item.type = c.getInt(colid);
+
+        try {
+            if (item.type == CollectionItem.KEY_TYPE_HERO) {
+                item.heroData =
+                        DataManager.getHeroItem(
+                                DefaultApplication.getInstance(), item.keyName);
+            } else if (item.type == CollectionItem.KEY_TYPE_ITEMS) {
+                item.itemsData =
+                        DataManager.getItemsItem(
+                                DefaultApplication.getInstance(), item.keyName);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return item;
     }
 
@@ -167,7 +232,8 @@ public class DBAdapter {
         @Override
         public void onUpgrade(final SQLiteDatabase db, final int oldVersion,
                 final int newVersion) {
-            Log.w(TAG, "Upgrading from version " + oldVersion + " to " + newVersion + ".");
+            Log.w(TAG, "Upgrading from version " + oldVersion + " to "
+                    + newVersion + ".");
         }
     }
 }

@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_check_addcollection"
+        android:checkable="true"
+        android:checked="false"
+        android:icon="@drawable/btn_star_off_normal_holo_dark"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/menu_addcollection"/>
+
+</menu>

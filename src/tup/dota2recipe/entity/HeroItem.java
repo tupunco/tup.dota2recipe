@@ -34,6 +34,12 @@ public class HeroItem {
     public String[] roles;
     public String[] roles_l;
 
+    /**
+     * 是否已经收藏
+     * -1 未加载, 0 否, 1 是
+     */
+    public int hasCollection = -1;
+
     @Override
     public String toString() {
         return String.format(

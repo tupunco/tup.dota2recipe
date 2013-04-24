@@ -25,7 +25,9 @@
     <string name="menu_hero_type">按类型</string>
     <string name="menu_items_qual">按品质</string>
     <string name="menu_items_itemcat">按分类</string>
-
+    <string name="menu_addcollection">添加到收藏</string>
+    <string name="menu_removecollection">从收藏中删除</string>
+    
     <!-- view txt -->
     <string name="text_items_repice_name">合成卷轴</string>
     <string name="text_items_mana_label">魔法消耗:</string>
@@ -40,6 +42,7 @@
     <string name="text_hero_stats_demo_label">智力</string>
     <string name="text_hero_stats_demo_value">21 + 2.80</string>
     <string name="text_division_label">/</string>
+    <string name="text_collection_emptylist">暂无收藏…</string>
 
     <string-array name="array_hero_stats">
         <item>智力</item>

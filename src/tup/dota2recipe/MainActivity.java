@@ -3,12 +3,8 @@ package tup.dota2recipe;
 import tup.dota2recipe.util.AbstractTabsAdapter;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -44,19 +40,23 @@ public class MainActivity extends SherlockFragmentActivity {
         mTabsAdapter = new TabsAdapter(this, mViewPager);
 
         mTabsAdapter = new TabsAdapter(this, mViewPager);
-        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_hero),
+        mTabsAdapter.addTab(
+                actionBar.newTab().setText(R.string.main_actionBar_tab_hero),
                 HeroListFragment.class, null);
-        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_item),
+        mTabsAdapter.addTab(
+                actionBar.newTab().setText(R.string.main_actionBar_tab_item),
                 ItemsListFragment.class, null);
         // mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_skill),
         // DummySectionFragment.class, null);
-        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_favorite),
-                DummySectionFragment.class, null);
+        mTabsAdapter.addTab(
+                actionBar.newTab()
+                        .setText(R.string.main_actionBar_tab_favorite),
+                CollectionListFragment.class, null);
 
-		if (savedInstanceState != null) {
-			actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
-					"tab", 0));
-		}
+        if (savedInstanceState != null) {
+            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
+                    "tab", 0));
+        }
     }
 
     @Override
@@ -68,11 +68,11 @@ public class MainActivity extends SherlockFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_about:
-            this.startActivity(new Intent(this, AboutActivity.class));
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+            case R.id.menu_about:
+                this.startActivity(new Intent(this, AboutActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -80,8 +80,8 @@ public class MainActivity extends SherlockFragmentActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-		outState.putInt("tab", getSupportActionBar()
-				.getSelectedNavigationIndex());
+        outState.putInt("tab", getSupportActionBar()
+                .getSelectedNavigationIndex());
 
         instanceStateSaved = true;
     }
@@ -124,33 +124,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
-    }
-
-    /**
-     * A dummy fragment representing a section of the app, but that simply
-     * displays dummy text.
-     */
-    public static class DummySectionFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        public static final String ARG_SECTION_NUMBER = "section_number";
-
-        public DummySectionFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            // Create a new TextView and set its text to the fragment's section
-            // number argument value.
-            // TextView textView = new TextView(getActivity());
-            // textView.setGravity(Gravity.CENTER);
-            // textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
-            // return textView;
-            return inflater.inflate(R.layout.fragment_main, container, false);
         }
     }
 }
