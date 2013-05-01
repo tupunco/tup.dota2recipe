@@ -4,7 +4,7 @@
         android:id="@+id/menu_check_addcollection"
         android:checkable="true"
         android:checked="false"
-        android:icon="@drawable/btn_star_off_normal_holo_dark"
+        android:icon="@drawable/ic_action_favorite2"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/menu_addcollection"/>

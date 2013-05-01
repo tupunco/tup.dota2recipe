@@ -80,10 +80,10 @@ public final class Utils {
         }
 
         if (menu.isChecked()) {
-            menu.setIcon(R.drawable.btn_star_on_normal_holo_dark);
+            menu.setIcon(R.drawable.ic_action_favorite);
             menu.setTitle(R.string.menu_removecollection);
         } else {
-            menu.setIcon(R.drawable.btn_star_off_normal_holo_dark);
+            menu.setIcon(R.drawable.ic_action_favorite2);
             menu.setTitle(R.string.menu_addcollection);
         }
     }
