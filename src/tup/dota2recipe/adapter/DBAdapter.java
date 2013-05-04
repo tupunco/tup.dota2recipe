@@ -100,10 +100,9 @@ public class DBAdapter {
     public List<FavoriteItem> getFavorites() {
         final List<FavoriteItem> list = new ArrayList<FavoriteItem>();
         final Cursor c = rsd.query(TABLE_NAME_COLLECTIONS,
-                SELECT_COLLECTION_COLUMNS,
-                null, null, null, null, null);
+                SELECT_COLLECTION_COLUMNS, null, null, null, null, null);
         while (c.moveToNext()) {
-            list.add(extractCollectionItem(c));
+            list.add(extractFavoriteItem(c));
         }
         c.close();
         return list;
@@ -114,8 +113,8 @@ public class DBAdapter {
      * @param keyName
      * @return
      */
-    public boolean hasCollection(String keyName) {
-        final FavoriteItem c = getCollectionByKeyName(keyName);
+    public boolean hasFavorite(String keyName) {
+        final FavoriteItem c = getFavoriteByKeyName(keyName);
         return c != null;
     }
 
@@ -125,14 +124,14 @@ public class DBAdapter {
      * @param keyName
      * @return
      */
-    public FavoriteItem getCollectionByKeyName(String keyName) {
+    public FavoriteItem getFavoriteByKeyName(String keyName) {
         if (!TextUtils.isEmpty(keyName)) {
             final Cursor c = rsd.query(TABLE_NAME_COLLECTIONS,
                     SELECT_COLLECTION_COLUMNS,
                     KEY_KEYNAME + "=?", new String[] { keyName }, null, null,
                     null);
             if (c.moveToNext()) {
-                return extractCollectionItem(c);
+                return extractFavoriteItem(c);
             }
             c.close();
         }
@@ -145,7 +144,7 @@ public class DBAdapter {
      * @param keyName
      * @return
      */
-    public int deleteCollection(String keyName) {
+    public int deleteFavorite(String keyName) {
         if (TextUtils.isEmpty(keyName))
             return -1;
 
@@ -163,7 +162,7 @@ public class DBAdapter {
      * @param cItem
      * @return
      */
-    public long addCollection(FavoriteItem cItem) {
+    public long addFavorite(FavoriteItem cItem) {
         if (cItem == null || TextUtils.isEmpty(cItem.keyName)
                 || (cItem.type != FavoriteItem.KEY_TYPE_HERO
                 && cItem.type != FavoriteItem.KEY_TYPE_ITEMS)) {
@@ -185,7 +184,7 @@ public class DBAdapter {
      * @param c
      * @return
      */
-    private FavoriteItem extractCollectionItem(Cursor c) {
+    private FavoriteItem extractFavoriteItem(Cursor c) {
         final FavoriteItem item = new FavoriteItem();
 
         int colid = c.getColumnIndex(KEY_ID);
@@ -200,12 +199,10 @@ public class DBAdapter {
         try {
             if (item.type == FavoriteItem.KEY_TYPE_HERO) {
                 item.heroData =
-                        DataManager.getHeroItem(
-                                DefaultApplication.getInstance(), item.keyName);
+                        DataManager.getHeroItem(DefaultApplication.getInstance(), item.keyName);
             } else if (item.type == FavoriteItem.KEY_TYPE_ITEMS) {
                 item.itemsData =
-                        DataManager.getItemsItem(
-                                DefaultApplication.getInstance(), item.keyName);
+                        DataManager.getItemsItem(DefaultApplication.getInstance(), item.keyName);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -232,8 +229,7 @@ public class DBAdapter {
         @Override
         public void onUpgrade(final SQLiteDatabase db, final int oldVersion,
                 final int newVersion) {
-            Log.w(TAG, "Upgrading from version " + oldVersion + " to "
-                    + newVersion + ".");
+            Log.w(TAG, "Upgrading from version " + oldVersion + " to " + newVersion + ".");
         }
     }
 }

@@ -10,6 +10,7 @@ import tup.dota2recipe.adapter.ItemsImagesAdapter;
 import tup.dota2recipe.entity.AbilityItem;
 import tup.dota2recipe.entity.FavoriteItem;
 import tup.dota2recipe.entity.HeroDetailItem;
+import tup.dota2recipe.entity.HeroItem;
 import tup.dota2recipe.entity.ItemsItem;
 import tup.dota2recipe.util.Utils;
 import tup.dota2recipe.view.SimpleGridView;
@@ -158,9 +159,9 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                         final FavoriteItem c = new FavoriteItem();
                         c.keyName = hero.keyName;
                         c.type = FavoriteItem.KEY_TYPE_HERO;
-                        DBAdapter.getInstance().addCollection(c);
+                        DBAdapter.getInstance().addFavorite(c);
                     } else {
-                        DBAdapter.getInstance().deleteCollection(hero.keyName);
+                        DBAdapter.getInstance().deleteFavorite(hero.keyName);
                     }
                     return true;
                 }
@@ -179,44 +180,12 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             }
 
             mHeroDetailItem = cItem;
-            final SherlockFragmentActivity cContext = this
-                    .getSherlockActivity();
+            final SherlockFragmentActivity cContext = this.getSherlockActivity();
             cContext.invalidateOptionsMenu();
             cContext.setTitle(cItem.name_l);
 
             final View v = this.getView();
-            final Resources cRes = this.getResources();
-
-            ImageLoader.getInstance().displayImage(
-                    Utils.getHeroImageUri(cItem.keyName),
-                    ((ImageView) v.findViewById(R.id.image_hero)),
-                    mImageLoadOptions);
-
-            ((TextView) v.findViewById(R.id.text_hero_name))
-                    .setText(cItem.name);
-            ((TextView) v.findViewById(R.id.text_hero_name_l))
-                    .setText(cItem.name_l);
-
-            if (cItem.roles_l != null && cItem.roles_l.length > 0) {
-                ((TextView) v.findViewById(R.id.text_hero_roles))
-                        .setText(TextUtils.join(
-                                cRes.getString(R.string.text_division_label),
-                                cItem.roles_l));
-            } else {
-                ((TextView) v.findViewById(R.id.text_hero_roles))
-                        .setVisibility(View.GONE);
-            }
-
-            ((TextView) v.findViewById(R.id.text_hero_atk))
-                    .setText(cItem.atk_l);
-            ((TextView) v.findViewById(R.id.text_hero_faction))
-                    .setText(Utils.getMenuValue(cRes,
-                            R.array.menu_hero_factions_keys,
-                            R.array.menu_hero_factions_values, cItem.faction));
-            ((TextView) v.findViewById(R.id.text_hero_hp))
-                    .setText(Utils.getMenuValue(cRes,
-                            R.array.menu_hero_type_keys,
-                            R.array.menu_hero_type_values, cItem.hp));
+            bindHeroItemSimpleView(v, cItem, mImageLoadOptions);
 
             // cItem.stats
             bindStatsView(v, cItem);
@@ -254,6 +223,47 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                 v.findViewById(R.id.llayout_hero_abilities)
                         .setVisibility(View.GONE);
             }
+        }
+
+        /**
+         * 绑定视图-英雄简单数据信息
+         * 
+         * @param v
+         * @param cItem
+         * @param cImageLoadOptions
+         */
+        public static void bindHeroItemSimpleView(final View v, final HeroItem cItem,
+                final DisplayImageOptions cImageLoadOptions) {
+            if (v == null || cItem == null || cImageLoadOptions == null) {
+                return;
+            }
+
+            final Resources cRes = v.getResources();
+            ImageLoader.getInstance().displayImage(
+                    Utils.getHeroImageUri(cItem.keyName),
+                    ((ImageView) v.findViewById(R.id.image_hero)),
+                    cImageLoadOptions);
+
+            ((TextView) v.findViewById(R.id.text_hero_name)).setText(cItem.name);
+            ((TextView) v.findViewById(R.id.text_hero_name_l)).setText(cItem.name_l);
+
+            if (cItem.roles_l != null && cItem.roles_l.length > 0) {
+                ((TextView) v.findViewById(R.id.text_hero_roles))
+                        .setText(TextUtils.join(cRes.getString(R.string.text_division_label),
+                                cItem.roles_l));
+            } else {
+                ((TextView) v.findViewById(R.id.text_hero_roles)).setVisibility(View.GONE);
+            }
+
+            ((TextView) v.findViewById(R.id.text_hero_atk)).setText(cItem.atk_l);
+            ((TextView) v.findViewById(R.id.text_hero_faction))
+                    .setText(Utils.getMenuValue(cRes,
+                            R.array.menu_hero_factions_keys,
+                            R.array.menu_hero_factions_values, cItem.faction));
+            ((TextView) v.findViewById(R.id.text_hero_hp))
+                    .setText(Utils.getMenuValue(cRes,
+                            R.array.menu_hero_type_keys,
+                            R.array.menu_hero_type_values, cItem.hp));
         }
 
         /**
@@ -471,7 +481,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                             params[0]);
                     if (date != null && date.hasCollection < 0) {
                         final boolean has = DBAdapter.getInstance()
-                                .hasCollection(params[0]);
+                                .hasFavorite(params[0]);
                         date.hasCollection = has ? 1 : 0;
                     }
                     return date;

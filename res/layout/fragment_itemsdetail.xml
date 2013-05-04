@@ -46,24 +46,16 @@
                 android:layout_toRightOf="@+id/image_items"
                 android:text="name" />
 
-            <ImageView
-                android:id="@+id/image_items_gold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/text_items_dname"
-                android:layout_below="@+id/text_items_dname"
-                android:layout_marginTop="@dimen/margins_text"
-                android:contentDescription="@string/hello_world"
-                android:src="@drawable/gold" />
-
             <TextView
                 android:id="@+id/text_items_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/image_items_gold"
-                android:layout_marginLeft="@dimen/margins_text"
-                android:layout_toRightOf="@+id/image_items_gold"
-                android:text="cost" />
+                android:layout_below="@+id/text_items_dname"
+                android:layout_toRightOf="@+id/image_items"
+                android:drawableLeft="@drawable/gold"
+                android:drawablePadding="@dimen/margins_text"
+                android:text="cost" >
+            </TextView>
         </RelativeLayout>
 
         <LinearLayout

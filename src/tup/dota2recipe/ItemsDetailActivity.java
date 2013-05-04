@@ -56,9 +56,9 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Utils.fillFragment(this, ItemsDetailFragment.newInstance(this
-                .getIntent().getStringExtra(KEY_ITEMS_DETAIL_KEY_NAME), this
-                .getIntent().getStringExtra(KEY_ITEMS_DETAIL_PARENT_KEY_NAME)));
+        Utils.fillFragment(this, ItemsDetailFragment.newInstance(
+                this.getIntent().getStringExtra(KEY_ITEMS_DETAIL_KEY_NAME),
+                this.getIntent().getStringExtra(KEY_ITEMS_DETAIL_PARENT_KEY_NAME)));
     }
 
     @Override
@@ -110,11 +110,10 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
             mImageLoadOptions = Utils.createDisplayImageOptions();
 
             final Bundle arg = this.getArguments();
-            final String items_keyName = arg
-                    .getString(KEY_ITEMS_DETAIL_KEY_NAME);
-            final String items_parent_keyName = arg
-                    .containsKey(KEY_ITEMS_DETAIL_PARENT_KEY_NAME) ? arg
-                    .getString(KEY_ITEMS_DETAIL_PARENT_KEY_NAME) : null;
+            final String items_keyName = arg.getString(KEY_ITEMS_DETAIL_KEY_NAME);
+            final String items_parent_keyName =
+                    arg.containsKey(KEY_ITEMS_DETAIL_PARENT_KEY_NAME) ?
+                            arg.getString(KEY_ITEMS_DETAIL_PARENT_KEY_NAME) : null;
 
             Log.v(TAG, "arg.items_keyName=" + items_keyName
                     + " arg.items_parent_keyName" + items_parent_keyName);
@@ -173,9 +172,9 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
                         final FavoriteItem c = new FavoriteItem();
                         c.keyName = items.keyName;
                         c.type = FavoriteItem.KEY_TYPE_ITEMS;
-                        DBAdapter.getInstance().addCollection(c);
+                        DBAdapter.getInstance().addFavorite(c);
                     } else {
-                        DBAdapter.getInstance().deleteCollection(items.keyName);
+                        DBAdapter.getInstance().deleteFavorite(items.keyName);
                     }
                     return true;
                 }
@@ -199,18 +198,7 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
             cContext.invalidateOptionsMenu();
             cContext.setTitle(cItem.dname_l);
             final View v = this.getView();
-
-            ImageLoader.getInstance().displayImage(
-                    Utils.getItemsImageUri(cItem.keyName),
-                    ((ImageView) v.findViewById(R.id.image_items)),
-                    mImageLoadOptions);
-
-            ((TextView) v.findViewById(R.id.text_items_dname))
-                    .setText(cItem.dname);
-            ((TextView) v.findViewById(R.id.text_items_dname_l))
-                    .setText(cItem.dname_l);
-            ((TextView) v.findViewById(R.id.text_items_cost)).setText(String
-                    .valueOf(cItem.cost));
+            bindItemsItemSimpleView(v, cItem, mImageLoadOptions);
 
             // 合成卷轴处理
             if (cItem.isrecipe) {
@@ -277,6 +265,29 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
         }
 
         /**
+         * 绑定视图-物品简单数据信息
+         * 
+         * @param v
+         * @param cItem
+         * @param cImageLoadOptions
+         */
+        public static void bindItemsItemSimpleView(final View v, final ItemsItem cItem,
+                final DisplayImageOptions cImageLoadOptions) {
+            if (v == null || cItem == null || cImageLoadOptions == null) {
+                return;
+            }
+            
+            ImageLoader.getInstance().displayImage(
+                    Utils.getItemsImageUri(cItem.keyName),
+                    ((ImageView) v.findViewById(R.id.image_items)),
+                    cImageLoadOptions);
+
+            ((TextView) v.findViewById(R.id.text_items_dname)).setText(cItem.dname);
+            ((TextView) v.findViewById(R.id.text_items_dname_l)).setText(cItem.dname_l);
+            ((TextView) v.findViewById(R.id.text_items_cost)).setText(String.valueOf(cItem.cost));
+        }
+
+        /**
          * 物品详细 LoaderTask
          */
         private final AsyncTask<String, Void, ItemsItem> mLoaderTask = new AsyncTask<String, Void, ItemsItem>() {
@@ -310,7 +321,7 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
                             keyName);
                     if (!isrecipe && cItem != null && cItem.hasCollection < 0) {
                         final boolean has = DBAdapter.getInstance()
-                                .hasCollection(keyName);
+                                .hasFavorite(keyName);
                         cItem.hasCollection = has ? 1 : 0;
                     }
                     // 合成卷轴数据合并

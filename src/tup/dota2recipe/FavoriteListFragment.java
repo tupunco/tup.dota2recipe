@@ -18,12 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 物品数据列表 Fragment
@@ -127,11 +124,6 @@ public class FavoriteListFragment extends SherlockListFragment
      */
     final class FavoriteListAdapter extends
             AbstractArrayAdapter<FavoriteItem> {
-        private final class ViewHolder {
-            public TextView text;
-            public ImageView image;
-        }
-
         private final LayoutInflater mInflater;
 
         public FavoriteListAdapter(Context context) {
@@ -150,48 +142,22 @@ public class FavoriteListFragment extends SherlockListFragment
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
-
-            final ViewHolder holder;
-            if (convertView == null) {
-                view = mInflater.inflate(R.layout.fragment_itemsdata_grid_item, parent, false);
-
-                holder = new ViewHolder();
-                holder.text = (TextView) view.findViewById(R.id.text_items_name);
-                holder.image = (ImageView) view.findViewById(R.id.image_items);
-
-                view.setTag(holder);
-            } else {
-                holder = (ViewHolder) view.getTag();
-            }
-
             final FavoriteItem item = getItem(position);
-            String imgUrl = null, title = null;
             switch (item.type)
             {
                 case FavoriteItem.KEY_TYPE_HERO:
-                    imgUrl = Utils.getHeroImageUri(item.keyName);
-                    if (item.heroData != null) {
-                        title = item.heroData.name_l;
-                    }
-                    else {
-                        title = item.keyName;
-                    }
+                    view = mInflater.inflate(R.layout.fragment_favorite_list_hero_item,
+                            parent, false);
+                    HeroDetailActivity.HeroDetailFragment
+                            .bindHeroItemSimpleView(view, item.heroData, mImageLoadOptions);
                     break;
                 case FavoriteItem.KEY_TYPE_ITEMS:
-                    imgUrl = Utils.getItemsImageUri(item.keyName);
-                    if (item.itemsData != null) {
-                        title = item.itemsData.dname_l;
-                    }
-                    else {
-                        title = item.keyName;
-                    }
+                    view = mInflater.inflate(R.layout.fragment_favorite_list_items_item,
+                            parent, false);
+                    ItemsDetailActivity.ItemsDetailFragment
+                            .bindItemsItemSimpleView(view, item.itemsData, mImageLoadOptions);
                     break;
             }
-            if (imgUrl != null) {
-                ImageLoader.getInstance().displayImage(imgUrl, holder.image, mImageLoadOptions);
-            }
-            holder.text.setText(title);
-            // TODO--------------
             return view;
         }
     }

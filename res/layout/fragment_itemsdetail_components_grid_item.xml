@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/simplegridview_selector_background"
     android:orientation="vertical"
-    android:padding="@dimen/margins_base" >
+    android:padding="@dimen/margins_base"
+    tools:ignore="NestedScrolling,HardcodedText" >
 
     <ImageView
         android:id="@+id/image_items"
@@ -25,28 +27,15 @@
         android:singleLine="true"
         android:text="@string/app_name" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/text_items_cost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-
-        <ImageView
-            android:id="@+id/image_items_gold"
-            android:layout_width="18dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_text"
-            android:contentDescription="@string/hello_world"
-            android:scaleType="fitStart"
-            android:src="@drawable/gold" />
-
-        <TextView
-            android:id="@+id/text_items_cost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margins_text"
-            android:layout_toRightOf="@+id/image_items_gold"
-            android:text="@string/hello_world"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </RelativeLayout>
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/gold"
+        android:drawablePadding="@dimen/margins_text"
+        android:text="cost"
+        android:textAppearance="?android:attr/textAppearanceSmall" >
+    </TextView>
 
 </LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/margins_text4"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin"
+    android:paddingTop="@dimen/margins_text4"
+    tools:ignore="NestedScrolling,HardcodedText" >
+
+    <ImageView
+        android:id="@+id/image_hero"
+        android:layout_width="144dp"
+        android:layout_height="81dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margins_base"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitStart"
+        android:src="@drawable/loading" />
+
+    <TextView
+        android:id="@+id/text_hero_name_l"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/image_hero"
+        android:text="name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:id="@+id/text_hero_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_hero_name_l"
+        android:layout_toRightOf="@+id/image_hero"
+        android:text="name"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:id="@+id/text_hero_roles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_hero_name"
+        android:layout_toRightOf="@+id/image_hero"
+        android:text="roles"
+        android:textIsSelectable="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_hero_roles"
+        android:layout_toRightOf="@+id/image_hero" >
+
+        <TextView
+            android:id="@+id/text_hero_hp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hp"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margins_text"
+            android:text="@string/text_division_label" />
+
+        <TextView
+            android:id="@+id/text_hero_faction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margins_text"
+            android:text="faction"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margins_text"
+            android:text="@string/text_division_label" />
+
+        <TextView
+            android:id="@+id/text_hero_atk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margins_text"
+            android:text="atk"
+            android:textIsSelectable="false" />
+    </LinearLayout>
+
+</RelativeLayout>
