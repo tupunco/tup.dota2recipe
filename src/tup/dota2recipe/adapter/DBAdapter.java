@@ -8,7 +8,7 @@ import org.json2.JSONException;
 
 import tup.dota2recipe.DataManager;
 import tup.dota2recipe.DefaultApplication;
-import tup.dota2recipe.entity.CollectionItem;
+import tup.dota2recipe.entity.FavoriteItem;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -77,7 +77,7 @@ public class DBAdapter {
      * 
      * @param observer
      */
-    public void registerCollectionObserver(DataSetObserver observer) {
+    public void registerFavoriteObserver(DataSetObserver observer) {
         if (observer != null)
             mDataSetObservable.registerObserver(observer);
     }
@@ -87,7 +87,7 @@ public class DBAdapter {
      * 
      * @param observer
      */
-    public void unregisterCollectionObserver(DataSetObserver observer) {
+    public void unregisterFavoriteObserver(DataSetObserver observer) {
         if (observer != null)
             mDataSetObservable.unregisterObserver(observer);
     }
@@ -97,8 +97,8 @@ public class DBAdapter {
      * 
      * @return
      */
-    public List<CollectionItem> getCollections() {
-        final List<CollectionItem> list = new ArrayList<CollectionItem>();
+    public List<FavoriteItem> getFavorites() {
+        final List<FavoriteItem> list = new ArrayList<FavoriteItem>();
         final Cursor c = rsd.query(TABLE_NAME_COLLECTIONS,
                 SELECT_COLLECTION_COLUMNS,
                 null, null, null, null, null);
@@ -115,7 +115,7 @@ public class DBAdapter {
      * @return
      */
     public boolean hasCollection(String keyName) {
-        final CollectionItem c = getCollectionByKeyName(keyName);
+        final FavoriteItem c = getCollectionByKeyName(keyName);
         return c != null;
     }
 
@@ -125,7 +125,7 @@ public class DBAdapter {
      * @param keyName
      * @return
      */
-    public CollectionItem getCollectionByKeyName(String keyName) {
+    public FavoriteItem getCollectionByKeyName(String keyName) {
         if (!TextUtils.isEmpty(keyName)) {
             final Cursor c = rsd.query(TABLE_NAME_COLLECTIONS,
                     SELECT_COLLECTION_COLUMNS,
@@ -163,10 +163,10 @@ public class DBAdapter {
      * @param cItem
      * @return
      */
-    public long addCollection(CollectionItem cItem) {
+    public long addCollection(FavoriteItem cItem) {
         if (cItem == null || TextUtils.isEmpty(cItem.keyName)
-                || (cItem.type != CollectionItem.KEY_TYPE_HERO
-                && cItem.type != CollectionItem.KEY_TYPE_ITEMS)) {
+                || (cItem.type != FavoriteItem.KEY_TYPE_HERO
+                && cItem.type != FavoriteItem.KEY_TYPE_ITEMS)) {
             return -1L;
         }
 
@@ -185,8 +185,8 @@ public class DBAdapter {
      * @param c
      * @return
      */
-    private CollectionItem extractCollectionItem(Cursor c) {
-        final CollectionItem item = new CollectionItem();
+    private FavoriteItem extractCollectionItem(Cursor c) {
+        final FavoriteItem item = new FavoriteItem();
 
         int colid = c.getColumnIndex(KEY_ID);
         item.id = c.getInt(colid);
@@ -198,11 +198,11 @@ public class DBAdapter {
         item.type = c.getInt(colid);
 
         try {
-            if (item.type == CollectionItem.KEY_TYPE_HERO) {
+            if (item.type == FavoriteItem.KEY_TYPE_HERO) {
                 item.heroData =
                         DataManager.getHeroItem(
                                 DefaultApplication.getInstance(), item.keyName);
-            } else if (item.type == CollectionItem.KEY_TYPE_ITEMS) {
+            } else if (item.type == FavoriteItem.KEY_TYPE_ITEMS) {
                 item.itemsData =
                         DataManager.getItemsItem(
                                 DefaultApplication.getInstance(), item.keyName);

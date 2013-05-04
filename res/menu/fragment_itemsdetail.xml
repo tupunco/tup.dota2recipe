@@ -7,6 +7,6 @@
         android:icon="@drawable/ic_action_favorite2"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/menu_addcollection"/>
+        android:title="@string/menu_addfavorite"/>
 
 </menu>

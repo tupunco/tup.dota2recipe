@@ -6,7 +6,7 @@ import org.json2.JSONException;
 
 import tup.dota2recipe.adapter.DBAdapter;
 import tup.dota2recipe.adapter.ItemsImagesAdapter;
-import tup.dota2recipe.entity.CollectionItem;
+import tup.dota2recipe.entity.FavoriteItem;
 import tup.dota2recipe.entity.ItemsItem;
 import tup.dota2recipe.util.Utils;
 import tup.dota2recipe.view.SimpleGridView;
@@ -170,9 +170,9 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
                     Utils.configureStarredMenuItem(item, items.isrecipe);
                     items.hasCollection = isChecked ? 1 : 0;
                     if (isChecked) {
-                        final CollectionItem c = new CollectionItem();
+                        final FavoriteItem c = new FavoriteItem();
                         c.keyName = items.keyName;
-                        c.type = CollectionItem.KEY_TYPE_ITEMS;
+                        c.type = FavoriteItem.KEY_TYPE_ITEMS;
                         DBAdapter.getInstance().addCollection(c);
                     } else {
                         DBAdapter.getInstance().deleteCollection(items.keyName);

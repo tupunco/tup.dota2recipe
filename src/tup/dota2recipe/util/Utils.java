@@ -81,10 +81,10 @@ public final class Utils {
 
         if (menu.isChecked()) {
             menu.setIcon(R.drawable.ic_action_favorite);
-            menu.setTitle(R.string.menu_removecollection);
+            menu.setTitle(R.string.menu_removefavorite);
         } else {
             menu.setIcon(R.drawable.ic_action_favorite2);
-            menu.setTitle(R.string.menu_addcollection);
+            menu.setTitle(R.string.menu_addfavorite);
         }
     }
 

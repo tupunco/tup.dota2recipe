@@ -8,7 +8,7 @@ import org.json2.JSONException;
 import tup.dota2recipe.adapter.DBAdapter;
 import tup.dota2recipe.adapter.ItemsImagesAdapter;
 import tup.dota2recipe.entity.AbilityItem;
-import tup.dota2recipe.entity.CollectionItem;
+import tup.dota2recipe.entity.FavoriteItem;
 import tup.dota2recipe.entity.HeroDetailItem;
 import tup.dota2recipe.entity.ItemsItem;
 import tup.dota2recipe.util.Utils;
@@ -155,9 +155,9 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                     Utils.configureStarredMenuItem(item);
                     hero.hasCollection = isChecked ? 1 : 0;
                     if (isChecked) {
-                        final CollectionItem c = new CollectionItem();
+                        final FavoriteItem c = new FavoriteItem();
                         c.keyName = hero.keyName;
-                        c.type = CollectionItem.KEY_TYPE_HERO;
+                        c.type = FavoriteItem.KEY_TYPE_HERO;
                         DBAdapter.getInstance().addCollection(c);
                     } else {
                         DBAdapter.getInstance().deleteCollection(hero.keyName);

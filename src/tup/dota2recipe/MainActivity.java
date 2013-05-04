@@ -51,7 +51,7 @@ public class MainActivity extends SherlockFragmentActivity {
         mTabsAdapter.addTab(
                 actionBar.newTab()
                         .setText(R.string.main_actionBar_tab_favorite),
-                CollectionListFragment.class, null);
+                FavoriteListFragment.class, null);
 
         if (savedInstanceState != null) {
             actionBar.setSelectedNavigationItem(savedInstanceState.getInt(

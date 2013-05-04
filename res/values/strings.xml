@@ -25,9 +25,9 @@
     <string name="menu_hero_type">按类型</string>
     <string name="menu_items_qual">按品质</string>
     <string name="menu_items_itemcat">按分类</string>
-    <string name="menu_addcollection">添加到收藏</string>
-    <string name="menu_removecollection">从收藏中删除</string>
-    
+    <string name="menu_addfavorite">添加到收藏</string>
+    <string name="menu_removefavorite">从收藏中删除</string>
+
     <!-- view txt -->
     <string name="text_items_repice_name">合成卷轴</string>
     <string name="text_items_mana_label">魔法消耗:</string>
@@ -42,7 +42,7 @@
     <string name="text_hero_stats_demo_label">智力</string>
     <string name="text_hero_stats_demo_value">21 + 2.80</string>
     <string name="text_division_label">/</string>
-    <string name="text_collection_emptylist">暂无收藏…</string>
+    <string name="text_favorite_emptylist">暂无收藏…</string>
 
     <string-array name="array_hero_stats">
         <item>智力</item>
@@ -62,9 +62,5 @@
         <item>攻击范围</item>
         <item>发射速度</item>
     </string-array>
-
-    <string name="text_about_desc">Dota2 英雄和物品数据清单. \n
-数据来源 http://www.dota2.com. \n
-本软件为开源软件, 源代码可以在 https://github.com/tupunco/tup.dota2recipe 获取.</string>
 
 </resources>
