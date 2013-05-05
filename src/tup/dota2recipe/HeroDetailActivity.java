@@ -582,13 +582,13 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                         Utils.getAbilitiesImageUri(item.keyName),
                         holder.image, mImageLoadOptions);
 
+                holder.dname.setText(item.dname);
                 bindHtmlTextView(holder.affects, item.affects);
                 bindHtmlTextView(holder.attrib, item.attrib);
                 bindHtmlTextView(holder.cmb, item.cmb, mImageGetter);
                 bindHtmlTextView(holder.dmg, item.dmg);
-                holder.dname.setText(item.dname);
-                holder.desc.setText(item.desc);
-                holder.lore.setText(item.lore);
+                bindHtmlTextView(holder.desc, item.desc);
+                bindHtmlTextView(holder.lore, item.lore);
 
                 return view;
             }

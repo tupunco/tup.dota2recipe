@@ -54,13 +54,13 @@
     </string-array>
     <string-array name="array_hero_detailstats">
         <item>等级</item>
-        <item>生命</item>
-        <item>魔法</item>
-        <item>伤害</item>
-        <item>护甲</item>
-        <item>视野范围</item>
-        <item>攻击范围</item>
-        <item>发射速度</item>
+        <item>生命值</item>
+        <item>魔法值</item>
+        <item>伤害值</item>
+        <item>护甲值</item>
+        <item>视野距离</item>
+        <item>攻击距离</item>
+        <item>弹道速度</item>
     </string-array>
 
 </resources>
