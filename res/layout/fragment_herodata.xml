@@ -3,7 +3,7 @@
     android:id="@+id/herodata_grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnWidth="100dp"
+    android:columnWidth="@dimen/herodata_grid_column_width"
     android:fastScrollEnabled="true"
     android:gravity="center"
     android:numColumns="auto_fit"

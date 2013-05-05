@@ -7,5 +7,9 @@
     <dimen name="activity_margin">8dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="herodata_grid_column_width">100dp</dimen>
+    <dimen name="herodata_grid_image_width">96dp</dimen>
+    <dimen name="herodata_grid_image_height">54dp</dimen>
+    <dimen name="itemsdata_grid_column_width">75dp</dimen>
 
 </resources>

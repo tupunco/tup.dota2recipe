@@ -5,4 +5,15 @@
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     -->
 
+    <dimen name="margins_base">12dp</dimen>
+    <dimen name="margins_text">4dp</dimen>
+    <dimen name="margins_text4">6dp</dimen>
+    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">32dp</dimen>
+    <dimen name="activity_horizontal_margin">32dp</dimen>
+    <dimen name="herodata_grid_column_width">180dp</dimen>
+    <dimen name="herodata_grid_image_width">128dp</dimen>
+    <dimen name="herodata_grid_image_height">72dp</dimen>
+    <dimen name="itemsdata_grid_column_width">135dp</dimen>
+
 </resources>

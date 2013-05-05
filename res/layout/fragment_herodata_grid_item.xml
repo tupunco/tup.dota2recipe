@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/image_hero"
-        android:layout_width="96dp"
-        android:layout_height="54dp"
+        android:layout_width="@dimen/herodata_grid_image_width"
+        android:layout_height="@dimen/herodata_grid_image_height"
         android:layout_gravity="center"
         android:contentDescription="@string/app_name"
         android:scaleType="fitStart"

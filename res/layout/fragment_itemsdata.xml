@@ -3,7 +3,7 @@
     android:id="@+id/itemsdata_grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnWidth="75dp"
+    android:columnWidth="@dimen/itemsdata_grid_column_width"
     android:fastScrollEnabled="true"
     android:gravity="center"
     android:numColumns="auto_fit"
