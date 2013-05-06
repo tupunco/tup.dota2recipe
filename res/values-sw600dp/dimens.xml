@@ -14,6 +14,12 @@
     <dimen name="herodata_grid_column_width">180dp</dimen>
     <dimen name="herodata_grid_image_width">128dp</dimen>
     <dimen name="herodata_grid_image_height">72dp</dimen>
+    <dimen name="herodetail_image_width">320dp</dimen>
+    <dimen name="herodetail_image_height">180dp</dimen>
     <dimen name="itemsdata_grid_column_width">135dp</dimen>
+    <dimen name="itemsdata_grid_image_width">85dp</dimen>
+    <dimen name="itemsdata_grid_image_height">64dp</dimen>
+    <dimen name="itemsdetail_image_width">102dp</dimen>
+    <dimen name="itemsdetail_image_height">77dp</dimen>
 
 </resources>

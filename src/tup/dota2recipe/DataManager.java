@@ -352,11 +352,9 @@ final public class DataManager {
         inItem.stats = cJsonObj.optString("stats");
         inItem.stats1 = toStringArray2(cJsonObj.optJSONArray("stats1"));
         inItem.detailstats = cJsonObj.optString("detailstats");
-        inItem.detailstats1 = toStringArray2(cJsonObj
-                .optJSONArray("detailstats1"));
+        inItem.detailstats1 = toStringArray2(cJsonObj.optJSONArray("detailstats1"));
         inItem.detailstats1.add(0, new String[] { "Level", "1", "15", "25" });
-        inItem.detailstats2 = toStringArray2(cJsonObj
-                .optJSONArray("detailstats2"));
+        inItem.detailstats2 = toStringArray2(cJsonObj.optJSONArray("detailstats2"));
         inItem.itembuilds = toStringArray(cJsonObj.optJSONObject("itembuilds"));
         if (inItem.itembuilds != null && inItem.itembuilds.size() > 0) {
             inItem.itembuilds_i = new HashMap<String, List<ItemsItem>>();
@@ -374,8 +372,7 @@ final public class DataManager {
         final List<AbilityItem> outList = new ArrayList<AbilityItem>(len);
         AbilityItem cAbilityItem = null;
         for (int index = 0; index < len; index++) {
-            cAbilityItem = extractHeroAbilityItem(cJsonArray
-                    .optJSONObject(index));
+            cAbilityItem = extractHeroAbilityItem(cJsonArray.optJSONObject(index));
             if (cAbilityItem != null)
                 outList.add(cAbilityItem);
         }
@@ -439,8 +436,7 @@ final public class DataManager {
         cItem.cd = cJsonObj.optInt("cd");
         cItem.lore = cJsonObj.optString("lore");
         cItem.components = toStringArray(cJsonObj.optJSONArray("components"));
-        cItem.tocomponents = toStringArray(cJsonObj
-                .optJSONArray("tocomponents"));
+        cItem.tocomponents = toStringArray(cJsonObj.optJSONArray("tocomponents"));
         return cItem;
     }
 

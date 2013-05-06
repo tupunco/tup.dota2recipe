@@ -288,14 +288,11 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
 
             final Context context = cView.getContext();
             final Resources res = context.getResources();
-            final String[] labels = res
-                    .getStringArray(R.array.array_hero_stats);
+            final String[] labels = res.getStringArray(R.array.array_hero_stats);
             final int[] resIds = new int[] {
                     R.drawable.overviewicon_int, R.drawable.overviewicon_agi,
-                    R.drawable.overviewicon_str,
-                    R.drawable.overviewicon_attack,
-                    R.drawable.overviewicon_speed,
-                    R.drawable.overviewicon_defense
+                    R.drawable.overviewicon_str, R.drawable.overviewicon_attack,
+                    R.drawable.overviewicon_speed, R.drawable.overviewicon_defense
             };
 
             final LayoutInflater inflater = LayoutInflater.from(context);
@@ -314,15 +311,13 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                 text = (TextView) view.findViewById(R.id.text_hero_stats_label);
                 text.setText(labels[i]);
 
-                image = (ImageView) view
-                        .findViewById(R.id.image_hero_stats_icon);
+                image = (ImageView) view.findViewById(R.id.image_hero_stats_icon);
                 image.setImageResource(resIds[i]);
 
                 text = (TextView) view.findViewById(R.id.text_hero_stats_value);
                 text.setText(cItem.stats1.get(i)[2]);
                 if (hpIndex == i) {
-                    image = (ImageView) view
-                            .findViewById(R.id.image_hero_stats_icon_primary);
+                    image = (ImageView) view.findViewById(R.id.image_hero_stats_icon_primary);
                     image.setVisibility(View.VISIBLE);
                 }
                 cParent.addView(view);
@@ -344,8 +339,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                 return;
             }
 
-            final TableLayout table = (TableLayout) cView
-                    .findViewById(R.id.table_hero_detailstats);
+            final TableLayout table = (TableLayout) cView.findViewById(R.id.table_hero_detailstats);
             if (table == null) {
                 return;
             }
@@ -355,10 +349,9 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             rowLayout.weight = 1f;
             final TableLayout.LayoutParams tableLayout = new TableLayout.LayoutParams();
             final String[] detailstatsLabel = context.getResources()
-                    .getStringArray(
-                            R.array.array_hero_detailstats);
-            final Drawable rowBg = context.getResources().getDrawable(
-                    R.drawable.hero_detailstats_table_bg);
+                    .getStringArray(R.array.array_hero_detailstats);
+            final Drawable rowBg = context.getResources()
+                    .getDrawable(R.drawable.hero_detailstats_table_bg);
             int count = cItem.detailstats1.size();
             int iCount = 0;
             String[] iItem = null;
@@ -372,7 +365,11 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                 for (int ii = 0; ii < iCount; ii++) {
                     text = new TextView(context);
                     text.setPadding(0, 3, 0, 3);
-                    text.setText(ii == 0 ? detailstatsLabel[i] : iItem[ii]);
+                    if (i <= 0) {
+                        text.setText(ii == 0 ? detailstatsLabel[i] : iItem[ii]);
+                    } else { //INFO:源数据颠倒
+                        text.setText(ii == 0 ? detailstatsLabel[i] : iItem[iCount - ii]);
+                    }
                     row.addView(text, rowLayout);
                 }
                 if (i % 2 == 1) {

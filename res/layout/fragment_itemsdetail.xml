@@ -20,8 +20,8 @@
 
             <ImageView
                 android:id="@+id/image_items"
-                android:layout_width="85dp"
-                android:layout_height="64dp"
+                android:layout_width="@dimen/itemsdetail_image_width"
+                android:layout_height="@dimen/itemsdetail_image_height"
                 android:layout_marginRight="@dimen/margins_base"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/app_name"
