@@ -40,22 +40,15 @@ public class MainActivity extends SherlockFragmentActivity {
         mTabsAdapter = new TabsAdapter(this, mViewPager);
 
         mTabsAdapter = new TabsAdapter(this, mViewPager);
-        mTabsAdapter.addTab(
-                actionBar.newTab().setText(R.string.main_actionBar_tab_hero),
+        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_hero),
                 HeroListFragment.class, null);
-        mTabsAdapter.addTab(
-                actionBar.newTab().setText(R.string.main_actionBar_tab_item),
+        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_item),
                 ItemsListFragment.class, null);
-        // mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_skill),
-        // DummySectionFragment.class, null);
-        mTabsAdapter.addTab(
-                actionBar.newTab()
-                        .setText(R.string.main_actionBar_tab_favorite),
+        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.main_actionBar_tab_favorite),
                 FavoriteListFragment.class, null);
 
         if (savedInstanceState != null) {
-            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
-                    "tab", 0));
+            actionBar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
         }
     }
 

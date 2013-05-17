@@ -3,7 +3,6 @@
  */
 package tup.dota2recipe;
 
-import tup.dota2recipe.util.ExtendedImageDownloader;
 import android.app.Application;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -36,11 +35,6 @@ public class DefaultApplication extends Application {
                         .threadPriority(Thread.NORM_PRIORITY - 2)
                         .memoryCacheSize(2 * 1024 * 1024)
                         .denyCacheImageMultipleSizesInMemory()
-                        // .discCacheFileNameGenerator(new
-                        // Md5FileNameGenerator())
-                        .imageDownloader(
-                                new ExtendedImageDownloader(
-                                        getApplicationContext()))
                         .tasksProcessingOrder(QueueProcessingType.LIFO)
                         .enableLogging()
                         .build();
