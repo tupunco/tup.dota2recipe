@@ -4,21 +4,19 @@
     xmlns:myview="http://schemas.android.com/apk/res/tup.dota2recipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_margin"
     android:fillViewport="true"
     tools:context=".ItemsDetailActivity"
-    tools:ignore="NestedScrolling" >
+    tools:ignore="NestedScrolling,HardcodedText" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/margins_base" >
+        android:padding="@dimen/margins_layout" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
             android:baselineAligned="false" >
 
             <RelativeLayout
@@ -28,8 +26,8 @@
 
                 <ImageView
                     android:id="@+id/image_items"
-                    android:layout_width="85dp"
-                    android:layout_height="64dp"
+                    android:layout_width="@dimen/itemsdetail_image_width"
+                    android:layout_height="@dimen/itemsdetail_image_height"
                     android:layout_marginRight="@dimen/margins_base"
                     android:adjustViewBounds="false"
                     android:contentDescription="@string/app_name"
@@ -42,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/image_items"
-                    android:text="@string/hello_world"
+                    android:text="dname_l"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <TextView
@@ -52,7 +50,7 @@
                     android:layout_below="@+id/text_items_dname_l"
                     android:layout_marginTop="@dimen/margins_text"
                     android:layout_toRightOf="@+id/image_items"
-                    android:text="@string/hello_world" />
+                    android:text="dname" />
 
                 <ImageView
                     android:id="@+id/image_items_gold"
@@ -71,7 +69,7 @@
                     android:layout_alignTop="@+id/image_items_gold"
                     android:layout_marginLeft="@dimen/margins_text"
                     android:layout_toRightOf="@+id/image_items_gold"
-                    android:text="@string/hello_world" />
+                    android:text="cost" />
             </RelativeLayout>
 
             <LinearLayout
@@ -79,7 +77,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins_base"
-                android:layout_marginTop="@dimen/margins_base"
                 android:layout_weight="1"
                 android:baselineAligned="false"
                 android:orientation="vertical" >
@@ -114,7 +111,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="@dimen/margins_text"
                         android:layout_toRightOf="@+id/text_items_mana_label"
-                        android:text="@string/hello_world" />
+                        android:text="mana" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -149,7 +146,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margins_text"
                         android:layout_toRightOf="@+id/text_items_cd_label"
-                        android:text="@string/hello_world" />
+                        android:text="cd" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
@@ -165,20 +162,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margins_base"
-                android:text="@string/hello_world" />
+                android:text="attrib" />
 
             <TextView
                 android:id="@+id/text_items_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margins_base"
-                android:text="@string/hello_world" />
+                android:text="desc" />
 
             <TextView
                 android:id="@+id/text_items_lore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hello_world" />
+                android:text="lore" />
 
             <LinearLayout
                 android:id="@+id/llayout_items_components"

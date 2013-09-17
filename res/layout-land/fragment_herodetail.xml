@@ -102,31 +102,42 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="true"
+            android:baselineAligned="false"
             android:orientation="horizontal" >
 
             <LinearLayout
-                android:id="@+id/layout_hero_stats1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical" >
+                android:baselineAligned="true"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/layout_hero_stats1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    tools:ignore="NestedWeights" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_hero_stats2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_hero_stats2"
+            <TableLayout
+                android:id="@+id/table_hero_detailstats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:baselineAligned="false" >
+            </TableLayout>
         </LinearLayout>
-
-        <TableLayout
-            android:id="@+id/table_hero_detailstats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </TableLayout>
 
         <TextView
             android:id="@+id/text_hero_bio"
