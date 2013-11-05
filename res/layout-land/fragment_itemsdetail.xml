@@ -59,7 +59,7 @@
                     android:layout_alignLeft="@+id/text_items_dname"
                     android:layout_below="@+id/text_items_dname"
                     android:layout_marginTop="@dimen/margins_text"
-                    android:contentDescription="@string/hello_world"
+                    android:contentDescription="items_gold"
                     android:src="@drawable/gold" />
 
                 <TextView
@@ -92,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:contentDescription="@string/hello_world"
+                        android:contentDescription="items_mana"
                         android:src="@drawable/mana" />
 
                     <TextView
@@ -126,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:contentDescription="@string/hello_world"
+                        android:contentDescription="items_cd"
                         android:src="@drawable/cooldown" />
 
                     <TextView

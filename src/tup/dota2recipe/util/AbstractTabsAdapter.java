@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
@@ -23,7 +23,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
  * listens to changes in tabs, and takes care of switch to the correct paged in
  * the ViewPager whenever the selected tab changes.
  */
-public abstract class AbstractTabsAdapter extends FragmentStatePagerAdapter implements
+public abstract class AbstractTabsAdapter extends FragmentPagerAdapter implements
         ActionBar.TabListener, ViewPager.OnPageChangeListener {
     private final Context mContext;
     private final ActionBar mActionBar;

@@ -45,6 +45,9 @@ a {
 			Version: <span id="version"></span>
 		</p>
 		<p>
+			Data Version: <span id="dataVersion"></span>
+		</p>
+		<p>
 			by TUPUNCO <br /> (<a href="mailto:tupunco@gmail.com"
 				title="tupunco@gmail.com"
 				onclick="javascript:mailTo('tupunco@gmail.com');return false;">
@@ -100,6 +103,10 @@ a {
 			document.getElementById('version').innerHTML = aboutCallback
 					.getVersion();
 		}
+		function getDataVersion() {
+			document.getElementById('dataVersion').innerHTML = aboutCallback
+					.getDataVersion();
+		}
 		function mailTo(to) {
 			aboutCallback
 					.mailTo(to, document.getElementById('title').innerHTML);
@@ -109,6 +116,7 @@ a {
 			return false;
 		};
 		getVersion();
+		getDataVersion();
 	</script>
 </body>
 </html>

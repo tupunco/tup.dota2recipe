@@ -65,6 +65,20 @@ public class AboutActivity extends Activity {
         }
 
         /**
+         * get data version
+         * 
+         * @param key
+         * @return
+         */
+        @JavascriptInterface
+        public String getDataVersion()
+        {
+            return this.mContext
+                    .getResources()
+                    .getString(R.string.assets_about_dataVersion);
+        }
+
+        /**
          * MailTo
          * 
          * @param to
@@ -77,7 +91,7 @@ public class AboutActivity extends Activity {
             intent.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
             if (!TextUtils.isEmpty(subject))
                 intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-            
+
             intent = Intent.createChooser(intent, null);
             if (intent != null) {
                 this.mContext.startActivity(intent);

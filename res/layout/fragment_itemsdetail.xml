@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:contentDescription="@string/hello_world"
+                        android:contentDescription="items_mana"
                         android:src="@drawable/mana" />
 
                     <TextView
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:contentDescription="@string/hello_world"
+                        android:contentDescription="items_cd"
                         android:src="@drawable/cooldown" />
 
                     <TextView
