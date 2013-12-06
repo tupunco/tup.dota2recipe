@@ -25,6 +25,7 @@ import org.json2.JSONObject;
 import tup.dota2recipe.entity.AbilityItem;
 import tup.dota2recipe.entity.HeroDetailItem;
 import tup.dota2recipe.entity.HeroItem;
+import tup.dota2recipe.entity.HeroStatsItem;
 import tup.dota2recipe.entity.ItemsItem;
 import android.content.Context;
 import android.support.v4.util.LruCache;
@@ -160,22 +161,19 @@ final public class DataManager {
         if (mHeroList.size() > 0)
             return;
 
-        final JSONObject json = loadJsonObjectFromAssets(cContext,
-                KEY_FILE_JOSN_HEROLIST);
-
+        final JSONObject json = loadJsonObjectFromAssets(cContext, KEY_FILE_JOSN_HEROLIST);
         final Iterator<String> keyIterator = json.keys();
         HeroItem cItem = null;
         String cKeyName = null;
         while (keyIterator.hasNext()) {
             cKeyName = keyIterator.next();
-            cItem = extractHeroItem(cKeyName, json.getJSONObject(cKeyName),
-                    null);
+            cItem = extractHeroItem(cKeyName, json.getJSONObject(cKeyName), null);
             if (cItem != null) {
                 mHeroList.add(cItem);
                 mHeroMap.put(cItem.keyName, cItem);
             }
         }
-        Collections.sort(mHeroList, ALPHA_COMPARATOR);
+        Collections.sort(mHeroList, HeroItem_Default_Name_Comparator);
     }
 
     /**
@@ -189,8 +187,7 @@ final public class DataManager {
         if (TextUtils.isEmpty(keyName) || mHeroDetailCache.get(keyName) != null)
             return;
 
-        final String path = String.format(KEY_FILE_JSON_HERODETAIL_FROMART,
-                keyName);
+        final String path = String.format(KEY_FILE_JSON_HERODETAIL_FROMART, keyName);
         final JSONObject json = loadJsonObjectFromAssets(cContext, path);
 
         if (json == null || json.length() <= 0)
@@ -214,8 +211,7 @@ final public class DataManager {
         if (mItemsList.size() > 0)
             return;
 
-        final JSONObject json = loadJsonObjectFromAssets(cContext,
-                KEY_FILE_JSON_ITEMSLIST);
+        final JSONObject json = loadJsonObjectFromAssets(cContext, KEY_FILE_JSON_ITEMSLIST);
 
         final Iterator<String> keyIterator = json.keys();
         ItemsItem cItem = null;
@@ -231,8 +227,7 @@ final public class DataManager {
         // ------------fill components
         if (mItemsList != null && mItemsList.size() > 0) {
             for (ItemsItem ccItem : mItemsList) {
-                ccItem.components_i = fillItemsInfo(cContext, ccItem,
-                        ccItem.components, true);
+                ccItem.components_i = fillItemsInfo(cContext, ccItem, ccItem.components, true);
                 ccItem.tocomponents_i = fillItemsInfo(ccItem.tocomponents);
             }
         }
@@ -266,8 +261,7 @@ final public class DataManager {
         // TODO----------------
         // recipe_necronomicon:死灵书 卷轴
         // recipe_dagon:达贡之神力 卷轴
-        final List<ItemsItem> outList = new ArrayList<ItemsItem>(
-                cFillItems.length);
+        final List<ItemsItem> outList = new ArrayList<ItemsItem>(cFillItems.length);
         ItemsItem tItems = null;
         int totalCost = 0;
         for (String ccKeyName : cFillItems) {
@@ -287,8 +281,8 @@ final public class DataManager {
             recipeItems.cost = cItem.cost - totalCost;
             recipeItems.isrecipe = true;
             recipeItems.keyName = recipeItems.dname = KEY_NAME_RECIPE_ITEMS_KEYNAME;
-            recipeItems.dname_l = cContext.getResources().getString(
-                    R.string.text_items_repice_name);
+            recipeItems.dname_l = cContext.getResources()
+                                          .getString(R.string.text_items_repice_name);
             recipeItems.parent_keyName = cItem.keyName;
             outList.add(recipeItems);
         }
@@ -296,14 +290,13 @@ final public class DataManager {
     }
 
     /**
-     * HeroItem 对比 Comparator
+     * HeroItem Name 排序 Comparator
      */
-    private static final Comparator<HeroItem> ALPHA_COMPARATOR = new Comparator<HeroItem>() {
+    private static final Comparator<HeroItem> HeroItem_Default_Name_Comparator = new Comparator<HeroItem>() {
         private final Collator sCollator = Collator.getInstance();
-
         @Override
         public int compare(HeroItem object1, HeroItem object2) {
-            return sCollator.compare(object1.keyName, object2.keyName);
+            return sCollator.compare(object1.name_l, object2.name_l);
         }
     };
 
@@ -333,7 +326,41 @@ final public class DataManager {
 
         cItem.roles = toStringArray(cJsonObj.optJSONArray("roles"));
         cItem.roles_l = toStringArray(cJsonObj.optJSONArray("roles_l"));
+
+        cItem.nickname_l = toStringArray(cJsonObj.optJSONArray("nickname_l"));
+        extractHeroStatsItem(cJsonObj.optJSONObject("statsall"), cItem);
         return cItem;
+    }
+
+    /**
+     * 反序列化 JSON HeroItem.statsall 项
+     * 
+     * @return
+     */
+    private static void extractHeroStatsItem(JSONObject cJsonObj, HeroItem cItem) {
+        if (cJsonObj == null || cItem == null)
+            return;
+
+        final HeroStatsItem s = new HeroStatsItem();
+        s.lv_str = cJsonObj.optDouble("lv_mp");
+        s.init_str = cJsonObj.optDouble("init_str");
+        s.lv_agi = cJsonObj.optDouble("lv_agi");
+        s.init_agi = cJsonObj.optDouble("init_agi");
+        s.lv_int = cJsonObj.optDouble("lv_int");
+        s.init_int = cJsonObj.optDouble("init_int");
+
+        s.lv_dmg = cJsonObj.optDouble("lv_dmg");
+        s.init_max_dmg = cJsonObj.optDouble("init_max_dmg");
+        s.init_min_dmg = cJsonObj.optDouble("init_min_dmg");
+
+        s.lv_hp = cJsonObj.optDouble("lv_hp");
+        s.init_hp = cJsonObj.optDouble("init_hp");
+        s.lv_mp = cJsonObj.optDouble("init_agi");
+        s.init_mp = cJsonObj.optDouble("init_mp");
+
+        s.init_armor = cJsonObj.optDouble("init_armor");
+        s.lv_armor = cJsonObj.optDouble("lv_armor");
+        cItem.statsall = s;
     }
 
     /**
@@ -428,6 +455,7 @@ final public class DataManager {
 
         cItem.created = cJsonObj.optBoolean("created");
         cItem.ispublic = cJsonObj.optBoolean("ispublic");
+
         // --------------ItemsDetail----------
         cItem.cost = cJsonObj.optInt("cost");
         cItem.desc = cJsonObj.optString("desc");
@@ -437,6 +465,7 @@ final public class DataManager {
         cItem.lore = cJsonObj.optString("lore");
         cItem.components = toStringArray(cJsonObj.optJSONArray("components"));
         cItem.tocomponents = toStringArray(cJsonObj.optJSONArray("tocomponents"));
+        cItem.toheros = toStringArray(cJsonObj.optJSONArray("toheros"));
         return cItem;
     }
 
@@ -451,8 +480,7 @@ final public class DataManager {
     private static JSONObject loadJsonObjectFromAssets(Context cContext,
             String fileName) throws IOException, JSONException {
         final InputStream in = cContext.getAssets().open(fileName);
-        final JSONObject json = new JSONObject(streamToString(in));
-        return json;
+        return new JSONObject(streamToString(in));
     }
 
     /**
@@ -531,13 +559,11 @@ final public class DataManager {
 
         final Iterator<String> keyIterator =
                 (Iterator<String>) jsonObject.keys();
-        final Map<String, String[]> outMap =
-                new HashMap<String, String[]>(jsonObject.length());
+        final Map<String, String[]> outMap = new HashMap<String, String[]>(jsonObject.length());
         String cKeyName = null;
         while (keyIterator.hasNext()) {
             cKeyName = keyIterator.next();
-            outMap.put(cKeyName,
-                    toStringArray(jsonObject.optJSONArray(cKeyName)));
+            outMap.put(cKeyName, toStringArray(jsonObject.optJSONArray(cKeyName)));
         }
         return outMap;
     }

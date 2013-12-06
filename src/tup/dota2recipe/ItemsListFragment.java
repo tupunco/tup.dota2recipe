@@ -328,8 +328,9 @@ public class ItemsListFragment extends SherlockFragment
                 return true;
             }
 
-            if (!TextUtils.isEmpty(cDataItem.dname)) {
-                return cDataItem.dname.startsWith(prefixString);
+            if (!TextUtils.isEmpty(cDataItem.dname)
+                    && cDataItem.dname.toLowerCase().startsWith(prefixString)) {
+                return true;
             }
             return false;
         }
@@ -370,8 +371,7 @@ public class ItemsListFragment extends SherlockFragment
                         parent, false);
 
                 holder = new ViewHolder();
-                holder.text = (TextView) view
-                        .findViewById(R.id.text_items_name);
+                holder.text = (TextView) view.findViewById(R.id.text_items_name);
                 holder.image = (ImageView) view.findViewById(R.id.image_items);
 
                 view.setTag(holder);
@@ -440,18 +440,14 @@ public class ItemsListFragment extends SherlockFragment
                                 final String key_all = KEY_MENU_ITEMS_QUERY_ALL;
                                 if (!cQueryKey_qual.equals(key_all)
                                         && !TextUtils.isEmpty(cObject.qual)) {
-                                    cQuery = cObject.qual
-                                            .equals(cQueryKey_qual) ? 1
-                                            : 0;
+                                    cQuery = cObject.qual.equals(cQueryKey_qual) ? 1 : 0;
                                 }
                                 if (cQuery != 0
                                         && !cQueryKey_itemcat.equals(key_all)
                                         && !TextUtils.isEmpty(cObject.itemcat)) {
-                                    cQuery = (cObject.itemcat
-                                            .equals(cQueryKey_itemcat)
-                                            || cObject.itembasecat
-                                            .equals(cQueryKey_itemcat))
-                                            ? 1 : 0;
+                                    cQuery = (cObject.itemcat.equals(cQueryKey_itemcat)
+                                            || cObject.itembasecat.equals(cQueryKey_itemcat)) ? 1
+                                            : 0;
                                 }
                                 return cQuery == 1;
                             }

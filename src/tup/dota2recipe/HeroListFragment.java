@@ -390,8 +390,15 @@ public class HeroListFragment extends SherlockFragment
             if (cDataItem.name_l.indexOf(prefixString) > -1) {
                 return true;
             }
-            if (!TextUtils.isEmpty(cDataItem.name)) {
-                return cDataItem.name.startsWith(prefixString);
+
+            if (!TextUtils.isEmpty(cDataItem.name)
+                    && cDataItem.name.toLowerCase().startsWith(prefixString)) {
+                return true;
+            }
+
+            if (cDataItem.nickname_l != null && cDataItem.nickname_l.length > 0
+                    && Utils.exists(cDataItem.nickname_l, prefixString, true)) {
+                return true;
             }
             return false;
         }
@@ -453,8 +460,7 @@ public class HeroListFragment extends SherlockFragment
     /**
      * 
      */
-    public static class HeroListLoader extends
-            AbstractAsyncTaskLoader<HeroItem> {
+    public static class HeroListLoader extends AbstractAsyncTaskLoader<HeroItem> {
         final String[] menu_hero_query_keys;
 
         public HeroListLoader(Context context, String[] queryKeys) {
@@ -504,24 +510,16 @@ public class HeroListFragment extends SherlockFragment
                                 int cQuery = -1; //
                                 final String key_all = KEY_MENU_HERO_QUERY_ALL;
                                 if (!cQueryKey_role.equals(key_all)) {
-                                    cQuery = Utils.exists(cObject.roles,
-                                            cQueryKey_role) ? 1 : 0;
+                                    cQuery = Utils.exists(cObject.roles, cQueryKey_role) ? 1 : 0;
                                 }
-                                if (cQuery != 0
-                                        && !cquerykey_attack.equals(key_all)) {
-                                    cQuery = cObject.atk
-                                            .equals(cquerykey_attack) ? 1 : 0;
+                                if (cQuery != 0 && !cquerykey_attack.equals(key_all)) {
+                                    cQuery = cObject.atk.equals(cquerykey_attack) ? 1 : 0;
                                 }
-                                if (cQuery != 0
-                                        && !cQueryKey_type.equals(key_all)) {
-                                    cQuery = cObject.hp.equals(cQueryKey_type) ? 1
-                                            : 0;
+                                if (cQuery != 0 && !cQueryKey_type.equals(key_all)) {
+                                    cQuery = cObject.hp.equals(cQueryKey_type) ? 1 : 0;
                                 }
-                                if (cQuery != 0
-                                        && !cquerykey_factions.equals(key_all)) {
-                                    cQuery = cObject.faction
-                                            .equals(cquerykey_factions) ? 1
-                                            : 0;
+                                if (cQuery != 0 && !cquerykey_factions.equals(key_all)) {
+                                    cQuery = cObject.faction.equals(cquerykey_factions) ? 1 : 0;
                                 }
                                 return cQuery == 1;
                             }

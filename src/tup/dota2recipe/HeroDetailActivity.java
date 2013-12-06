@@ -143,7 +143,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                 return;
             }
 
-            check.setChecked(mHeroDetailItem.hasCollection == 1);
+            check.setChecked(mHeroDetailItem.hasFavorite == 1);
             Utils.configureStarredMenuItem(check);
             check.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
@@ -154,7 +154,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                     item.setChecked(isChecked);
 
                     Utils.configureStarredMenuItem(item);
-                    hero.hasCollection = isChecked ? 1 : 0;
+                    hero.hasFavorite = isChecked ? 1 : 0;
                     if (isChecked) {
                         final FavoriteItem c = new FavoriteItem();
                         c.keyName = hero.keyName;
@@ -192,8 +192,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
             // cItem.detailstats
             bindDetailstatsView(v, cItem);
 
-            ((TextView) v.findViewById(R.id.text_hero_bio))
-                    .setText(cItem.bio_l);
+            ((TextView) v.findViewById(R.id.text_hero_bio)).setText(cItem.bio_l);
 
             // cItem.itembuilds
             bindItembuildsItems(v, cItem, "Starting",
@@ -244,26 +243,26 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                     ((ImageView) v.findViewById(R.id.image_hero)),
                     cImageLoadOptions);
 
-            ((TextView) v.findViewById(R.id.text_hero_name)).setText(cItem.name);
+            final String division = cRes.getString(R.string.text_division_label);
+            final String name = (cItem.nickname_l != null && cItem.nickname_l.length > 0)
+                    ? TextUtils.join(division, cItem.nickname_l) : cItem.name;
+            ((TextView) v.findViewById(R.id.text_hero_name)).setText(name);
             ((TextView) v.findViewById(R.id.text_hero_name_l)).setText(cItem.name_l);
 
             if (cItem.roles_l != null && cItem.roles_l.length > 0) {
                 ((TextView) v.findViewById(R.id.text_hero_roles))
-                        .setText(TextUtils.join(cRes.getString(R.string.text_division_label),
-                                cItem.roles_l));
+                        .setText(TextUtils.join(division, cItem.roles_l));
             } else {
                 ((TextView) v.findViewById(R.id.text_hero_roles)).setVisibility(View.GONE);
             }
 
-            ((TextView) v.findViewById(R.id.text_hero_atk)).setText(cItem.atk_l);
-            ((TextView) v.findViewById(R.id.text_hero_faction))
-                    .setText(Utils.getMenuValue(cRes,
-                            R.array.menu_hero_factions_keys,
-                            R.array.menu_hero_factions_values, cItem.faction));
-            ((TextView) v.findViewById(R.id.text_hero_hp))
-                    .setText(Utils.getMenuValue(cRes,
-                            R.array.menu_hero_type_keys,
-                            R.array.menu_hero_type_values, cItem.hp));
+            final String hp_faction_atk = String.format("%s/%s/%s",
+                    Utils.getMenuValue(cRes, R.array.menu_hero_type_keys,
+                            R.array.menu_hero_type_values, cItem.hp),
+                    Utils.getMenuValue(cRes, R.array.menu_hero_factions_keys,
+                            R.array.menu_hero_factions_values, cItem.faction),
+                    cItem.atk_l);
+            ((TextView) v.findViewById(R.id.text_hero_hp_faction_atk)).setText(hp_faction_atk);
         }
 
         /**
@@ -367,7 +366,7 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                     text.setPadding(0, 3, 0, 3);
                     if (i <= 0) {
                         text.setText(ii == 0 ? detailstatsLabel[i] : iItem[ii]);
-                    } else { //INFO:源数据颠倒
+                    } else { // INFO:源数据颠倒
                         text.setText(ii == 0 ? detailstatsLabel[i] : iItem[iCount - ii]);
                     }
                     row.addView(text, rowLayout);
@@ -476,10 +475,10 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
                     final HeroDetailItem date = DataManager.getHeroDetailItem(
                             HeroDetailFragment.this.getSherlockActivity(),
                             params[0]);
-                    if (date != null && date.hasCollection < 0) {
+                    if (date != null && date.hasFavorite < 0) {
                         final boolean has = DBAdapter.getInstance()
                                 .hasFavorite(params[0]);
-                        date.hasCollection = has ? 1 : 0;
+                        date.hasFavorite = has ? 1 : 0;
                     }
                     return date;
                 } catch (IOException e) {

@@ -62,10 +62,16 @@ public final class ItemsItem {
     public List<ItemsItem> tocomponents_i;
 
     /**
+     * 此物品推荐英雄使用
+     */
+    public String[] toheros;
+    public List<HeroItem> toheros_i;
+   
+    /**
      * 是否已经收藏
      * -1 未加载, 0 否, 1 是
      */
-    public int hasCollection = -1;
+    public int hasFavorite = -1;
 
     @Override
     public String toString() {

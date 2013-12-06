@@ -35,10 +35,21 @@ public class HeroItem {
     public String[] roles_l;
 
     /**
+     * 昵称/别称
+     * 
+     * FROM:http://dota2.replays.net/
+     */
+    public String[] nickname_l;
+    /**
+     * 本英雄统计参数信息
+     */
+    public HeroStatsItem statsall;
+
+    /**
      * 是否已经收藏
      * -1 未加载, 0 否, 1 是
      */
-    public int hasCollection = -1;
+    public int hasFavorite = -1;
 
     @Override
     public String toString() {

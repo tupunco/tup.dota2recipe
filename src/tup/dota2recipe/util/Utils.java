@@ -209,10 +209,26 @@ public final class Utils {
      * @return
      */
     public static boolean exists(String[] collection, String predicate) {
+        return exists(collection, predicate, false);
+    }
+
+    /**
+     * 字符串数组内指定项存在与否
+     * 
+     * @param collection
+     * @param predicate
+     * @param ignoreCase
+     * @return
+     */
+    public static boolean exists(String[] collection, String predicate, boolean ignoreCase) {
         if (collection != null && predicate != null) {
             for (String cItem : collection) {
-                if (predicate.equals(cItem)) {
-                    return true;
+                if (ignoreCase) {
+                    if (predicate.equalsIgnoreCase(cItem))
+                        return true;
+                } else {
+                    if (predicate.equals(cItem))
+                        return true;
                 }
             }
         }

@@ -152,7 +152,7 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
                 return;
             }
 
-            check.setChecked(mItemsItem.hasCollection == 1);
+            check.setChecked(mItemsItem.hasFavorite == 1);
             Utils.configureStarredMenuItem(check, mItemsItem.isrecipe);
             if (mItemsItem.isrecipe) {
                 return;
@@ -167,7 +167,7 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
                     item.setChecked(isChecked);
 
                     Utils.configureStarredMenuItem(item, items.isrecipe);
-                    items.hasCollection = isChecked ? 1 : 0;
+                    items.hasFavorite = isChecked ? 1 : 0;
                     if (isChecked) {
                         final FavoriteItem c = new FavoriteItem();
                         c.keyName = items.keyName;
@@ -319,10 +319,10 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
                     final ItemsItem cItem = DataManager.getItemsItem(
                             ItemsDetailFragment.this.getSherlockActivity(),
                             keyName);
-                    if (!isrecipe && cItem != null && cItem.hasCollection < 0) {
+                    if (!isrecipe && cItem != null && cItem.hasFavorite < 0) {
                         final boolean has = DBAdapter.getInstance()
                                 .hasFavorite(keyName);
-                        cItem.hasCollection = has ? 1 : 0;
+                        cItem.hasFavorite = has ? 1 : 0;
                     }
                     // 合成卷轴数据合并
                     if (isrecipe) {
