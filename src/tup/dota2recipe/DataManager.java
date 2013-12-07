@@ -229,9 +229,35 @@ final public class DataManager {
             for (ItemsItem ccItem : mItemsList) {
                 ccItem.components_i = fillItemsInfo(cContext, ccItem, ccItem.components, true);
                 ccItem.tocomponents_i = fillItemsInfo(ccItem.tocomponents);
+                ccItem.toheros_i = fillItemsToHeroInfo(cContext, ccItem.toheros);
             }
         }
-        // Collections.sort(mHeroList, ALPHA_COMPARATOR);
+    }
+
+    /**
+     * 
+     * @return
+     * @throws JSONException
+     * @throws IOException
+     */
+    private static List<HeroItem> fillItemsToHeroInfo(Context cContext, String[] cToHeros)
+            throws IOException, JSONException {
+        if (cContext == null || cToHeros == null || cToHeros.length <= 0)
+            return null;
+
+        tryLoadHeroData(cContext);
+
+        final List<HeroItem> outList = new ArrayList<HeroItem>(cToHeros.length);
+        HeroItem tHeroItem = null;
+        for (String ccKeyName : cToHeros) {
+            tHeroItem = mHeroMap.get(ccKeyName);
+            if (tHeroItem != null) {
+                outList.add(tHeroItem);
+            } else {
+                Log.e("DataManager", "-fillItemsToHeroInfo-----NULL-" + ccKeyName);
+            }
+        }
+        return outList;
     }
 
     /**
@@ -282,7 +308,7 @@ final public class DataManager {
             recipeItems.isrecipe = true;
             recipeItems.keyName = recipeItems.dname = KEY_NAME_RECIPE_ITEMS_KEYNAME;
             recipeItems.dname_l = cContext.getResources()
-                                          .getString(R.string.text_items_repice_name);
+                    .getString(R.string.text_items_repice_name);
             recipeItems.parent_keyName = cItem.keyName;
             outList.add(recipeItems);
         }
@@ -294,6 +320,7 @@ final public class DataManager {
      */
     private static final Comparator<HeroItem> HeroItem_Default_Name_Comparator = new Comparator<HeroItem>() {
         private final Collator sCollator = Collator.getInstance();
+
         @Override
         public int compare(HeroItem object1, HeroItem object2) {
             return sCollator.compare(object1.name_l, object2.name_l);

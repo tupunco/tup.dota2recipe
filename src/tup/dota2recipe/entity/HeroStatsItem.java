@@ -3,13 +3,15 @@
  */
 package tup.dota2recipe.entity;
 
+import java.util.Locale;
+
 
 /**
  * 英雄统计参数实体
  * 
  * @author tupunco
  */
-public class HeroStatsItem {
+public final class HeroStatsItem {
     /**
      * 初始力量
      */
@@ -81,7 +83,7 @@ public class HeroStatsItem {
     @Override
     public String toString() {
         return String
-                .format("[HeroStatsItem: init_str=%f, init_agi=%f, init_int=%f, lv_str=%f, lv_agi=%f, lv_int=%f, init_hp=%f, init_mp=%f, init_armor=%f, lv_hp=%f, lv_mp=%f, lv_armor=%f, init_min_dmg=%f, init_max_dmg=%f, lv_dmg=%f]",
+                .format(Locale.getDefault(), "[HeroStatsItem: init_str=%f, init_agi=%f, init_int=%f, lv_str=%f, lv_agi=%f, lv_int=%f, init_hp=%f, init_mp=%f, init_armor=%f, lv_hp=%f, lv_mp=%f, lv_armor=%f, init_min_dmg=%f, init_max_dmg=%f, lv_dmg=%f]",
                         init_str, init_agi, init_int, lv_str, lv_agi, lv_int, init_hp, init_mp,
                         init_armor, lv_hp, lv_mp, lv_armor, init_min_dmg, init_max_dmg, lv_dmg);
     }

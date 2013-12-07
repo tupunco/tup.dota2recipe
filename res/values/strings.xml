@@ -33,6 +33,7 @@
     <string name="text_items_cd_label">冷却时间:</string>
     <string name="text_items_components_label">合成所需物品:</string>
     <string name="text_items_tocomponents_label">可合成物品:</string>
+    <string name="text_items_toheros_label">推荐英雄使用:</string>
     <string name="text_hero_abilities_label">技能:</string>
     <string name="text_hero_itembuilds_starting_label">出门装备:</string>
     <string name="text_hero_itembuilds_early_label">前期装备:</string>

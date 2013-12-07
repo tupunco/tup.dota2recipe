@@ -206,7 +206,30 @@
                     myview:horizontalSpacing="@dimen/margins_base"
                     myview:verticalSpacing="@dimen/margins_base" >
                 </tup.dota2recipe.view.SimpleGridView>
+            </LinearLayout><LinearLayout
+                android:id="@+id/llayout_items_toheros"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margins_base"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/text_items_toheros_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_items_toheros_label"
+                    android:textStyle="bold" />
+
+                <tup.dota2recipe.view.SimpleGridView
+                    android:id="@+id/grid_items_toheros"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    myview:horizontalSpacing="@dimen/margins_base"
+                    myview:verticalSpacing="@dimen/margins_base" >
+                </tup.dota2recipe.view.SimpleGridView>
             </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

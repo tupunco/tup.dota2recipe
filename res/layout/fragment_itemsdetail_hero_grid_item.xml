@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/simplegridview_selector_background"
+    android:orientation="vertical"
+    android:padding="@dimen/margins_base"
+    tools:ignore="NestedScrolling,HardcodedText" >
+
+    <ImageView
+        android:id="@+id/image_hero"
+        android:layout_width="@dimen/itemsdata_hero_grid_image_width"
+        android:layout_height="@dimen/itemsdata_hero_grid_image_height"
+        android:layout_gravity="center"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitStart"
+        android:src="@drawable/loading" />
+
+    <TextView
+        android:id="@+id/text_hero_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="@dimen/margins_text"
+        android:singleLine="true"
+        android:text="@string/app_name" />
+
+</LinearLayout>

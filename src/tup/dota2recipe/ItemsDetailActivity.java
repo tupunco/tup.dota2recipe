@@ -5,8 +5,10 @@ import java.io.IOException;
 import org.json2.JSONException;
 
 import tup.dota2recipe.adapter.DBAdapter;
+import tup.dota2recipe.adapter.HeroImagesAdapter;
 import tup.dota2recipe.adapter.ItemsImagesAdapter;
 import tup.dota2recipe.entity.FavoriteItem;
+import tup.dota2recipe.entity.HeroItem;
 import tup.dota2recipe.entity.ItemsItem;
 import tup.dota2recipe.util.Utils;
 import tup.dota2recipe.view.SimpleGridView;
@@ -262,6 +264,17 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
                 v.findViewById(R.id.llayout_items_tocomponents)
                         .setVisibility(View.GONE);
             }
+            // toheros
+            if (cItem.toheros != null && cItem.toheros.length > 0) {
+                final HeroImagesAdapter adapter = new HeroImagesAdapter(
+                        cContext, mImageLoadOptions, cItem.toheros_i);
+                final SimpleGridView grid = (SimpleGridView) v
+                        .findViewById(R.id.grid_items_toheros);
+                grid.setAdapter(adapter);
+                grid.setOnItemClickListener(this);
+            } else {
+                v.findViewById(R.id.llayout_items_toheros).setVisibility(View.GONE);
+            }
         }
 
         /**
@@ -276,7 +289,7 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
             if (v == null || cItem == null || cImageLoadOptions == null) {
                 return;
             }
-            
+
             ImageLoader.getInstance().displayImage(
                     Utils.getItemsImageUri(cItem.keyName),
                     ((ImageView) v.findViewById(R.id.image_items)),
@@ -359,10 +372,14 @@ public class ItemsDetailActivity extends SherlockFragmentActivity {
         };
 
         @Override
-        public void onItemClick(ListAdapter parent, View view, int position,
-                long id) {
-            Utils.startItemsDetailActivity(this.getSherlockActivity(),
-                    (ItemsItem) parent.getItem(position));
+        public void onItemClick(ListAdapter parent, View view, int position, long id) {
+            if (parent instanceof ItemsImagesAdapter) {
+                Utils.startItemsDetailActivity(this.getSherlockActivity(),
+                        (ItemsItem) parent.getItem(position));
+            } else if (parent instanceof HeroImagesAdapter) {
+                Utils.startHeroDetailActivity(this.getSherlockActivity(),
+                        (HeroItem) parent.getItem(position));
+            }
         };
     }
 }
