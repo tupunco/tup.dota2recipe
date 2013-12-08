@@ -114,6 +114,23 @@ public final class CollectionUtils {
     }
 
     /**
+     * clone all elements
+     * 
+     * @param inputCollection
+     *            the collection to get the input from, may not be null
+     * @return all elements (new list)
+     * @throws NullPointerException
+     *             if the input collection is null
+     */
+    public static <E> Collection<E> cloneEx(Collection<E> inputCollection) {
+        final ArrayList<E> outputCollection = new ArrayList<E>(inputCollection.size());
+        for (Iterator<E> iter = inputCollection.iterator(); iter.hasNext();) {
+            outputCollection.add(iter.next());
+        }
+        return outputCollection;
+    }
+
+    /**
      * Selects all elements from input collection which match the given
      * predicate
      * into an output collection.

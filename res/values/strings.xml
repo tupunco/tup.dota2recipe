@@ -22,6 +22,7 @@
     <string name="menu_hero_attack">按攻击</string>
     <string name="menu_hero_factions">按阵营</string>
     <string name="menu_hero_type">按类型</string>
+    <string name="menu_hero_statsall">排序</string>
     <string name="menu_items_qual">按品质</string>
     <string name="menu_items_itemcat">按分类</string>
     <string name="menu_addfavorite">添加到收藏</string>

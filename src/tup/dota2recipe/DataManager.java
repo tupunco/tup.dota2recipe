@@ -27,6 +27,7 @@ import tup.dota2recipe.entity.HeroDetailItem;
 import tup.dota2recipe.entity.HeroItem;
 import tup.dota2recipe.entity.HeroStatsItem;
 import tup.dota2recipe.entity.ItemsItem;
+import tup.dota2recipe.entity.StatsallBaseComparator;
 import android.content.Context;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
@@ -37,7 +38,7 @@ import android.util.Log;
  * 
  * @author tupunco
  */
-final public class DataManager {
+public final class DataManager {
     /**
      * 合成卷轴物品 keyname
      */
@@ -55,17 +56,113 @@ final public class DataManager {
      */
     private final static String KEY_FILE_JSON_HERODETAIL_FROMART = "hero_detail/hero-%s.json";
 
-    private static List<HeroItem> mHeroList = new ArrayList<HeroItem>();
-    private static Map<String, HeroItem> mHeroMap = new HashMap<String, HeroItem>();
-    private static LruCache<String, HeroDetailItem> mHeroDetailCache =
+    private final static List<HeroItem> mHeroList = new ArrayList<HeroItem>();
+    private final static Map<String, HeroItem> mHeroMap = new HashMap<String, HeroItem>();
+    private final static LruCache<String, HeroDetailItem> mHeroDetailCache =
             new LruCache<String, HeroDetailItem>(50);
-    private static List<ItemsItem> mItemsList = new ArrayList<ItemsItem>();
-    private static Map<String, ItemsItem> mItemsMap = new HashMap<String, ItemsItem>();
+    private final static List<ItemsItem> mItemsList = new ArrayList<ItemsItem>();
+    private final static Map<String, ItemsItem> mItemsMap = new HashMap<String, ItemsItem>();
+
+    /**
+     * HeroItem Name 排序 Comparator
+     */
+    private static final Comparator<HeroItem> mHeroItemDefaultNameComparator = new Comparator<HeroItem>() {
+        private final Collator sCollator = Collator.getInstance();
+
+        @Override
+        public int compare(HeroItem object1, HeroItem object2) {
+            return sCollator.compare(object1.name_l, object2.name_l);
+        }
+    };
+
+    /**
+     * HeroItem statsall.* 排序 Comparator Map
+     */
+    private static final HashMap<String, Comparator<HeroItem>> mHeroItemStatsallComparatorMap = new
+            HashMap<String, Comparator<HeroItem>>();
+
+    static {
+        mHeroItemStatsallComparatorMap.put("default", mHeroItemDefaultNameComparator);
+        mHeroItemStatsallComparatorMap.put("init_str", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.init_str, stat2.init_str);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("lv_str", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.lv_str, stat2.lv_str);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("init_agi", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.init_agi, stat2.init_agi);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("lv_agi", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.lv_agi, stat2.lv_agi);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("init_int", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.init_int, stat2.init_int);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("lv_int", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.lv_int, stat2.lv_int);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("init_hp", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.init_hp, stat2.init_hp);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("init_mp", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.init_mp, stat2.init_mp);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("init_armor", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.init_armor, stat2.init_armor);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("init_min_dmg", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.init_min_dmg, stat2.init_min_dmg);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("init_max_dmg", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.init_max_dmg, stat2.init_max_dmg);
+            }
+        });
+        mHeroItemStatsallComparatorMap.put("lv_dmg", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.lv_dmg, stat2.lv_dmg);
+            }
+        });
+    }
 
     /**
      * 获取英雄列表数据
      * 
      * @param cContext
+     * @param comparatorType
+     * 
      * @return
      * @throws JSONException
      * @throws IOException
@@ -74,6 +171,23 @@ final public class DataManager {
             throws JSONException, IOException {
         tryLoadHeroData(cContext);
         return mHeroList;
+    }
+
+    /**
+     * 英雄列表排序
+     * 
+     * @param heroList
+     * @param comparatorType
+     */
+    public synchronized static void sortHeroList(List<HeroItem> heroList, String comparatorType) {
+        if (heroList == null || TextUtils.isEmpty(comparatorType))
+            return;
+
+        Comparator<HeroItem> cComparator = null;
+        if ((cComparator = mHeroItemStatsallComparatorMap.get(comparatorType)) == null) {
+            cComparator = mHeroItemDefaultNameComparator;
+        }
+        Collections.sort(heroList, cComparator);
     }
 
     /**
@@ -173,7 +287,8 @@ final public class DataManager {
                 mHeroMap.put(cItem.keyName, cItem);
             }
         }
-        Collections.sort(mHeroList, HeroItem_Default_Name_Comparator);
+
+        Collections.sort(mHeroList, mHeroItemDefaultNameComparator);
     }
 
     /**
@@ -316,18 +431,6 @@ final public class DataManager {
     }
 
     /**
-     * HeroItem Name 排序 Comparator
-     */
-    private static final Comparator<HeroItem> HeroItem_Default_Name_Comparator = new Comparator<HeroItem>() {
-        private final Collator sCollator = Collator.getInstance();
-
-        @Override
-        public int compare(HeroItem object1, HeroItem object2) {
-            return sCollator.compare(object1.name_l, object2.name_l);
-        }
-    };
-
-    /**
      * 反序列化 JSON HeroItem(英雄) 项
      * 
      * @param cHeroKey
@@ -369,7 +472,7 @@ final public class DataManager {
             return;
 
         final HeroStatsItem s = new HeroStatsItem();
-        s.lv_str = cJsonObj.optDouble("lv_mp");
+        s.lv_str = cJsonObj.optDouble("lv_str");
         s.init_str = cJsonObj.optDouble("init_str");
         s.lv_agi = cJsonObj.optDouble("lv_agi");
         s.init_agi = cJsonObj.optDouble("init_agi");
@@ -382,7 +485,7 @@ final public class DataManager {
 
         s.lv_hp = cJsonObj.optDouble("lv_hp");
         s.init_hp = cJsonObj.optDouble("init_hp");
-        s.lv_mp = cJsonObj.optDouble("init_agi");
+        s.lv_mp = cJsonObj.optDouble("lv_mp");
         s.init_mp = cJsonObj.optDouble("init_mp");
 
         s.init_armor = cJsonObj.optDouble("init_armor");

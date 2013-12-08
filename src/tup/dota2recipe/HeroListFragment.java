@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -55,6 +56,7 @@ public class HeroListFragment extends SherlockFragment
     private static final int KEY_MENU_HERO_TYPE = 1;
     private static final int KEY_MENU_HERO_ATTACK = 2;
     private static final int KEY_MENU_HERO_FACTIONS = 3;
+    private static final int KEY_MENU_HERO_STATSALL = 4;
 
     private MenuItem menu_hero_role = null;
     private String[] menu_hero_role_values = null;
@@ -64,9 +66,12 @@ public class HeroListFragment extends SherlockFragment
     private String[] menu_hero_attack_values = null;
     private MenuItem menu_hero_factions = null;
     private String[] menu_hero_factions_values = null;
+    private MenuItem menu_hero_statsall = null;
+    private String[] menu_hero_statsall_values = null;
 
-    private String[] menu_hero_query_keys = new String[4];
+    private String[] menu_hero_query_keys = new String[5];
     private static final String KEY_MENU_HERO_QUERY_ALL = "all";
+    private static final String KEY_MENU_HERO_QUERY_DEFAULT = "default";
     private static final String KEY_STATE_MENU_HERO_QUERY_KEYS = "KEY_STATE_MENU_HERO_QUERY_KEYS";
 
     private HeroListAdapter mAdapter = null;
@@ -81,6 +86,7 @@ public class HeroListFragment extends SherlockFragment
         menu_hero_query_keys[KEY_MENU_HERO_TYPE] = KEY_MENU_HERO_QUERY_ALL;
         menu_hero_query_keys[KEY_MENU_HERO_ATTACK] = KEY_MENU_HERO_QUERY_ALL;
         menu_hero_query_keys[KEY_MENU_HERO_FACTIONS] = KEY_MENU_HERO_QUERY_ALL;
+        menu_hero_query_keys[KEY_MENU_HERO_STATSALL] = KEY_MENU_HERO_QUERY_DEFAULT;
     }
 
     @Override
@@ -146,35 +152,38 @@ public class HeroListFragment extends SherlockFragment
         final Resources cRes = this.getResources();
         // 按定位
         menu_hero_role = menu.findItem(R.id.menu_hero_role);
-        menu_hero_role_values = cRes
-                .getStringArray(R.array.menu_hero_role_values);
+        menu_hero_role_values = cRes.getStringArray(R.array.menu_hero_role_values);
         createHeroOptionsSubMenu(menu_hero_role, KEY_MENU_HERO_ROLE,
                 R.array.menu_hero_role_keys, menu_hero_role_values,
                 mMenuHeroRoleMenuItemClickListener);
 
         // 按属性类型
         menu_hero_type = menu.findItem(R.id.menu_hero_type);
-        menu_hero_type_values = cRes
-                .getStringArray(R.array.menu_hero_type_values);
+        menu_hero_type_values = cRes.getStringArray(R.array.menu_hero_type_values);
         createHeroOptionsSubMenu(menu_hero_type, KEY_MENU_HERO_TYPE,
                 R.array.menu_hero_type_keys, menu_hero_type_values,
                 mMenuHeroTypeMenuItemClickListener);
 
         // 按攻击类型
         menu_hero_attack = menu.findItem(R.id.menu_hero_attack);
-        menu_hero_attack_values = cRes
-                .getStringArray(R.array.menu_hero_attack_values);
+        menu_hero_attack_values = cRes.getStringArray(R.array.menu_hero_attack_values);
         createHeroOptionsSubMenu(menu_hero_attack, KEY_MENU_HERO_ATTACK,
                 R.array.menu_hero_attack_keys, menu_hero_attack_values,
                 mMenuHeroAttackMenuItemClickListener);
 
         // 按阵营
         menu_hero_factions = menu.findItem(R.id.menu_hero_factions);
-        menu_hero_factions_values = cRes
-                .getStringArray(R.array.menu_hero_factions_values);
+        menu_hero_factions_values = cRes.getStringArray(R.array.menu_hero_factions_values);
         createHeroOptionsSubMenu(menu_hero_factions, KEY_MENU_HERO_FACTIONS,
                 R.array.menu_hero_factions_keys, menu_hero_factions_values,
                 mMenuHeroFactionsMenuItemClickListener);
+
+        // 排序-按英雄统计参数
+        menu_hero_statsall = menu.findItem(R.id.menu_hero_statsall);
+        menu_hero_statsall_values = cRes.getStringArray(R.array.menu_hero_statsall_values);
+        createHeroOptionsSubMenu(menu_hero_statsall, KEY_MENU_HERO_STATSALL,
+                R.array.menu_hero_statsall_keys, menu_hero_statsall_values,
+                mMenuHeroStatsAllMenuItemClickListener);
 
         // hero search view
         setupHeroSearchView(menu.findItem(R.id.action_search));
@@ -206,16 +215,14 @@ public class HeroListFragment extends SherlockFragment
      *            创建后的子菜单单击监听
      */
     private void createHeroOptionsSubMenu(MenuItem cMenu, int cMenuQueryKeyId,
-            int cSubMenuKeysId,
-            String[] cSubMenuValues,
+            int cSubMenuKeysId, String[] cSubMenuValues,
             MenuItem.OnMenuItemClickListener menuItemClickListener) {
         if (cMenu == null || menuItemClickListener == null) {
             return;
         }
 
         final SubMenu cSubMenu = cMenu.getSubMenu();
-        final String[] cSubMenuKeys = this.getResources().getStringArray(
-                cSubMenuKeysId);
+        final String[] cSubMenuKeys = this.getResources().getStringArray(cSubMenuKeysId);
         MenuItem cMenuItem = null;
         int cIndex = 0;
         for (String cMenuKey : cSubMenuKeys) {
@@ -225,7 +232,9 @@ public class HeroListFragment extends SherlockFragment
 
         // 设置菜单默认值
         final String queryKey = menu_hero_query_keys[cMenuQueryKeyId];
-        if (!queryKey.equals(KEY_MENU_HERO_QUERY_ALL) && cSubMenuKeys != null) {
+        if (!queryKey.equals(KEY_MENU_HERO_QUERY_ALL)
+                && !queryKey.equals(KEY_MENU_HERO_QUERY_DEFAULT)
+                && cSubMenuKeys != null) {
             final int queryValueIndex = Utils.indexOf(cSubMenuValues, queryKey);
             if (queryValueIndex >= 0 && cSubMenuKeys.length > queryValueIndex) {
                 cMenu.setTitle(cSubMenuKeys[queryValueIndex]);
@@ -253,17 +262,20 @@ public class HeroListFragment extends SherlockFragment
 
         final String cMenuQueryValue = menu_hero_query_keys[cHeroMenuItemKeyId];
         final String cMenuValue = cMenuHeroValues[cItem.getItemId()];
+
         Log.v(TAG,
                 String.format(
                         "MenuHeroMenuItemClickListener-Key:%s-ID:%d-OldValue:%s-NewValue:%s",
-                        cHeroMenuItemKeyId,
-                        cItem.getItemId(), cMenuQueryValue, cMenuValue));
+                        cHeroMenuItemKeyId, cItem.getItemId(), cMenuQueryValue, cMenuValue));
 
         if (!cMenuQueryValue.equals(cMenuValue)) {
             menu_hero_query_keys[cHeroMenuItemKeyId] = cMenuValue;
             getLoaderManager().restartLoader(0, null, this);
         }
+
         if (cMenuValue.equals(KEY_MENU_HERO_QUERY_ALL)) {
+            cParentItem.setTitle(cMenuItemDefaultTitleId);
+        } else if (cMenuValue.equals(KEY_MENU_HERO_QUERY_DEFAULT)) {
             cParentItem.setTitle(cMenuItemDefaultTitleId);
         }
     }
@@ -281,7 +293,6 @@ public class HeroListFragment extends SherlockFragment
             return true;
         }
     };
-
     /**
      * 按属性类型筛选子菜单单击监听
      */
@@ -295,7 +306,6 @@ public class HeroListFragment extends SherlockFragment
             return true;
         }
     };
-
     /**
      * 按攻击类型筛选子菜单单击监听
      */
@@ -322,21 +332,32 @@ public class HeroListFragment extends SherlockFragment
             return true;
         }
     };
+    /**
+     * 排序-按英雄统计参数子菜单单击监听
+     */
+    private MenuItem.OnMenuItemClickListener mMenuHeroStatsAllMenuItemClickListener = new MenuItem.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            doMenuHeroMenuItemClickListener(item, menu_hero_statsall,
+                    KEY_MENU_HERO_STATSALL,
+                    menu_hero_statsall_values, R.string.menu_hero_statsall);
+
+            return true;
+        }
+    };
 
     @Override
     public Loader<List<HeroItem>> onCreateLoader(int arg0, Bundle arg1) {
-        this.getSherlockActivity()
-                .setSupportProgressBarIndeterminateVisibility(true);
-        return new HeroListLoader(this.getSherlockActivity(),
-                this.menu_hero_query_keys);
+        final SherlockFragmentActivity c = this.getSherlockActivity();
+        c.setSupportProgressBarIndeterminateVisibility(true);
+        return new HeroListLoader(c, this.menu_hero_query_keys);
     }
 
     @Override
     public void onLoadFinished(Loader<List<HeroItem>> loader,
             List<HeroItem> data) {
         mAdapter.setData(data);
-        this.getSherlockActivity()
-                .setSupportProgressBarIndeterminateVisibility(false);
+        this.getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
     }
 
     @Override
@@ -417,8 +438,7 @@ public class HeroListFragment extends SherlockFragment
 
         public HeroListAdapter(Context context) {
             super(context);
-            mInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             setNotifyOnChange(true);
         }
 
@@ -496,13 +516,14 @@ public class HeroListFragment extends SherlockFragment
             final String cQueryKey_type = cQueryKeys[KEY_MENU_HERO_TYPE];
             final String cquerykey_attack = cQueryKeys[KEY_MENU_HERO_ATTACK];
             final String cquerykey_factions = cQueryKeys[KEY_MENU_HERO_FACTIONS];
+            final String cquerykey_statsall = cQueryKeys[KEY_MENU_HERO_STATSALL];
 
             if (!cQueryKey_role.equals(KEY_MENU_HERO_QUERY_ALL)
                     || !cQueryKey_type.equals(KEY_MENU_HERO_QUERY_ALL)
                     || !cquerykey_attack.equals(KEY_MENU_HERO_QUERY_ALL)
                     || !cquerykey_factions.equals(KEY_MENU_HERO_QUERY_ALL))
             {
-                return (ArrayList<HeroItem>) CollectionUtils.select(
+                mOriginalList = (ArrayList<HeroItem>) CollectionUtils.select(
                         mOriginalList,
                         new Predicate<HeroItem>() {
                             @Override
@@ -525,6 +546,12 @@ public class HeroListFragment extends SherlockFragment
                             }
                         });
             }
+
+            if (!cquerykey_statsall.equals(KEY_MENU_HERO_QUERY_DEFAULT)) {
+                mOriginalList = (ArrayList<HeroItem>) CollectionUtils.cloneEx(mOriginalList);
+                DataManager.sortHeroList(mOriginalList, cquerykey_statsall);
+            }
+
             return mOriginalList;
         }
     }
