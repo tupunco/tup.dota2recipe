@@ -6,7 +6,7 @@ Dota2图谱/秘籍, android app.
 
 Dota2 游戏中英雄/物品资料合集软件, 全部数据离线.
 
-###Developed By
+###Developed By:
 
 * TUPUNCO - <tupunco@gmail.com>
 
@@ -19,8 +19,32 @@ Dota2 游戏中英雄/物品资料合集软件, 全部数据离线.
 ###未完成功能:
 * 搜索提供者
 * 分享
+* 英雄参数升级模拟
 
-###第三方类库
+###升级日志:
+
+>####v0.6.0(8)
+>>1. 更新到 6.79c 最新'英雄/物品'数据, 增加新英雄'军团指挥官'
+>>2. '英雄列表'增加根据基础参数排序功能, '英雄/物品'搜索功能做了优化
+>>3. '物品详细页'增加本物品'推荐英雄使用'功能
+>>4. '剧毒术士/骷髅王(冥魂大帝)'肖像技能图片更新
+>>5. 修复'英雄详细页'几个屏幕尺寸显示效果
+>>6. 更换为重新设计应用图标
+>####v0.5.6(7)
+>>1. 增加 "大地之灵/灰烬之灵" 英雄数据
+>>2. 更新 "风暴之灵/幻影刺客/撼地者/育母蜘蛛/兽王/黑暗贤者" 等英雄 "肖像/技能图标"
+>>3. 修复 "达贡之神力/死灵书" 升级合成中的价格错误
+>####v0.5.5(6)
+>>1. 同步 6.79 最新数据
+>>2. '关于'页面增加显示'数据版本(Data Version)'
+>####v0.5.4(5)
+>>1. 更新到 6.79 数据
+>>2. 修复'紫怨/净魂之刃'总价及合成卷轴价格错误
+>>3. 适配几种尺寸屏幕
+>####v0.5.2(4)
+>>1. 更新 6.78 版本英雄物品数据
+
+###第三方类库:
 
 ####ActionBarSherlock ([Link](http://actionbarsherlock.com))
 by Jake Wharton, licensed under the Apache 2.0 license
@@ -38,9 +62,11 @@ licensed under the Apache 2.0 license
 Created by Artem Votincev (apmem.org) Distributed under BSD license
 Uncaught ReferenceError: aboutCallback is not defined
 
+------------------------------
 ####开放源代码许可: [Apache 2.0 license][2]
 
 ####本软件中的英雄物品数据及图片来源于 [dota2.com](http://www.dota2.com), 版权归 Valve 所有.
+####本软件英雄别称来源于[锐派游戏](http://dota2.replays.net/)
 
 [1]: ic_launcher-web.png
 [2]: LICENSE.txt
