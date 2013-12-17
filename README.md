@@ -65,11 +65,14 @@ licensed under the Apache 2.0 license
 ###Android flow layout ([Link](https://github.com/ApmeM/android-flowlayout))
 Created by Artem Votincev (apmem.org) Distributed under BSD license
 
+###SwipeBackLayout ([Link](https://github.com/Issacw0ng/SwipeBackLayout))
+by Issac Wong, Licensed under the Apache License, Version 2.0
+
 ------------------------------
 ####开放源代码许可: [Apache 2.0 license][2]
 
 ####本软件中的英雄物品数据及图片来源于 [dota2.com](http://www.dota2.com), 版权归 Valve 所有.
-####本软件英雄别称来源于[锐派游戏](http://dota2.replays.net/)
+####本软件英雄别称来源于[锐派游戏](http://dota2.replays.net/).
 
 [1]: ic_launcher-web.png
 [2]: LICENSE.txt

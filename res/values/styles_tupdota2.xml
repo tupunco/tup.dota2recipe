@@ -45,7 +45,7 @@
         <item name="android:listViewStyle">@style/ListViewTupDotA2</item>
         <item name="android:listViewWhiteStyle">@style/ListViewTupDotA2.White</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemTupDotA2</item>
-        
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="ActionBar.Solid.Tupdota2" parent="@style/Widget.Sherlock.ActionBar.Solid">

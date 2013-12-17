@@ -51,7 +51,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * 
  * @author tupunco
  */
-public class HeroDetailActivity extends SherlockFragmentActivity {
+public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
     private static final String TAG = "HeroDetailActivity";
     /**
      * 英雄名称 Intent 参数
@@ -60,9 +60,9 @@ public class HeroDetailActivity extends SherlockFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Utils.fillFragment(this, HeroDetailFragment.newInstance(

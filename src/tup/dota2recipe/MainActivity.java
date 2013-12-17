@@ -19,7 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * @author tupunco
  * 
  */
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends SwipeBackSherlockFragmentActivity {
     TabsAdapter mTabsAdapter;
     ViewPager mViewPager;
 
@@ -28,9 +28,9 @@ public class MainActivity extends SherlockFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
 
         final ActionBar actionBar = this.getSupportActionBar();
