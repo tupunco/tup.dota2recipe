@@ -15,23 +15,23 @@ import tup.dota2recipe.view.SimpleGridView;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -40,7 +40,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * 
  * @author tupunco
  */
-public class ItemsDetailActivity extends SwipeBackSherlockFragmentActivity {
+public class ItemsDetailActivity extends SwipeBackAppCompatFragmentActivity {
     private static final String TAG = "ItemsDetailActivity";
     /**
      * 物品名称 Intent 参数
@@ -55,7 +55,7 @@ public class ItemsDetailActivity extends SwipeBackSherlockFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
-        
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Utils.fillFragment(this, ItemsDetailFragment.newInstance(
@@ -76,7 +76,7 @@ public class ItemsDetailActivity extends SwipeBackSherlockFragmentActivity {
     /**
      * 物品详细 Fragment
      */
-    public static class ItemsDetailFragment extends SherlockFragment implements
+    public static class ItemsDetailFragment extends Fragment implements
             SimpleGridView.OnItemClickListener {
         private DisplayImageOptions mImageLoadOptions;
         private ItemsItem mItemsItem;
@@ -195,8 +195,8 @@ public class ItemsDetailActivity extends SwipeBackSherlockFragmentActivity {
             }
 
             mItemsItem = cItem;
-            final SherlockFragmentActivity cContext = this
-                    .getSherlockActivity();
+            final FragmentActivity cContext = this
+                    .getActivity();
             cContext.invalidateOptionsMenu();
             cContext.setTitle(cItem.dname_l);
             final View v = this.getView();
@@ -306,8 +306,8 @@ public class ItemsDetailActivity extends SwipeBackSherlockFragmentActivity {
         private final AsyncTask<String, Void, ItemsItem> mLoaderTask = new AsyncTask<String, Void, ItemsItem>() {
             @Override
             protected void onPreExecute() {
-                ItemsDetailFragment.this.getSherlockActivity()
-                        .setSupportProgressBarIndeterminateVisibility(true);
+                ItemsDetailFragment.this.getActivity()
+                        .setProgressBarIndeterminateVisibility(true);
 
                 super.onPreExecute();
             }
@@ -316,8 +316,8 @@ public class ItemsDetailActivity extends SwipeBackSherlockFragmentActivity {
             protected void onCancelled() {
                 super.onCancelled();
 
-                ItemsDetailFragment.this.getSherlockActivity()
-                        .setSupportProgressBarIndeterminateVisibility(false);
+                ItemsDetailFragment.this.getActivity()
+                        .setProgressBarIndeterminateVisibility(false);
             }
 
             @Override
@@ -330,7 +330,7 @@ public class ItemsDetailActivity extends SwipeBackSherlockFragmentActivity {
                         keyName = params[1];
                     }
                     final ItemsItem cItem = DataManager.getItemsItem(
-                            ItemsDetailFragment.this.getSherlockActivity(),
+                            ItemsDetailFragment.this.getActivity(),
                             keyName);
                     if (!isrecipe && cItem != null && cItem.hasFavorite < 0) {
                         final boolean has = DBAdapter.getInstance()
@@ -366,18 +366,18 @@ public class ItemsDetailActivity extends SwipeBackSherlockFragmentActivity {
                 super.onPostExecute(result);
 
                 ItemsDetailFragment.this.bindItemsItemView(result);
-                ItemsDetailFragment.this.getSherlockActivity()
-                        .setSupportProgressBarIndeterminateVisibility(false);
+                ItemsDetailFragment.this.getActivity()
+                        .setProgressBarIndeterminateVisibility(false);
             }
         };
 
         @Override
         public void onItemClick(ListAdapter parent, View view, int position, long id) {
             if (parent instanceof ItemsImagesAdapter) {
-                Utils.startItemsDetailActivity(this.getSherlockActivity(),
+                Utils.startItemsDetailActivity(this.getActivity(),
                         (ItemsItem) parent.getItem(position));
             } else if (parent instanceof HeroImagesAdapter) {
-                Utils.startHeroDetailActivity(this.getSherlockActivity(),
+                Utils.startHeroDetailActivity(this.getActivity(),
                         (HeroItem) parent.getItem(position));
             }
         };

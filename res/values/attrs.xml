@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="dividerHorizontal" format="reference" />
-
+    <!-- <attr name="dividerHorizontal" format="reference" /> -->
     <declare-styleable name="Divider">
         <attr name="android:orientation" />
         <attr name="marginTop" format="dimension" />

@@ -4,6 +4,7 @@
     xmlns:myview="http://schemas.android.com/apk/res/tup.dota2recipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fadeScrollbars="true"
     android:fillViewport="true"
     tools:context=".ItemsDetailActivity"
     tools:ignore="NestedScrolling,HardcodedText" >
@@ -206,7 +207,9 @@
                     myview:horizontalSpacing="@dimen/margins_base"
                     myview:verticalSpacing="@dimen/margins_base" >
                 </tup.dota2recipe.view.SimpleGridView>
-            </LinearLayout><LinearLayout
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/llayout_items_toheros"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -229,7 +232,6 @@
                     myview:verticalSpacing="@dimen/margins_base" >
                 </tup.dota2recipe.view.SimpleGridView>
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 

@@ -20,7 +20,7 @@
 
 <resources>
 
-    <style name="Theme.Tupdota2" parent="@style/Theme.Sherlock">
+    <style name="Theme.Tupdota2" parent="@style/Theme.AppCompat">
         <item name="actionBarItemBackground">@drawable/selectable_background_tupdota2</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Tupdota2</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Tupdota2</item>
@@ -48,20 +48,20 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="ActionBar.Solid.Tupdota2" parent="@style/Widget.Sherlock.ActionBar.Solid">
+    <style name="ActionBar.Solid.Tupdota2" parent="@style/Widget.AppCompat.ActionBar.Solid">
         <item name="android:background">@drawable/ab_solid_tupdota2</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_tupdota2</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_tupdota2</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Tupdota2</item>
     </style>
 
-    <style name="ActionBar.Transparent.Tupdota2" parent="@style/Widget.Sherlock.ActionBar">
+    <style name="ActionBar.Transparent.Tupdota2" parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/ab_transparent_tupdota2</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Tupdota2</item>
     </style>
 
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Tupdota2.Widget" parent="@style/Theme.Sherlock">
+    <style name="Theme.Tupdota2.Widget" parent="@style/Theme.AppCompat">
         <item name="android:popupMenuStyle">@style/PopupMenu.Tupdota2</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Tupdota2</item>
     </style>

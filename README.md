@@ -50,8 +50,8 @@ Dota2 游戏中英雄/物品资料合集软件, 全部数据离线.
 
 ###第三方类库:
 
-####ActionBarSherlock ([Link](http://actionbarsherlock.com))
-by Jake Wharton, licensed under the Apache 2.0 license
+####android-support-v4/android-support-v7-appcompat ([Link](https://developer.android.com/tools/support-library/index.html))
+licensed under the Apache 2.0 license
 
 ####Universal Image Loader for Android ([Link](https://github.com/nostra13/Android-Universal-Image-Loader))
 by Sergey Tarasevich, Licensed under the BSD 3-clause

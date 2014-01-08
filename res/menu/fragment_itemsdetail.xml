@@ -1,4 +1,5 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/menu_check_addcollection"
@@ -6,7 +7,7 @@
         android:checked="false"
         android:icon="@drawable/ic_action_favorite2"
         android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/menu_addfavorite"/>
+        android:title="@string/menu_addfavorite"
+        app:showAsAction="always"/>
 
 </menu>

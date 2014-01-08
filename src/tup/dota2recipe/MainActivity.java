@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.Window;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -19,7 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * @author tupunco
  * 
  */
-public class MainActivity extends SwipeBackSherlockFragmentActivity {
+public class MainActivity extends SwipeBackAppCompatFragmentActivity {
     TabsAdapter mTabsAdapter;
     ViewPager mViewPager;
 
@@ -54,7 +54,7 @@ public class MainActivity extends SwipeBackSherlockFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
 
@@ -99,7 +99,7 @@ public class MainActivity extends SwipeBackSherlockFragmentActivity {
      */
     public static class TabsAdapter extends AbstractTabsAdapter {
 
-        public TabsAdapter(SherlockFragmentActivity activity, ViewPager pager) {
+        public TabsAdapter(ActionBarActivity activity, ViewPager pager) {
             super(activity, pager);
         }
 

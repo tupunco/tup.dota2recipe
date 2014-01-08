@@ -1,45 +1,46 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/menu_hero_type"
-        android:showAsAction="always|withText"
-        android:title="@string/menu_hero_type">
+        android:title="@string/menu_hero_type"
+        app:showAsAction="always|withText">
         <menu>
         </menu>
     </item>
     <item
         android:id="@+id/menu_hero_role"
-        android:showAsAction="always|withText"
-        android:title="@string/menu_hero_role">
+        android:title="@string/menu_hero_role"
+        app:showAsAction="always|withText">
         <menu>
         </menu>
     </item>
     <item
         android:id="@+id/menu_hero_attack"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_hero_attack">
+        android:title="@string/menu_hero_attack"
+        app:showAsAction="ifRoom|withText">
         <menu>
         </menu>
     </item>
     <item
         android:id="@+id/menu_hero_factions"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_hero_factions">
+        android:title="@string/menu_hero_factions"
+        app:showAsAction="ifRoom|withText">
         <menu>
         </menu>
     </item>
     <item
         android:id="@+id/menu_hero_statsall"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_hero_statsall">
+        android:title="@string/menu_hero_statsall"
+        app:showAsAction="ifRoom|withText">
         <menu>
         </menu>
     </item>
     <item
         android:id="@+id/action_search"
-        android:actionViewClass="com.actionbarsherlock.widget.SearchView"
         android:icon="@drawable/ic_action_search"
-        android:showAsAction="ifRoom|collapseActionView"
-        android:title="@string/action_bar_search"/>
+        android:title="@string/action_bar_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"/>
 
 </menu>

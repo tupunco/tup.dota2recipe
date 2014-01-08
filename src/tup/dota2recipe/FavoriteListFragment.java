@@ -10,6 +10,7 @@ import tup.dota2recipe.util.Utils;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.Log;
@@ -19,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 /**
@@ -28,7 +28,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
  * @author tupunco
  * 
  */
-public class FavoriteListFragment extends SherlockListFragment
+public class FavoriteListFragment extends ListFragment
         implements OnItemClickListener,
         LoaderManager.LoaderCallbacks<List<FavoriteItem>> {
     private static final String TAG = "FavoriteListFragment";
@@ -74,7 +74,7 @@ public class FavoriteListFragment extends SherlockListFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new FavoriteListAdapter(this.getSherlockActivity());
+        mAdapter = new FavoriteListAdapter(this.getActivity());
         this.setListAdapter(mAdapter);
         this.setEmptyText(this.getResources().getString(R.string.text_favorite_emptylist));
         this.getListView().setOnItemClickListener(this);
@@ -93,24 +93,24 @@ public class FavoriteListFragment extends SherlockListFragment
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final FavoriteItem cItem = (FavoriteItem) parent.getItemAtPosition(position);
         if (cItem.type == FavoriteItem.KEY_TYPE_HERO) {
-            Utils.startHeroDetailActivity(this.getSherlockActivity(), cItem.heroData);
+            Utils.startHeroDetailActivity(this.getActivity(), cItem.heroData);
         } else if (cItem.type == FavoriteItem.KEY_TYPE_ITEMS) {
-            Utils.startItemsDetailActivity(this.getSherlockActivity(), cItem.itemsData);
+            Utils.startItemsDetailActivity(this.getActivity(), cItem.itemsData);
         }
     }
 
     @Override
     public Loader<List<FavoriteItem>> onCreateLoader(int arg0, Bundle arg1) {
-        this.getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+        this.getActivity().setProgressBarIndeterminateVisibility(true);
         this.setListShown(false);
-        return new ItemsListLoader(this.getSherlockActivity());
+        return new ItemsListLoader(this.getActivity());
     }
 
     @Override
     public void onLoadFinished(Loader<List<FavoriteItem>> loader,
             List<FavoriteItem> data) {
         mAdapter.setData(data);
-        this.getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+        this.getActivity().setProgressBarIndeterminateVisibility(false);
         this.setListShown(true);
     }
 
