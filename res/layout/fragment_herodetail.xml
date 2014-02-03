@@ -4,7 +4,10 @@
     xmlns:myview="http://schemas.android.com/apk/res/tup.dota2recipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fadeScrollbars="true"
     android:fillViewport="true"
+    android:fitsSystemWindows="true"
     tools:context=".HeroDetailActivity"
     tools:ignore="NestedScrolling,HardcodedText" >
 

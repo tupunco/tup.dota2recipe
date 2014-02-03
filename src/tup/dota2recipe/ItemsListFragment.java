@@ -17,11 +17,18 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,12 +37,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
-import com.actionbarsherlock.widget.SearchView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -45,7 +46,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * @author tupunco
  * 
  */
-public class ItemsListFragment extends SherlockFragment
+public class ItemsListFragment extends Fragment
         implements SearchView.OnQueryTextListener, OnItemClickListener,
         LoaderManager.LoaderCallbacks<List<ItemsItem>> {
 
@@ -101,7 +102,7 @@ public class ItemsListFragment extends SherlockFragment
         final View v = inflater.inflate(R.layout.fragment_itemsdata, container,
                 false);
 
-        mAdapter = new ItemsListAdapter(this.getSherlockActivity());
+        mAdapter = new ItemsListAdapter(this.getActivity());
         mAdapter.setFilterAccepter(mItemsListFilterAccepter);
 
         mGridView = ((GridView) v.findViewById(R.id.itemsdata_grid));
@@ -117,7 +118,7 @@ public class ItemsListFragment extends SherlockFragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
             long id) {
-        Utils.startItemsDetailActivity(this.getSherlockActivity(),
+        Utils.startItemsDetailActivity(this.getActivity(),
                 (ItemsItem) parent.getItemAtPosition(position));
     }
 
@@ -160,7 +161,7 @@ public class ItemsListFragment extends SherlockFragment
      * @param searchItem
      */
     private void setupItemsSearchView(MenuItem searchItem) {
-        mSearchView = (SearchView) searchItem.getActionView();
+        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         // TODO SearchableInfo
         if (mSearchView != null)
             mSearchView.setOnQueryTextListener(this);
@@ -283,9 +284,9 @@ public class ItemsListFragment extends SherlockFragment
 
     @Override
     public Loader<List<ItemsItem>> onCreateLoader(int arg0, Bundle arg1) {
-        this.getSherlockActivity()
-                .setSupportProgressBarIndeterminateVisibility(true);
-        return new ItemsListLoader(this.getSherlockActivity(),
+        this.getActivity()
+                .setProgressBarIndeterminateVisibility(true);
+        return new ItemsListLoader(this.getActivity(),
                 this.menu_items_query_keys);
     }
 
@@ -293,8 +294,8 @@ public class ItemsListFragment extends SherlockFragment
     public void onLoadFinished(Loader<List<ItemsItem>> loader,
             List<ItemsItem> data) {
         mAdapter.setData(data);
-        this.getSherlockActivity()
-                .setSupportProgressBarIndeterminateVisibility(false);
+        this.getActivity()
+                .setProgressBarIndeterminateVisibility(false);
     }
 
     @Override

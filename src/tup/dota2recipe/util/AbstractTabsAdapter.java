@@ -8,10 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * This is a helper class that implements the management of tabs and all details
@@ -40,7 +39,7 @@ public abstract class AbstractTabsAdapter extends FragmentPagerAdapter implement
         }
     }
 
-    public AbstractTabsAdapter(SherlockFragmentActivity activity, ViewPager pager) {
+    public AbstractTabsAdapter(ActionBarActivity activity, ViewPager pager) {
         super(activity.getSupportFragmentManager());
         mContext = activity;
         mActionBar = activity.getSupportActionBar();

@@ -1,6 +1,5 @@
 package tup.dota2recipe;
 
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +12,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-public class AboutActivity extends SwipeBackActivity {
+public class AboutActivity extends SwipeBackAppCompatFragmentActivity {
 
     WebView webv_about_desc = null;
 

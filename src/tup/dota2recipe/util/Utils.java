@@ -14,8 +14,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.view.MenuItem;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 /**
@@ -176,7 +176,7 @@ public final class Utils {
      */
     public static DisplayImageOptions createDisplayImageOptions() {
         return new DisplayImageOptions.Builder()
-                .showStubImage(com.actionbarsherlock.R.drawable.abs__progress_medium_holo)
+                .showStubImage(R.drawable.abs__progress_medium_holo)
                 .showImageForEmptyUri(R.drawable.hero_for_empty_url)
                 .cacheInMemory()
                 .build();

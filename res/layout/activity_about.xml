@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".AboutActivity"
     tools:ignore="HardcodedText" >
@@ -9,7 +10,7 @@
     <WebView
         android:id="@+id/webv_about_desc"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
+        android:layout_height="match_parent"
         android:background="#DDEEEEEE" />
 
 </LinearLayout>

@@ -21,14 +21,20 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,12 +43,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -51,7 +51,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * 
  * @author tupunco
  */
-public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
+public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
     private static final String TAG = "HeroDetailActivity";
     /**
      * 英雄名称 Intent 参数
@@ -82,10 +82,11 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
     /**
      * 英雄详细 Fragment
      */
-    public static class HeroDetailFragment extends SherlockFragment
+    public static class HeroDetailFragment extends Fragment
             implements SimpleGridView.OnItemClickListener {
         private DisplayImageOptions mImageLoadOptions;
         private HeroDetailItem mHeroDetailItem;
+        private MenuItem mMenuCheckAddCollection;
 
         /**
          * 
@@ -107,8 +108,8 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
             setHasOptionsMenu(true);
             mImageLoadOptions = Utils.createDisplayImageOptions();
 
-            final String hero_keyName = this.getArguments().getString(
-                    KEY_HERO_DETAIL_KEY_NAME);
+            final String hero_keyName = this.getArguments()
+                    .getString(KEY_HERO_DETAIL_KEY_NAME);
             Log.v(TAG, "arg.hero_keyName=" + hero_keyName);
             if (!TextUtils.isEmpty(hero_keyName)) {
                 Utils.executeAsyncTask(mLoaderTask, hero_keyName);
@@ -118,8 +119,7 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_herodetail, container,
-                    false);
+            return inflater.inflate(R.layout.fragment_herodetail, container, false);
         }
 
         @Override
@@ -134,20 +134,27 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
             super.onPrepareOptionsMenu(menu);
 
             // ----加收藏按钮---
-            if (mHeroDetailItem == null) {
-                return;
-            }
-            final MenuItem check =
-                    menu.findItem(R.id.menu_check_addcollection);
-            if (check == null) {
+            final MenuItem check = menu.findItem(R.id.menu_check_addcollection);
+            mMenuCheckAddCollection = check;
+            tryFillMenuCheckAddCollection();
+        }
+
+        /**
+         * fill MenuItem Check AddCollection
+         */
+        private void tryFillMenuCheckAddCollection() {
+            Log.d(TAG, String.format("mMenuCheckAddCollection=%s,mHeroDetailItem=%s",
+                    mMenuCheckAddCollection, mHeroDetailItem));
+
+            if (mMenuCheckAddCollection == null || mHeroDetailItem == null) {
                 return;
             }
 
+            final MenuItem check = mMenuCheckAddCollection;
             check.setChecked(mHeroDetailItem.hasFavorite == 1);
             Utils.configureStarredMenuItem(check);
             check.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
-                @SuppressLint("NewApi")
                 public boolean onMenuItemClick(MenuItem item) {
                     final boolean isChecked = !item.isChecked();
                     final HeroDetailItem hero = mHeroDetailItem;
@@ -180,8 +187,12 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
             }
 
             mHeroDetailItem = cItem;
-            final SherlockFragmentActivity cContext = this.getSherlockActivity();
-            cContext.invalidateOptionsMenu();
+            final FragmentActivity cContext = this.getActivity();
+            if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB) {
+                cContext.invalidateOptionsMenu();
+            } else {
+                tryFillMenuCheckAddCollection();
+            }
             cContext.setTitle(cItem.name_l);
 
             final View v = this.getView();
@@ -417,7 +428,7 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
             final SimpleGridView grid = (SimpleGridView) cView
                     .findViewById(itemsGridResId);
             final ItemsImagesAdapter adapter = new ItemsImagesAdapter(
-                    this.getSherlockActivity(),
+                    this.getActivity(),
                     mImageLoadOptions, cItembuilds);
             grid.setAdapter(adapter);
             grid.setOnItemClickListener(this);
@@ -432,7 +443,7 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
         private final ImageGetter mImageGetter = new ImageGetter() {
             @Override
             public Drawable getDrawable(String source) {
-                final Resources res = getSherlockActivity().getResources();
+                final Resources res = getActivity().getResources();
                 Drawable drawable = null;
                 if (source.equals("mana"))
                     drawable = res.getDrawable(R.drawable.mana);
@@ -455,8 +466,8 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
         private final AsyncTask<String, Void, HeroDetailItem> mLoaderTask = new AsyncTask<String, Void, HeroDetailItem>() {
             @Override
             protected void onPreExecute() {
-                HeroDetailFragment.this.getSherlockActivity()
-                        .setSupportProgressBarIndeterminateVisibility(true);
+                HeroDetailFragment.this.getActivity()
+                        .setProgressBarIndeterminateVisibility(true);
 
                 super.onPreExecute();
             }
@@ -465,15 +476,15 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
             protected void onCancelled() {
                 super.onCancelled();
 
-                HeroDetailFragment.this.getSherlockActivity()
-                        .setSupportProgressBarIndeterminateVisibility(false);
+                HeroDetailFragment.this.getActivity()
+                        .setProgressBarIndeterminateVisibility(false);
             }
 
             @Override
             protected HeroDetailItem doInBackground(String... params) {
                 try {
                     final HeroDetailItem date = DataManager.getHeroDetailItem(
-                            HeroDetailFragment.this.getSherlockActivity(),
+                            HeroDetailFragment.this.getActivity(),
                             params[0]);
                     if (date != null && date.hasFavorite < 0) {
                         final boolean has = DBAdapter.getInstance()
@@ -494,8 +505,8 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
                 super.onPostExecute(result);
 
                 HeroDetailFragment.this.bindHeroItemView(result);
-                HeroDetailFragment.this.getSherlockActivity()
-                        .setSupportProgressBarIndeterminateVisibility(false);
+                HeroDetailFragment.this.getActivity()
+                        .setProgressBarIndeterminateVisibility(false);
             }
         };
 
@@ -617,11 +628,11 @@ public class HeroDetailActivity extends SwipeBackSherlockFragmentActivity {
         @Override
         public void onItemClick(ListAdapter parent, View view, int position,
                 long id) {
-            // Utils.startHeroDetailActivity(this.getSherlockActivity(),
+            // Utils.startHeroDetailActivity(this.getActivity(),
             // (HeroDetailItem) parent.getItemAtPosition(position));
             final Object cItem = parent.getItem(position);
             if (cItem instanceof ItemsItem) {
-                Utils.startItemsDetailActivity(this.getSherlockActivity(),
+                Utils.startItemsDetailActivity(this.getActivity(),
                         (ItemsItem) cItem);
             }
         };

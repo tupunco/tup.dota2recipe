@@ -1,24 +1,26 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <item 
+    <item
         android:id="@+id/menu_items_qual"
-        android:showAsAction="always|withText"
-        android:title="@string/menu_items_qual" android:visible="false">
+        android:title="@string/menu_items_qual"
+        android:visible="false"
+        app:showAsAction="always|withText">
         <menu>
         </menu>
     </item>
     <item
         android:id="@+id/menu_items_itemcat"
-        android:showAsAction="always|withText"
-        android:title="@string/menu_items_itemcat">
+        android:title="@string/menu_items_itemcat"
+        app:showAsAction="always|withText">
         <menu>
         </menu>
     </item>
     <item
         android:id="@+id/action_search"
-        android:actionViewClass="com.actionbarsherlock.widget.SearchView"
         android:icon="@drawable/ic_action_search"
-        android:showAsAction="ifRoom|collapseActionView"
-        android:title="@string/action_bar_search"/>
+        android:title="@string/action_bar_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"/>
 
 </menu>
