@@ -64,10 +64,24 @@ public class FavoriteListFragment extends ListFragment
     public void onStart() {
         super.onStart();
 
+        tryReloadFavoriteData();
+    }
+
+    /**
+     * 
+     */
+    private void tryReloadFavoriteData() {
         if (mFavoriteDataReload) {
             getLoaderManager().restartLoader(0, null, this);
             mFavoriteDataReload = false;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        tryReloadFavoriteData();
     }
 
     @Override

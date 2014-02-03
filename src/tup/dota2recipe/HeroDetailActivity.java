@@ -86,6 +86,7 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
             implements SimpleGridView.OnItemClickListener {
         private DisplayImageOptions mImageLoadOptions;
         private HeroDetailItem mHeroDetailItem;
+        private MenuItem mMenuCheckAddCollection;
 
         /**
          * 
@@ -107,8 +108,8 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
             setHasOptionsMenu(true);
             mImageLoadOptions = Utils.createDisplayImageOptions();
 
-            final String hero_keyName = this.getArguments().getString(
-                    KEY_HERO_DETAIL_KEY_NAME);
+            final String hero_keyName = this.getArguments()
+                    .getString(KEY_HERO_DETAIL_KEY_NAME);
             Log.v(TAG, "arg.hero_keyName=" + hero_keyName);
             if (!TextUtils.isEmpty(hero_keyName)) {
                 Utils.executeAsyncTask(mLoaderTask, hero_keyName);
@@ -118,8 +119,7 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_herodetail, container,
-                    false);
+            return inflater.inflate(R.layout.fragment_herodetail, container, false);
         }
 
         @Override
@@ -134,20 +134,27 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
             super.onPrepareOptionsMenu(menu);
 
             // ----加收藏按钮---
-            if (mHeroDetailItem == null) {
-                return;
-            }
-            final MenuItem check =
-                    menu.findItem(R.id.menu_check_addcollection);
-            if (check == null) {
+            final MenuItem check = menu.findItem(R.id.menu_check_addcollection);
+            mMenuCheckAddCollection = check;
+            tryFillMenuCheckAddCollection();
+        }
+
+        /**
+         * fill MenuItem Check AddCollection
+         */
+        private void tryFillMenuCheckAddCollection() {
+            Log.d(TAG, String.format("mMenuCheckAddCollection=%s,mHeroDetailItem=%s",
+                    mMenuCheckAddCollection, mHeroDetailItem));
+
+            if (mMenuCheckAddCollection == null || mHeroDetailItem == null) {
                 return;
             }
 
+            final MenuItem check = mMenuCheckAddCollection;
             check.setChecked(mHeroDetailItem.hasFavorite == 1);
             Utils.configureStarredMenuItem(check);
             check.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
-                @SuppressLint("NewApi")
                 public boolean onMenuItemClick(MenuItem item) {
                     final boolean isChecked = !item.isChecked();
                     final HeroDetailItem hero = mHeroDetailItem;
@@ -181,7 +188,11 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
 
             mHeroDetailItem = cItem;
             final FragmentActivity cContext = this.getActivity();
-            cContext.invalidateOptionsMenu();
+            if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB) {
+                cContext.invalidateOptionsMenu();
+            } else {
+                tryFillMenuCheckAddCollection();
+            }
             cContext.setTitle(cItem.name_l);
 
             final View v = this.getView();

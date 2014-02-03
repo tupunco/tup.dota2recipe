@@ -10,7 +10,8 @@ import android.view.View;
 /**
  * @author Yrom
  */
-public class SwipeBackAppCompatFragmentActivity extends ActionBarActivity implements SwipeBackActivityBase{
+public class SwipeBackAppCompatFragmentActivity extends ActionBarActivity
+        implements SwipeBackActivityBase {
     private SwipeBackActivityHelper mHelper;
 
     @Override
@@ -33,11 +34,12 @@ public class SwipeBackAppCompatFragmentActivity extends ActionBarActivity implem
             return v;
         return mHelper.findViewById(id);
     }
-    
+
     @Override
     public SwipeBackLayout getSwipeBackLayout() {
         return mHelper.getSwipeBackLayout();
     }
+
     @Override
     public void setSwipeBackEnable(boolean enable) {
         getSwipeBackLayout().setEnableGesture(enable);

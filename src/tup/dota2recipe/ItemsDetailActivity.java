@@ -80,6 +80,7 @@ public class ItemsDetailActivity extends SwipeBackAppCompatFragmentActivity {
             SimpleGridView.OnItemClickListener {
         private DisplayImageOptions mImageLoadOptions;
         private ItemsItem mItemsItem;
+        private MenuItem mMenuCheckAddCollection;
 
         static ItemsDetailFragment newInstance(String items_keyName) {
             return newInstance(items_keyName, null);
@@ -145,15 +146,20 @@ public class ItemsDetailActivity extends SwipeBackAppCompatFragmentActivity {
             super.onPrepareOptionsMenu(menu);
 
             // ----加收藏按钮---
-            if (mItemsItem == null) {
-                return;
-            }
-            final MenuItem check =
-                    menu.findItem(R.id.menu_check_addcollection);
-            if (check == null) {
+            final MenuItem check = menu.findItem(R.id.menu_check_addcollection);
+            mMenuCheckAddCollection = check;
+            tryFillMenuCheckAddCollection();
+        }
+
+        /**
+         * fill MenuItem Check AddCollection
+         */
+        private void tryFillMenuCheckAddCollection() {
+            if (mMenuCheckAddCollection == null || mItemsItem == null) {
                 return;
             }
 
+            final MenuItem check = mMenuCheckAddCollection;
             check.setChecked(mItemsItem.hasFavorite == 1);
             Utils.configureStarredMenuItem(check, mItemsItem.isrecipe);
             if (mItemsItem.isrecipe) {
@@ -162,7 +168,6 @@ public class ItemsDetailActivity extends SwipeBackAppCompatFragmentActivity {
 
             check.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
-                @SuppressLint("NewApi")
                 public boolean onMenuItemClick(MenuItem item) {
                     final boolean isChecked = !item.isChecked();
                     final ItemsItem items = mItemsItem;
@@ -181,6 +186,7 @@ public class ItemsDetailActivity extends SwipeBackAppCompatFragmentActivity {
                     return true;
                 }
             });
+
         }
 
         /**
@@ -195,21 +201,22 @@ public class ItemsDetailActivity extends SwipeBackAppCompatFragmentActivity {
             }
 
             mItemsItem = cItem;
-            final FragmentActivity cContext = this
-                    .getActivity();
-            cContext.invalidateOptionsMenu();
+            final FragmentActivity cContext = this.getActivity();
+            if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB) {
+                cContext.invalidateOptionsMenu();
+            } else {
+                tryFillMenuCheckAddCollection();
+            }
             cContext.setTitle(cItem.dname_l);
             final View v = this.getView();
             bindItemsItemSimpleView(v, cItem, mImageLoadOptions);
 
             // 合成卷轴处理
             if (cItem.isrecipe) {
-                final View layout_items_desc = v
-                        .findViewById(R.id.layout_items_desc);
+                final View layout_items_desc = v.findViewById(R.id.layout_items_desc);
                 layout_items_desc.setVisibility(View.GONE);
 
-                final View layout_items_desc1 = v
-                        .findViewById(R.id.layout_items_desc1);
+                final View layout_items_desc1 = v.findViewById(R.id.layout_items_desc1);
                 if (layout_items_desc1 != null) {
                     layout_items_desc1.setVisibility(View.GONE);
                 }
