@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="app_name">Dota2 图谱</string>
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
     <string name="action_bar_search">搜索</string>
-    <string name="assets_about_dataVersion">6.79c|20131216</string>
+    <string name="assets_about_dataVersion">6.80|20140207</string>
     <!-- Activity title -->
     <string name="title_activity_items_detail">物品详细</string>
     <string name="title_activity_hero_detail">英雄详细</string>
@@ -49,7 +49,7 @@
         <item>智力</item>
         <item>敏捷</item>
         <item>力量</item>
-        <item>攻击</item>
+        <item>伤害</item>
         <item>移速</item>
         <item>护甲</item>
     </string-array>
@@ -57,10 +57,10 @@
         <item>等级</item>
         <item>生命值</item>
         <item>魔法值</item>
-        <item>伤害值</item>
-        <item>护甲值</item>
-        <item>视野距离</item>
-        <item>攻击距离</item>
+        <item>攻击力</item>
+        <item>护甲</item>
+        <item>视野范围</item>
+        <item>攻击范围</item>
         <item>弹道速度</item>
     </string-array>
 

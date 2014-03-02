@@ -6,6 +6,7 @@ import tup.dota2recipe.R;
 import tup.dota2recipe.entity.HeroItem;
 import tup.dota2recipe.entity.ItemsItem;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
@@ -291,5 +293,27 @@ public final class Utils {
             }
         }
         return null;
+    }
+
+    /**
+     * 
+     * @param activity
+     * @param id
+     * @return
+     */
+    @SuppressWarnings({ "unchecked" })
+    public static <T extends View> T findById(Activity activity, int id) {
+        return (T) activity.findViewById(id);
+    }
+
+    /**
+     * 
+     * @param activity
+     * @param id
+     * @return
+     */
+    @SuppressWarnings({ "unchecked" })
+    public static <T extends View> T findById(View view, int id) {
+        return (T) view.findViewById(id);
     }
 }

@@ -1,5 +1,6 @@
 package tup.dota2recipe;
 
+import tup.dota2recipe.util.Utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +23,7 @@ public class AboutActivity extends SwipeBackAppCompatFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        webv_about_desc = (WebView) this.findViewById(R.id.webv_about_desc);
+        webv_about_desc = Utils.findById(this, R.id.webv_about_desc);
         webv_about_desc.getSettings().setJavaScriptEnabled(true);
         webv_about_desc.addJavascriptInterface(new JsCallbackObj(this), "aboutCallback");
         webv_about_desc.loadUrl("file:///android_asset/about/about.html");
@@ -104,8 +105,7 @@ public class AboutActivity extends SwipeBackAppCompatFragmentActivity {
          */
         @JavascriptInterface
         public void showToast(String msg) {
-            Toast.makeText(mContext, msg, Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }
