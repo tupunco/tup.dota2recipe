@@ -1,23 +1,33 @@
 package tup.dota2recipe;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /**
  * @author Yrom
  */
 public class SwipeBackAppCompatFragmentActivity extends ActionBarActivity
 {
+
+    // implements SwipeBackActivityBase {
+    // private SwipeBackActivityHelper mHelper;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // mHelper = new SwipeBackActivityHelper(this);
+        // mHelper.onActivityCreate();
+
+        final SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.actionbar_bg);
+        tintManager.setNavigationBarTintResource(R.color.statusbar_bg);
+    }
+
     /*
-     * implements SwipeBackActivityBase {
-     * private SwipeBackActivityHelper mHelper;
-     * 
-     * @Override
-     * protected void onCreate(Bundle savedInstanceState) {
-     * super.onCreate(savedInstanceState);
-     * mHelper = new SwipeBackActivityHelper(this);
-     * mHelper.onActivityCreate();
-     * }
-     * 
      * @Override
      * protected void onPostCreate(Bundle savedInstanceState) {
      * super.onPostCreate(savedInstanceState);
@@ -47,4 +57,5 @@ public class SwipeBackAppCompatFragmentActivity extends ActionBarActivity
      * getSwipeBackLayout().scrollToFinishActivity();
      * }
      */
+
 }

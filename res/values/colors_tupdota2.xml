@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<!--
+     File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -18,5 +19,9 @@
 -->
 
 <resources>
+
     <color name="pressed_tupdota2">#CC4C1A13</color>
+    <color name="actionbar_bg">#FF1a1a1a</color>
+    <color name="statusbar_bg">#FF1a1a1a</color>
+
 </resources>

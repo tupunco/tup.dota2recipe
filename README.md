@@ -22,6 +22,15 @@ Dota2 游戏中英雄/物品资料合集软件, 全部数据离线.
 * 英雄参数升级模拟
 
 ###升级日志:
+>####v0.6.2(10)
+>>1. 更新到 6.81 最新'英雄/物品'数据
+>>2. 增加对 Android 4.4 沉浸模式支持 
+
+>####v0.6.1(9)
+>>1. 更新到 6.80 最新'英雄/物品'数据
+>>2. 增加新英雄'凤凰/恐怖利刃'
+>>3. '英雄详细页'部分文案修改
+>>4. 暂时屏蔽'滑动返回'功能
 
 >####v0.6.0(8)
 >>1. 更新到 6.79c 最新'英雄/物品'数据, 增加新英雄'军团指挥官'
@@ -67,6 +76,9 @@ Created by Artem Votincev (apmem.org) Distributed under BSD license
 
 ###SwipeBackLayout ([Link](https://github.com/Issacw0ng/SwipeBackLayout))
 by Issac Wong, Licensed under the Apache License, Version 2.0
+
+###Android System Bar Tint ([Link](https://github.com/jgilfelt/SystemBarTint))
+by readyState Software Ltd, Licensed under the Apache License, Version 2.0
 
 ------------------------------
 ####开放源代码许可: [Apache 2.0 license][2]
