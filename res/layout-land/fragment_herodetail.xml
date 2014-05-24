@@ -28,6 +28,34 @@
                 android:scaleType="fitStart"
                 android:src="@drawable/loading" />
 
+            <!--
+            <LinearLayout
+                android:id="@+id/llayout_hero_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/image_hero"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/image_hero_name_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="false"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/hero_empty_icon" />
+
+                <TextView
+                    android:id="@+id/text_hero_name_l"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="name"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textIsSelectable="false" />
+            </LinearLayout>
+            -->
+
             <TextView
                 android:id="@+id/text_hero_name_l"
                 android:layout_width="wrap_content"

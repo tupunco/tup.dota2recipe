@@ -1,5 +1,7 @@
 package tup.dota2recipe.util;
 
+import java.lang.reflect.Method;
+
 import tup.dota2recipe.HeroDetailActivity;
 import tup.dota2recipe.ItemsDetailActivity;
 import tup.dota2recipe.R;
@@ -11,12 +13,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.Html.ImageGetter;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
@@ -29,9 +35,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 public final class Utils {
     private final static String s_ItemsImage_Format = "assets://items_images/%s_lg.jpg";
     private final static String s_HeroImage_Format = "assets://heroes_images/%s_full.jpg";
+    // private final static String s_HeroIcon_Format =
+    // "assets://heroes_icons/%s_icon.jpg";
     private final static String s_AbilitiesImage_Format = "assets://abilities_images/%s_hp1.jpg";
 
     /**
+     * get Hero image url
      * 
      * @param keyName
      * @return
@@ -41,6 +50,17 @@ public final class Utils {
     }
 
     /**
+     * get Hero icon url
+     * 
+     * @param keyName
+     * @return
+     */
+    // public static String getHeroIconUri(String keyName) {
+    // return String.format(s_HeroIcon_Format, keyName);
+    // }
+
+    /**
+     * get items image url
      * 
      * @param keyName
      * @return
@@ -315,5 +335,51 @@ public final class Utils {
     @SuppressWarnings({ "unchecked" })
     public static <T extends View> T findById(View view, int id) {
         return (T) view.findViewById(id);
+    }
+
+    /**
+     * bind HtmlTextView value
+     * @param text
+     * @param fieldValue
+     */
+    public static void bindHtmlTextView(TextView text, String fieldValue) {
+        bindHtmlTextView(text, fieldValue, null);
+    }
+
+    /**
+     * bind HtmlTextView value
+     * @param text
+     * @param fieldValue
+     * @param cImageGetter
+     */
+    public static void bindHtmlTextView(TextView text, String fieldValue, ImageGetter cImageGetter) {
+        if (!TextUtils.isEmpty(fieldValue)) {
+            text.setText(Html.fromHtml(fieldValue, cImageGetter, null));
+        } else {
+            text.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Meizu-HasSmartBar()
+     * FROM: Meizu Smartbar 开发指南
+     * 
+     * @return
+     */
+    public static boolean hasSmartBar() {
+        try {
+            // 新型号可用反射调用Build.hasSmartBar()
+            final Method method = Class.forName("android.os.Build").getMethod("hasSmartBar");
+            return ((Boolean) method.invoke(null)).booleanValue();
+        } catch (Exception e) {
+        }
+
+        // 反射不到 Build.hasSmartBar(), 则用 Build.DEVICE 判断
+        if (Build.DEVICE.equals("mx2")) {
+            return true;
+        } else if (Build.DEVICE.equals("mx") || Build.DEVICE.equals("m9")) {
+            return false;
+        }
+        return false;
     }
 }

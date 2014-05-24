@@ -1,5 +1,6 @@
 package tup.dota2recipe;
 
+import tup.dota2recipe.util.Utils;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -8,9 +9,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 /**
  * @author Yrom
  */
-public class SwipeBackAppCompatFragmentActivity extends ActionBarActivity
-{
-
+public class SwipeBackAppCompatFragmentActivity extends ActionBarActivity {
     // implements SwipeBackActivityBase {
     // private SwipeBackActivityHelper mHelper;
 
@@ -22,9 +21,11 @@ public class SwipeBackAppCompatFragmentActivity extends ActionBarActivity
 
         final SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setNavigationBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.actionbar_bg);
-        tintManager.setNavigationBarTintResource(R.color.statusbar_bg);
+        if (!Utils.hasSmartBar()) {
+            tintManager.setNavigationBarTintEnabled(true);
+            tintManager.setNavigationBarTintResource(R.color.statusbar_bg);
+        }
     }
 
     /*

@@ -41,6 +41,10 @@ public final class HeroDetailItem extends HeroItem {
      */
     public List<AbilityItem> abilities;
     /**
+     * 技能加点
+     */
+    public List<HeroSkillupItem> skillup;
+    /**
      * 推荐装备物品
      */
     public Map<String, String[]> itembuilds;

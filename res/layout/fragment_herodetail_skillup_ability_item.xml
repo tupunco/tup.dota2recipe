@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 技能加点 技能图标列表项 -->
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image_skillup_ability"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_gravity="center"
+    android:layout_marginRight="@dimen/margins_base"
+    android:adjustViewBounds="false"
+    android:contentDescription="@string/app_name"
+    android:scaleType="centerCrop"
+    android:src="@drawable/loading" />

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 技能加点 列表项 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myview="http://schemas.android.com/apk/res/tup.dota2recipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margins_text"
+    android:paddingTop="@dimen/margins_text" >
+
+    <TextView
+        android:id="@+id/text_skillup_groupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <tup.dota2recipe.view.SimpleGridView
+        android:id="@+id/grid_skillup_abilitys"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margins_base"
+        myview:horizontalSpacing="@dimen/margins_base"
+        myview:verticalSpacing="@dimen/margins_base" >
+    </tup.dota2recipe.view.SimpleGridView>
+
+    <TextView
+        android:id="@+id/text_skillup_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margins_base"
+        android:text="@string/app_name" />
+
+</LinearLayout>

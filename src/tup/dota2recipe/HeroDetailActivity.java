@@ -11,6 +11,7 @@ import tup.dota2recipe.entity.AbilityItem;
 import tup.dota2recipe.entity.FavoriteItem;
 import tup.dota2recipe.entity.HeroDetailItem;
 import tup.dota2recipe.entity.HeroItem;
+import tup.dota2recipe.entity.HeroSkillupItem;
 import tup.dota2recipe.entity.ItemsItem;
 import tup.dota2recipe.util.Utils;
 import tup.dota2recipe.view.SimpleGridView;
@@ -24,7 +25,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.text.TextUtils;
 import android.util.Log;
@@ -219,19 +219,28 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
                     R.id.llayout_hero_itembuilds_luxury,
                     R.id.grid_hero_itembuilds_luxury);
 
-            // abilities
+            // cItem.abilities
             if (cItem.abilities != null && cItem.abilities.size() > 0) {
                 final HeroAbilitiesAdapter adapter = new HeroAbilitiesAdapter(
                         cContext, cItem.abilities);
 
-                final SimpleListView list = (SimpleListView) v
-                        .findViewById(R.id.list_hero_abilities);
+                final SimpleListView list = Utils.findById(v, R.id.list_hero_abilities);
                 list.setAdapter(adapter);
                 // list.setOnItemClickListener(this);
             }
             else {
-                v.findViewById(R.id.llayout_hero_abilities)
-                        .setVisibility(View.GONE);
+                v.findViewById(R.id.llayout_hero_abilities).setVisibility(View.GONE);
+            }
+
+            // cItem.skillup
+            if (cItem.skillup != null && cItem.skillup.size() > 0) {
+                final HeroSkillupAdapter adapter = new HeroSkillupAdapter(cContext, cItem.skillup);
+                final SimpleListView list = Utils.findById(v, R.id.list_hero_skillup);
+                list.setAdapter(adapter);
+                // list.setOnItemClickListener(this);
+            }
+            else {
+                v.findViewById(R.id.llayout_hero_skillup).setVisibility(View.GONE);
             }
         }
 
@@ -253,6 +262,13 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
                     Utils.getHeroImageUri(cItem.keyName),
                     ((ImageView) v.findViewById(R.id.image_hero)),
                     cImageLoadOptions);
+
+            /*
+             * ImageLoader.getInstance().displayImage(
+             * Utils.getHeroIconUri(cItem.keyName),
+             * ((ImageView) v.findViewById(R.id.image_hero_name_icon)),
+             * cImageLoadOptions);
+             */
 
             final String division = cRes.getString(R.string.text_division_label);
             final String name = (cItem.nickname_l != null && cItem.nickname_l.length > 0)
@@ -288,10 +304,8 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
                 return;
             }
 
-            final LinearLayout layoutStats1 = (LinearLayout) cView
-                    .findViewById(R.id.layout_hero_stats1);
-            final LinearLayout layoutStats2 = (LinearLayout) cView
-                    .findViewById(R.id.layout_hero_stats2);
+            final LinearLayout layoutStats1 = Utils.findById(cView, R.id.layout_hero_stats1);
+            final LinearLayout layoutStats2 = Utils.findById(cView, R.id.layout_hero_stats2);
             if (layoutStats1 == null || layoutStats2 == null) {
                 return;
             }
@@ -318,16 +332,16 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
                         R.layout.fragment_herodetail_stats_list_item, cParent,
                         false);
 
-                text = (TextView) view.findViewById(R.id.text_hero_stats_label);
+                text = Utils.findById(view, R.id.text_hero_stats_label);
                 text.setText(labels[i]);
 
-                image = (ImageView) view.findViewById(R.id.image_hero_stats_icon);
+                image = Utils.findById(view, R.id.image_hero_stats_icon);
                 image.setImageResource(resIds[i]);
 
-                text = (TextView) view.findViewById(R.id.text_hero_stats_value);
+                text = Utils.findById(view, R.id.text_hero_stats_value);
                 text.setText(cItem.stats1.get(i)[2]);
                 if (hpIndex == i) {
-                    image = (ImageView) view.findViewById(R.id.image_hero_stats_icon_primary);
+                    image = Utils.findById(view, R.id.image_hero_stats_icon_primary);
                     image.setVisibility(View.VISIBLE);
                 }
                 cParent.addView(view);
@@ -425,11 +439,9 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
             if (cItembuilds == null || cItembuilds.size() <= 0)
                 return;
 
-            final SimpleGridView grid = (SimpleGridView) cView
-                    .findViewById(itemsGridResId);
+            final SimpleGridView grid = Utils.findById(cView, itemsGridResId);
             final ItemsImagesAdapter adapter = new ItemsImagesAdapter(
-                    this.getActivity(),
-                    mImageLoadOptions, cItembuilds);
+                    this.getActivity(), mImageLoadOptions, cItembuilds);
             grid.setAdapter(adapter);
             grid.setOnItemClickListener(this);
 
@@ -563,22 +575,14 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
                             parent, false);
 
                     holder = new ViewHolder();
-                    holder.affects = (TextView) view
-                            .findViewById(R.id.text_abilities_affects);
-                    holder.attrib = (TextView) view
-                            .findViewById(R.id.text_abilities_attrib);
-                    holder.dname = (TextView) view
-                            .findViewById(R.id.text_abilities_dname);
-                    holder.cmb = (TextView) view
-                            .findViewById(R.id.text_abilities_cmb);
-                    holder.desc = (TextView) view
-                            .findViewById(R.id.text_abilities_desc);
-                    holder.dmg = (TextView) view
-                            .findViewById(R.id.text_abilities_dmg);
-                    holder.lore = (TextView) view
-                            .findViewById(R.id.text_abilities_lore);
-                    holder.image = (ImageView) view
-                            .findViewById(R.id.image_abilities);
+                    holder.affects = Utils.findById(view, R.id.text_abilities_affects);
+                    holder.attrib = Utils.findById(view, R.id.text_abilities_attrib);
+                    holder.dname = Utils.findById(view, R.id.text_abilities_dname);
+                    holder.cmb = Utils.findById(view, R.id.text_abilities_cmb);
+                    holder.desc = Utils.findById(view, R.id.text_abilities_desc);
+                    holder.dmg = Utils.findById(view, R.id.text_abilities_dmg);
+                    holder.lore = Utils.findById(view, R.id.text_abilities_lore);
+                    holder.image = Utils.findById(view, R.id.image_abilities);
 
                     view.setTag(holder);
                 } else
@@ -590,44 +594,146 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
                         holder.image, mImageLoadOptions);
 
                 holder.dname.setText(item.dname);
-                bindHtmlTextView(holder.affects, item.affects);
-                bindHtmlTextView(holder.attrib, item.attrib);
-                bindHtmlTextView(holder.cmb, item.cmb, mImageGetter);
-                bindHtmlTextView(holder.dmg, item.dmg);
-                bindHtmlTextView(holder.desc, item.desc);
-                bindHtmlTextView(holder.lore, item.lore);
+                Utils.bindHtmlTextView(holder.affects, item.affects);
+                Utils.bindHtmlTextView(holder.attrib, item.attrib);
+                Utils.bindHtmlTextView(holder.cmb, item.cmb, mImageGetter);
+                Utils.bindHtmlTextView(holder.dmg, item.dmg);
+                Utils.bindHtmlTextView(holder.desc, item.desc);
+                Utils.bindHtmlTextView(holder.lore, item.lore);
 
                 return view;
             }
+        }
 
-            /**
-             * 
-             * @param text
-             * @param fieldValue
-             */
-            private void bindHtmlTextView(TextView text, String fieldValue) {
-                bindHtmlTextView(text, fieldValue, null);
+        /**
+         * 技能加点 List Adapter
+         */
+        private final class HeroSkillupAdapter extends BaseAdapter {
+            private final class ViewHolder {
+                public TextView groupName;
+                public TextView desc;
+                public SimpleGridView abilityKeys;
             }
 
-            /**
-             * 
-             * @param text
-             * @param fieldValue
-             * @param cImageGetter
-             */
-            private void bindHtmlTextView(TextView text, String fieldValue,
-                    ImageGetter cImageGetter) {
-                if (!TextUtils.isEmpty(fieldValue)) {
-                    text.setText(Html.fromHtml(fieldValue, cImageGetter, null));
-                } else {
-                    text.setVisibility(View.GONE);
+            private final LayoutInflater mInflater;
+            private final List<HeroSkillupItem> mAbilities;
+            private final Context mContext;
+
+            public HeroSkillupAdapter(Context context, List<HeroSkillupItem> abilities) {
+                super();
+
+                mInflater = (LayoutInflater) context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                mAbilities = abilities;
+                mContext = context;
+            }
+
+            @Override
+            public int getCount() {
+                return mAbilities.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return mAbilities.get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = convertView;
+
+                final ViewHolder holder;
+                if (convertView == null) {
+                    view = mInflater.inflate(
+                            R.layout.fragment_herodetail_skillup_list_item,
+                            parent, false);
+
+                    holder = new ViewHolder();
+                    holder.groupName = Utils.findById(view, R.id.text_skillup_groupName);
+                    holder.desc = Utils.findById(view, R.id.text_skillup_desc);
+                    holder.abilityKeys = Utils.findById(view, R.id.grid_skillup_abilitys);
+
+                    view.setTag(holder);
+                } else
+                    holder = (ViewHolder) view.getTag();
+
+                final HeroSkillupItem item = (HeroSkillupItem) getItem(position);
+                holder.groupName.setText(item.groupName);
+                Utils.bindHtmlTextView(holder.desc, item.desc);
+                if (item.abilityKeys != null && holder.abilityKeys != null) {
+                    holder.abilityKeys
+                            .setAdapter(new HeroSkillupAbilityKeysAdapter(mContext,
+                                    item.abilityKeys));
                 }
+                return view;
+            }
+        }
+
+        /**
+         * 技能加点 List Adapter
+         */
+        private final class HeroSkillupAbilityKeysAdapter extends BaseAdapter {
+            private final class ViewHolder {
+                public ImageView image;
+            }
+
+            private final LayoutInflater mInflater;
+            private final String[] mAbilities;
+
+            public HeroSkillupAbilityKeysAdapter(Context context, String[] abilities) {
+                super();
+
+                mInflater = (LayoutInflater) context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                mAbilities = abilities;
+            }
+
+            @Override
+            public int getCount() {
+                return mAbilities.length;
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return mAbilities[position];
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = convertView;
+
+                final ViewHolder holder;
+                if (convertView == null) {
+                    view = mInflater.inflate(
+                            R.layout.fragment_herodetail_skillup_ability_item,
+                            parent, false);
+
+                    holder = new ViewHolder();
+                    holder.image = Utils.findById(view, R.id.image_skillup_ability);
+
+                    view.setTag(holder);
+                } else
+                    holder = (ViewHolder) view.getTag();
+
+                ImageLoader.getInstance().displayImage(
+                        Utils.getAbilitiesImageUri((String) getItem(position)),
+                        holder.image, mImageLoadOptions);
+                return view;
             }
         }
 
         @Override
-        public void onItemClick(ListAdapter parent, View view, int position,
-                long id) {
+        public void onItemClick(ListAdapter parent, View view, int position, long id) {
             // Utils.startHeroDetailActivity(this.getActivity(),
             // (HeroDetailItem) parent.getItemAtPosition(position));
             final Object cItem = parent.getItem(position);

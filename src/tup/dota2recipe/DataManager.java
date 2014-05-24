@@ -25,6 +25,7 @@ import org.json2.JSONObject;
 import tup.dota2recipe.entity.AbilityItem;
 import tup.dota2recipe.entity.HeroDetailItem;
 import tup.dota2recipe.entity.HeroItem;
+import tup.dota2recipe.entity.HeroSkillupItem;
 import tup.dota2recipe.entity.HeroStatsItem;
 import tup.dota2recipe.entity.ItemsItem;
 import tup.dota2recipe.entity.StatsallBaseComparator;
@@ -512,6 +513,8 @@ public final class DataManager {
         inItem.detailstats1 = toStringArray2(cJsonObj.optJSONArray("detailstats1"));
         inItem.detailstats1.add(0, new String[] { "Level", "1", "15", "25" });
         inItem.detailstats2 = toStringArray2(cJsonObj.optJSONArray("detailstats2"));
+
+        // ---------itembuilds------------
         inItem.itembuilds = toStringArray(cJsonObj.optJSONObject("itembuilds"));
         if (inItem.itembuilds != null && inItem.itembuilds.size() > 0) {
             inItem.itembuilds_i = new HashMap<String, List<ItemsItem>>();
@@ -522,18 +525,32 @@ public final class DataManager {
         }
 
         // ---------abilities------------
-        final JSONArray cJsonArray = cJsonObj.optJSONArray("abilities");
-        if (cJsonArray == null || cJsonArray.length() <= 0)
-            return;
-        final int len = cJsonArray.length();
-        final List<AbilityItem> outList = new ArrayList<AbilityItem>(len);
-        AbilityItem cAbilityItem = null;
-        for (int index = 0; index < len; index++) {
-            cAbilityItem = extractHeroAbilityItem(cJsonArray.optJSONObject(index));
-            if (cAbilityItem != null)
-                outList.add(cAbilityItem);
+        JSONArray cJsonArray = cJsonObj.optJSONArray("abilities");
+        if (cJsonArray != null && cJsonArray.length() > 0) {
+            final int len = cJsonArray.length();
+            final List<AbilityItem> outList = new ArrayList<AbilityItem>(len);
+            AbilityItem cAbilityItem = null;
+            for (int index = 0; index < len; index++) {
+                cAbilityItem = extractHeroAbilityItem(cJsonArray.optJSONObject(index));
+                if (cAbilityItem != null)
+                    outList.add(cAbilityItem);
+            }
+            inItem.abilities = outList;
         }
-        inItem.abilities = outList;
+
+        // ---------skillup------------
+        cJsonArray = cJsonObj.optJSONArray("skillup");
+        if (cJsonArray != null && cJsonArray.length() > 0) {
+            final int len = cJsonArray.length();
+            final List<HeroSkillupItem> outList = new ArrayList<HeroSkillupItem>(len);
+            HeroSkillupItem cSkillupItem = null;
+            for (int index = 0; index < len; index++) {
+                cSkillupItem = extractHeroSkillupItem(cJsonArray.optJSONObject(index));
+                if (cSkillupItem != null)
+                    outList.add(cSkillupItem);
+            }
+            inItem.skillup = outList;
+        }
     }
 
     /**
@@ -556,6 +573,23 @@ public final class DataManager {
         cItem.cmb = cJsonObj.optString("cmb");
         cItem.lore = cJsonObj.optString("lore");
         cItem.hurl = cJsonObj.optString("hurl");
+        return cItem;
+    }
+
+    /**
+     * 反序列化 JSON HeroSkillupItem(技能加点) 项
+     * 
+     * @param cJsonObj
+     * @return
+     */
+    private static HeroSkillupItem extractHeroSkillupItem(JSONObject cJsonObj) {
+        if (cJsonObj == null)
+            return null;
+
+        final HeroSkillupItem cItem = new HeroSkillupItem();
+        cItem.groupName = cJsonObj.optString("groupName");
+        cItem.desc = cJsonObj.optString("desc");
+        cItem.abilityKeys = toStringArray(cJsonObj.optJSONArray("abilityKeys"));
         return cItem;
     }
 
@@ -645,6 +679,7 @@ public final class DataManager {
     }
 
     /**
+     * JSONArray to StringArray
      * 
      * @param jsonArray
      * @return
@@ -662,6 +697,7 @@ public final class DataManager {
     }
 
     /**
+     * JSONArray to StringArray List
      * 
      * @param jsonArray
      * @return

@@ -5,7 +5,7 @@
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
     <string name="action_bar_search">搜索</string>
-    <string name="assets_about_dataVersion">6.80|20140207</string>
+    <string name="assets_about_dataVersion">6.81|20140514</string>
     <!-- Activity title -->
     <string name="title_activity_items_detail">物品详细</string>
     <string name="title_activity_hero_detail">英雄详细</string>
@@ -40,6 +40,7 @@
     <string name="text_hero_itembuilds_early_label">前期装备:</string>
     <string name="text_hero_itembuilds_core_label">核心装备:</string>
     <string name="text_hero_itembuilds_luxury_label">可选装备:</string>
+    <string name="text_hero_skillup_label">技能加点:</string>
     <string name="text_hero_stats_demo_label">智力</string>
     <string name="text_hero_stats_demo_value">21 + 2.80</string>
     <string name="text_division_label">/</string>
