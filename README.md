@@ -22,6 +22,11 @@ Dota2 游戏中英雄/物品资料合集软件, 全部数据离线.
 * 英雄参数升级模拟
 
 ###升级日志:
+>####v0.6.3(11)
+>>1. 增加英雄'技能加点'
+>>2. 修复沉浸模式在 MX3 上的 SmartBar 黑屏按钮 BUG
+>>3. 升级 Android-Support 版本
+
 >####v0.6.2(10)
 >>1. 更新到 6.81 最新'英雄/物品'数据
 >>2. 增加对 Android 4.4 沉浸模式支持 
@@ -84,7 +89,7 @@ by readyState Software Ltd, Licensed under the Apache License, Version 2.0
 ####开放源代码许可: [Apache 2.0 license][2]
 
 ####本软件中的英雄物品数据及图片来源于 [dota2.com](http://www.dota2.com), 版权归 Valve 所有.
-####本软件英雄别称来源于[锐派游戏](http://dota2.replays.net/).
+####本软件英雄'别称/技能加点'来源于[锐派游戏](http://dota2.replays.net/).
 
 [1]: ic_launcher-web.png
 [2]: LICENSE.txt

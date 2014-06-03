@@ -77,6 +77,18 @@ public final class DataManager {
     };
 
     /**
+     * ItemsItem Name 排序 Comparator
+     */
+    private static final Comparator<ItemsItem> mItemsItemDefaultNameComparator = new Comparator<ItemsItem>() {
+        private final Collator sCollator = Collator.getInstance();
+
+        @Override
+        public int compare(ItemsItem object1, ItemsItem object2) {
+            return sCollator.compare(object1.dname_l, object2.dname_l);
+        }
+    };
+
+    /**
      * HeroItem statsall.* 排序 Comparator Map
      */
     private static final HashMap<String, Comparator<HeroItem>> mHeroItemStatsallComparatorMap = new
@@ -348,6 +360,8 @@ public final class DataManager {
                 ccItem.toheros_i = fillItemsToHeroInfo(cContext, ccItem.toheros);
             }
         }
+
+        Collections.sort(mItemsList, mItemsItemDefaultNameComparator);
     }
 
     /**

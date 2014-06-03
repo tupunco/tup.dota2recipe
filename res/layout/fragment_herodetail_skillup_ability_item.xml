@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 技能加点 技能图标列表项 -->
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/image_skillup_ability"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:layout_gravity="center"
-    android:layout_marginRight="@dimen/margins_base"
-    android:adjustViewBounds="false"
-    android:contentDescription="@string/app_name"
-    android:scaleType="centerCrop"
-    android:src="@drawable/loading" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/simplegridview_selector_background"
+    android:orientation="vertical"
+    tools:ignore="NestedScrolling,HardcodedText" >
+
+    <ImageView
+        android:id="@+id/image_skillup_ability"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margins_text"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/loading" />
+
+</LinearLayout>
