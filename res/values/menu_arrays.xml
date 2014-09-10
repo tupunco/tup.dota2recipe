@@ -130,14 +130,12 @@
     <!-- 英雄统计参数排序 -->
     <string-array name="menu_hero_statsall_keys">
         <item>==默认==</item>
-        <item>初始力量</item>
+        <item>初始力量/血量</item>
         <item>力量成长</item>
         <item>初始敏捷</item>
         <item>敏捷成长</item>
-        <item>初始智力</item>
+        <item>初始智力/魔法</item>
         <item>智力成长</item>
-        <item>初始血量</item>
-        <item>初始魔法</item>
         <item>初始护甲</item>
         <item>初始最小攻击力</item>
         <item>初始最大攻击力</item>
@@ -151,8 +149,6 @@
         <item>lv_agi</item>
         <item>init_int</item>
         <item>lv_int</item>
-        <item>init_hp</item>
-        <item>init_mp</item>
         <item>init_armor</item>
         <item>init_min_dmg</item>
         <item>init_max_dmg</item>
