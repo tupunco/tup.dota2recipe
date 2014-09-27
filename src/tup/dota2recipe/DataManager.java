@@ -585,6 +585,7 @@ public final class DataManager {
         cItem.desc = cJsonObj.optString("desc");
         cItem.dmg = cJsonObj.optString("dmg");
         cItem.cmb = cJsonObj.optString("cmb");
+        cItem.notes = cJsonObj.optString("notes");
         cItem.lore = cJsonObj.optString("lore");
         cItem.hurl = cJsonObj.optString("hurl");
         return cItem;
@@ -640,6 +641,7 @@ public final class DataManager {
         cItem.attrib = cJsonObj.optString("attrib");
         cItem.mc = cJsonObj.optString("mc");
         cItem.cd = cJsonObj.optInt("cd");
+        cItem.notes = cJsonObj.optString("notes");
         cItem.lore = cJsonObj.optString("lore");
         cItem.components = toStringArray(cJsonObj.optJSONArray("components"));
         cItem.tocomponents = toStringArray(cJsonObj.optJSONArray("tocomponents"));

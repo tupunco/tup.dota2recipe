@@ -534,6 +534,7 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
                 public TextView desc;
                 public TextView cmb;
                 public TextView dmg;
+                public TextView notes;
                 public TextView lore;
             }
 
@@ -581,6 +582,7 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
                     holder.cmb = Utils.findById(view, R.id.text_abilities_cmb);
                     holder.desc = Utils.findById(view, R.id.text_abilities_desc);
                     holder.dmg = Utils.findById(view, R.id.text_abilities_dmg);
+                    holder.notes = Utils.findById(view, R.id.text_abilities_notes);
                     holder.lore = Utils.findById(view, R.id.text_abilities_lore);
                     holder.image = Utils.findById(view, R.id.image_abilities);
 
@@ -599,6 +601,7 @@ public class HeroDetailActivity extends SwipeBackAppCompatFragmentActivity {
                 Utils.bindHtmlTextView(holder.cmb, item.cmb, mImageGetter);
                 Utils.bindHtmlTextView(holder.dmg, item.dmg);
                 Utils.bindHtmlTextView(holder.desc, item.desc);
+                Utils.bindHtmlTextView(holder.notes, item.notes);
                 Utils.bindHtmlTextView(holder.lore, item.lore);
 
                 return view;

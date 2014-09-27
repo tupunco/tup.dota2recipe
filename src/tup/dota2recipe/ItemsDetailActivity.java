@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -224,12 +223,16 @@ public class ItemsDetailActivity extends SwipeBackAppCompatFragmentActivity {
                 return;
             }
 
-            ((TextView) v.findViewById(R.id.text_items_desc)).setText(Html
-                    .fromHtml(cItem.desc));
-            ((TextView) v.findViewById(R.id.text_items_lore))
-                    .setText(cItem.lore);
-            ((TextView) v.findViewById(R.id.text_items_attrib)).setText(Html
-                    .fromHtml(cItem.attrib));
+            final TextView desc = Utils.findById(v, R.id.text_items_desc);
+            final TextView lore = Utils.findById(v, R.id.text_items_lore);
+            final TextView notes = Utils.findById(v, R.id.text_items_notes);
+            final TextView attrib = Utils.findById(v, R.id.text_items_attrib);
+
+            Utils.bindHtmlTextView(desc, cItem.desc);
+            Utils.bindHtmlTextView(lore, cItem.lore);
+            Utils.bindHtmlTextView(notes, cItem.notes);
+            Utils.bindHtmlTextView(attrib, cItem.attrib);
+
             // mc
             if (!TextUtils.isEmpty(cItem.mc)) {
                 ((TextView) v.findViewById(R.id.text_items_mana))

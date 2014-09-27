@@ -49,6 +49,7 @@ public final class ItemsItem {
     public String attrib;
     public String mc;
     public int cd;
+    public String notes;
     public String lore;
     /**
      * 合成所需物品
@@ -66,7 +67,7 @@ public final class ItemsItem {
      */
     public String[] toheros;
     public List<HeroItem> toheros_i;
-   
+
     /**
      * 是否已经收藏
      * -1 未加载, 0 否, 1 是

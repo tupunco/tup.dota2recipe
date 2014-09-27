@@ -23,5 +23,6 @@
     <color name="pressed_tupdota2">#CC4C1A13</color>
     <color name="actionbar_bg">#FF1a1a1a</color>
     <color name="statusbar_bg">#FF1a1a1a</color>
+    <color name="text_notes">#FF6fe771</color>
 
 </resources>
