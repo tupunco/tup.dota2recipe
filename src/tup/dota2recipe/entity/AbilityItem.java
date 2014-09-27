@@ -13,6 +13,7 @@ public final class AbilityItem {
     public String desc;
     public String dmg;
     public String cmb;
+    public String notes;
     public String lore;
     public String hurl;
 

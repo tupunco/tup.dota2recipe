@@ -172,6 +172,13 @@
                 android:text="desc" />
 
             <TextView
+                android:id="@+id/text_items_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="notes"
+                android:textColor="@color/text_notes" />
+
+            <TextView
                 android:id="@+id/text_items_lore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
