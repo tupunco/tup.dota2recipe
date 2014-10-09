@@ -24,11 +24,11 @@ import android.view.ViewGroup;
  * f:layout_breakLine="true" android:text="Cancel" />
  * <p/>
  * </com.example.android.layout.FlowLayout>
+ * https://github.com/ApmeM/android-flowlayout
  */
 public class FlowLayout extends ViewGroup {
     public static final int HORIZONTAL = 0;
     public static final int VERTICAL = 1;
-
     private int horizontalSpacing = 0;
     private int verticalSpacing = 0;
     private int orientation = 0;
@@ -54,13 +54,13 @@ public class FlowLayout extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec) - this.getPaddingRight()
+        final int sizeWidth = MeasureSpec.getSize(widthMeasureSpec) - this.getPaddingRight()
                 - this.getPaddingLeft();
-        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec) - this.getPaddingRight()
-                - this.getPaddingLeft();
+        final int sizeHeight = MeasureSpec.getSize(heightMeasureSpec) - this.getPaddingTop()
+                - this.getPaddingBottom();
 
-        int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
-        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
+        final int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
+        final int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
 
         int size;
         int mode;
@@ -90,20 +90,19 @@ public class FlowLayout extends ViewGroup {
                 continue;
             }
 
+            final LayoutParams lp = (LayoutParams) child.getLayoutParams();
             child.measure(
-                    MeasureSpec.makeMeasureSpec(sizeWidth,
-                            modeWidth == MeasureSpec.EXACTLY ? MeasureSpec.AT_MOST : modeWidth),
-                    MeasureSpec.makeMeasureSpec(sizeHeight,
-                            modeHeight == MeasureSpec.EXACTLY ? MeasureSpec.AT_MOST : modeHeight)
+                    getChildMeasureSpec(widthMeasureSpec,
+                            this.getPaddingLeft() + this.getPaddingRight(), lp.width),
+                    getChildMeasureSpec(heightMeasureSpec,
+                            this.getPaddingTop() + this.getPaddingBottom(), lp.height)
                     );
 
-            LayoutParams lp = (LayoutParams) child.getLayoutParams();
+            final int hSpacing = this.getHorizontalSpacing(lp);
+            final int vSpacing = this.getVerticalSpacing(lp);
 
-            int hSpacing = this.getHorizontalSpacing(lp);
-            int vSpacing = this.getVerticalSpacing(lp);
-
-            int childWidth = child.getMeasuredWidth();
-            int childHeight = child.getMeasuredHeight();
+            final int childWidth = child.getMeasuredWidth();
+            final int childHeight = child.getMeasuredHeight();
 
             int childLength;
             int childThickness;
@@ -154,6 +153,15 @@ public class FlowLayout extends ViewGroup {
             controlMaxThickness = prevLinePosition + lineThickness;
         }
 
+        /* need to take paddings into account */
+        if (orientation == HORIZONTAL) {
+            controlMaxLength += getPaddingLeft() + getPaddingRight();
+            controlMaxThickness += getPaddingBottom() + getPaddingTop();
+        } else {
+            controlMaxLength += getPaddingBottom() + getPaddingTop();
+            controlMaxThickness += getPaddingLeft() + getPaddingRight();
+        }
+
         if (orientation == HORIZONTAL) {
             this.setMeasuredDimension(resolveSize(controlMaxLength, widthMeasureSpec),
                     resolveSize(controlMaxThickness, heightMeasureSpec));
@@ -187,8 +195,8 @@ public class FlowLayout extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final int count = getChildCount();
         for (int i = 0; i < count; i++) {
-            View child = getChildAt(i);
-            LayoutParams lp = (LayoutParams) child.getLayoutParams();
+            final View child = getChildAt(i);
+            final LayoutParams lp = (LayoutParams) child.getLayoutParams();
             child.layout(lp.x, lp.y, lp.x + child.getMeasuredWidth(),
                     lp.y + child.getMeasuredHeight());
         }
@@ -222,7 +230,7 @@ public class FlowLayout extends ViewGroup {
     }
 
     private void readStyleParameters(Context context, AttributeSet attributeSet) {
-        TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.FlowLayout);
+        final TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.FlowLayout);
         try {
             horizontalSpacing = a
                     .getDimensionPixelSize(R.styleable.FlowLayout_horizontalSpacing, 0);
@@ -295,7 +303,7 @@ public class FlowLayout extends ViewGroup {
     }
 
     private Paint createPaint(int color) {
-        Paint paint = new Paint();
+        final Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(color);
         paint.setStrokeWidth(2.0f);
@@ -304,7 +312,6 @@ public class FlowLayout extends ViewGroup {
 
     public static class LayoutParams extends ViewGroup.LayoutParams {
         private static int NO_SPACING = -1;
-
         private int x;
         private int y;
         private int horizontalSpacing = NO_SPACING;
@@ -338,7 +345,7 @@ public class FlowLayout extends ViewGroup {
         }
 
         private void readStyleParameters(Context context, AttributeSet attributeSet) {
-            TypedArray a = context.obtainStyledAttributes(attributeSet,
+            final TypedArray a = context.obtainStyledAttributes(attributeSet,
                     R.styleable.FlowLayout_LayoutParams);
             try {
                 horizontalSpacing = a.getDimensionPixelSize(

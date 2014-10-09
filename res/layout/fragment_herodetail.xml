@@ -65,8 +65,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/image_hero"
                 android:text="name"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textIsSelectable="false" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/text_hero_name"
@@ -74,8 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_hero_name_l"
                 android:layout_toRightOf="@+id/image_hero"
-                android:text="name"
-                android:textIsSelectable="false" />
+                android:text="name" />
 
             <TextView
                 android:id="@+id/text_hero_roles"
@@ -83,8 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_hero_name"
                 android:layout_toRightOf="@+id/image_hero"
-                android:text="roles"
-                android:textIsSelectable="false" />
+                android:text="roles" />
 
             <TextView
                 android:id="@+id/text_hero_hp_faction_atk"
@@ -92,8 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_hero_roles"
                 android:layout_toRightOf="@+id/image_hero"
-                android:text="hp_faction_atk"
-                android:textIsSelectable="false" />
+                android:text="hp_faction_atk" />
         </RelativeLayout>
 
         <LinearLayout
@@ -130,8 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margins_base"
-            android:text="bio"
-            android:textIsSelectable="false" />
+            android:text="bio" />
 
         <!-- ====出装==== -->
 

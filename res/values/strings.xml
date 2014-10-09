@@ -5,7 +5,7 @@
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
     <string name="action_bar_search">搜索</string>
-    <string name="assets_about_dataVersion">6.82|20140927</string>
+    <string name="assets_about_dataVersion">6.82b|20141009</string>
     <!-- Activity title -->
     <string name="title_activity_items_detail">物品详细</string>
     <string name="title_activity_hero_detail">英雄详细</string>

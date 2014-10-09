@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:fitsSystemWindows="true"
     tools:context=".ItemsDetailActivity"
     tools:ignore="NestedScrolling,HardcodedText" >
 
@@ -69,7 +70,8 @@
                     android:layout_alignTop="@+id/image_items_gold"
                     android:layout_marginLeft="@dimen/margins_text"
                     android:layout_toRightOf="@+id/image_items_gold"
-                    android:text="cost" />
+                    android:text="cost"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </RelativeLayout>
 
             <LinearLayout

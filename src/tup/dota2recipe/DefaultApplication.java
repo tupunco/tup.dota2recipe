@@ -36,7 +36,7 @@ public class DefaultApplication extends Application {
                         .memoryCacheSize(2 * 1024 * 1024)
                         .denyCacheImageMultipleSizesInMemory()
                         .tasksProcessingOrder(QueueProcessingType.LIFO)
-                        .enableLogging()
+                        //.enableLogging()
                         .build();
 
         // Initialize ImageLoader with configuration.

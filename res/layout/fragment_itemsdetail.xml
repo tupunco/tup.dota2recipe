@@ -57,7 +57,8 @@
                 android:layout_toRightOf="@+id/image_items"
                 android:drawableLeft="@drawable/gold"
                 android:drawablePadding="@dimen/margins_text"
-                android:text="cost" >
+                android:text="cost"
+                android:textAppearance="?android:attr/textAppearanceSmall" >
             </TextView>
         </RelativeLayout>
 
