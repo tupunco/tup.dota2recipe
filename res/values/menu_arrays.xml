@@ -140,6 +140,7 @@
         <item>初始最小攻击力</item>
         <item>初始最大攻击力</item>
         <item>攻击成长</item>
+        <item>初始移速</item>
     </string-array>
     <string-array name="menu_hero_statsall_values">
         <item>default</item>
@@ -153,6 +154,7 @@
         <item>init_min_dmg</item>
         <item>init_max_dmg</item>
         <item>lv_dmg</item>
+        <item>init_ms</item>
     </string-array>
 
 </resources>

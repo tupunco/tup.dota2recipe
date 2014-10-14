@@ -168,6 +168,12 @@ public final class DataManager {
                 return Double.compare(stat1.lv_dmg, stat2.lv_dmg);
             }
         });
+        mHeroItemStatsallComparatorMap.put("init_ms", new StatsallBaseComparator() {
+            @Override
+            protected int compare(HeroStatsItem stat1, HeroStatsItem stat2) {
+                return Double.compare(stat1.init_ms, stat2.init_ms);
+            }
+        });
     }
 
     /**
@@ -505,6 +511,7 @@ public final class DataManager {
 
         s.init_armor = cJsonObj.optDouble("init_armor");
         s.lv_armor = cJsonObj.optDouble("lv_armor");
+        s.init_ms = cJsonObj.optDouble("init_ms");
         cItem.statsall = s;
     }
 

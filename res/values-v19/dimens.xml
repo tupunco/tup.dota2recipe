@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="herodetail_layout_fix_padding">8dp</dimen>
+
+</resources>

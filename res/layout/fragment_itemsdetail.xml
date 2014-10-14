@@ -243,6 +243,17 @@
                 </tup.dota2recipe.view.SimpleGridView>
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llayout_null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margins_base"
+            android:orientation="vertical"
+            android:padding="@dimen/herodetail_layout_fix_padding" >
+
+            <!-- space TODO -->
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

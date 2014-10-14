@@ -22,5 +22,6 @@
     <dimen name="itemsdetail_image_height">64dp</dimen>
     <dimen name="itemsdata_hero_grid_image_width">96dp</dimen>
     <dimen name="itemsdata_hero_grid_image_height">54dp</dimen>
+    <dimen name="herodetail_layout_fix_padding">0dp</dimen>
 
 </resources>
