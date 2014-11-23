@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * @author tupunco
  * 
  */
+@SuppressWarnings("deprecation")
 public class MainActivity extends SwipeBackAppCompatFragmentActivity {
     TabsAdapter mTabsAdapter;
     ViewPager mViewPager;

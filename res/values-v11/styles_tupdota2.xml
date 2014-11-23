@@ -20,47 +20,15 @@
 
 <resources>
 
-    <style name="Theme.Tupdota2" parent="@style/Theme.AppCompat">
-        <item name="actionBarItemBackground">@drawable/selectable_background_tupdota2</item>
-        <item name="android:popupMenuStyle">@style/PopupMenu.Tupdota2</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView.Tupdota2</item>
-        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Tupdota2</item>
-        <item name="android:actionDropDownStyle">@style/DropDownNav.Tupdota2</item>
-        <item name="android:actionBarStyle">@style/ActionBar.Solid.Tupdota2</item>
-        <item name="android:actionModeBackground">@drawable/cab_background_top_tupdota2</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_tupdota2</item>
-        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Tupdota2</item>
-        <item name="android:editTextBackground">@drawable/edit_text_holo_dark</item>
-        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewTupDotA2</item>
+    <style name="BaseV11.Theme.Tupdota2" parent="@style/Base.Theme.Tupdota2">
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
-        <item name="android:buttonStyle">@style/ButtonTupDotA2</item>
-        <item name="android:imageButtonStyle">@style/ImageButtonTupDotA2</item>
         <item name="android:dropDownSpinnerStyle">@style/SpinnerTupDotA2</item>
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBarTupDotA2</item>
-        <item name="android:seekBarStyle">@style/SeekBarTupDotA2</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
-        <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="ActionBar.Solid.Tupdota2" parent="@style/Widget.AppCompat.ActionBar.Solid">
-        <item name="android:background">@drawable/ab_solid_tupdota2</item>
-        <item name="backgroundStacked">@drawable/ab_stacked_solid_tupdota2</item>
-        <item name="backgroundSplit">@drawable/ab_bottom_solid_tupdota2</item>
-        <item name="android:progressBarStyle">@style/ProgressBar.Tupdota2</item>
-    </style>
-
-    <style name="ActionBar.Transparent.Tupdota2" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="android:background">@drawable/ab_transparent_tupdota2</item>
-        <item name="android:progressBarStyle">@style/ProgressBar.Tupdota2</item>
-    </style>
-
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Tupdota2.Widget" parent="@style/Theme.AppCompat">
-        <item name="android:popupMenuStyle">@style/PopupMenu.Tupdota2</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView.Tupdota2</item>
-    </style>
+    <style name="Theme.Tupdota2" parent="@style/BaseV11.Theme.Tupdota2"></style>
 
 </resources>

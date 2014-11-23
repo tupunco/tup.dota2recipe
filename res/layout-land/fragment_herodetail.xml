@@ -4,6 +4,8 @@
     xmlns:myview="http://schemas.android.com/apk/res/tup.dota2recipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fadeScrollbars="true"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     tools:context=".HeroDetailActivity"
@@ -259,6 +261,31 @@
 
             <tup.dota2recipe.view.SimpleListView
                 android:id="@+id/list_hero_abilities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </tup.dota2recipe.view.SimpleListView>
+        </LinearLayout>
+
+        <!-- ====技能加点==== -->
+
+        <LinearLayout
+            android:id="@+id/llayout_hero_skillup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margins_base"
+            android:baselineAligned="false"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/text_hero_skillup_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_hero_skillup_label"
+                android:textStyle="bold" />
+
+            <tup.dota2recipe.view.SimpleListView
+                android:id="@+id/list_hero_skillup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >

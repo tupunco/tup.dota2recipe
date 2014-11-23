@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:fadeScrollbars="true"
-    android:fillViewport="true"
     android:fitsSystemWindows="true"
     tools:context=".ItemsDetailActivity"
     tools:ignore="NestedScrolling,HardcodedText" >
+
+    <!-- android:fillViewport="true" -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -242,17 +243,6 @@
                     myview:verticalSpacing="@dimen/margins_base" >
                 </tup.dota2recipe.view.SimpleGridView>
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llayout_null"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margins_base"
-            android:orientation="vertical"
-            android:padding="@dimen/herodetail_layout_fix_padding" >
-
-            <!-- space TODO -->
         </LinearLayout>
     </LinearLayout>
 

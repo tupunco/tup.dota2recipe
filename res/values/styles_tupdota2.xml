@@ -18,7 +18,8 @@
 -->
 
 <resources>
-    <style name="Theme.Tupdota2" parent="@style/Theme.AppCompat">
+
+    <style name="Base.Theme.Tupdota2" parent="@style/Theme.AppCompat">
         <item name="actionBarItemBackground">@drawable/selectable_background_tupdota2</item>
         <item name="popupMenuStyle">@style/PopupMenu.Tupdota2</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Tupdota2</item>
@@ -43,7 +44,13 @@
         <item name="android:listViewWhiteStyle">@style/ListViewTupDotA2.White</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemTupDotA2</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="colorPrimary">@color/actionbar_bg</item>
+        <item name="colorPrimaryDark">@color/actionbar_bg</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
     </style>
+
+    <style name="Theme.Tupdota2" parent="@style/Base.Theme.Tupdota2"></style>
 
     <style name="ActionBar.Solid.Tupdota2" parent="@style/Widget.AppCompat.ActionBar.Solid">
         <item name="background">@drawable/ab_solid_tupdota2</item>
@@ -67,6 +74,7 @@
 
     <style name="ActionBarTabStyle.Tupdota2" parent="@style/Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_tupdota2</item>
+        <item name="background">@drawable/tab_indicator_ab_tupdota2</item>
     </style>
 
     <style name="DropDownNav.Tupdota2" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">

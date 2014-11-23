@@ -22,6 +22,7 @@ import android.support.v7.app.ActionBarActivity;
  * listens to changes in tabs, and takes care of switch to the correct paged in
  * the ViewPager whenever the selected tab changes.
  */
+@SuppressWarnings("deprecation")
 public abstract class AbstractTabsAdapter extends FragmentPagerAdapter implements
         ActionBar.TabListener, ViewPager.OnPageChangeListener {
     private final Context mContext;
