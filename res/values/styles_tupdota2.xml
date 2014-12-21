@@ -48,6 +48,7 @@
         <item name="colorPrimaryDark">@color/actionbar_bg</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
+        <item name="android:windowBackground">@drawable/ac_window_background</item>
     </style>
 
     <style name="Theme.Tupdota2" parent="@style/Base.Theme.Tupdota2"></style>
