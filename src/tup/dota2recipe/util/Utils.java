@@ -1,5 +1,7 @@
 package tup.dota2recipe.util;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import tup.dota2recipe.HeroDetailActivity;
@@ -8,6 +10,7 @@ import tup.dota2recipe.R;
 import tup.dota2recipe.entity.HeroItem;
 import tup.dota2recipe.entity.ItemsItem;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +21,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
-import android.text.TextUtils;
 import android.text.Html.ImageGetter;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -33,6 +40,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
  * 
  */
 public final class Utils {
+    private final static String TAG = "Utils";
     private final static String s_ItemsImage_Format = "assets://items_images/%s_lg.jpg";
     private final static String s_HeroImage_Format = "assets://heroes_images/%s_full.jpg";
     // private final static String s_HeroIcon_Format =
@@ -339,6 +347,7 @@ public final class Utils {
 
     /**
      * bind HtmlTextView value
+     * 
      * @param text
      * @param fieldValue
      */
@@ -348,6 +357,7 @@ public final class Utils {
 
     /**
      * bind HtmlTextView value
+     * 
      * @param text
      * @param fieldValue
      * @param cImageGetter
@@ -361,25 +371,174 @@ public final class Utils {
     }
 
     /**
-     * Meizu-HasSmartBar()
-     * FROM: Meizu Smartbar 开发指南
+     * FROM FlymeAPI.Lib
+     * Meizu-获取方法
      * 
-     * @return
+     * @param method
+     * @param clazz
+     * @param name
+     * @param parameterTypes
+     * @return method
+     */
+    protected static Method getMethod(Method method, Class<?> clazz, String name,
+            Class<?>... parameterTypes) {
+        if (method == null) {
+            try {
+                method = clazz.getMethod(name, parameterTypes);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
+        return method;
+    }
+
+    /**
+     * FROM FlymeAPI.Lib
+     * Meizu-执行方法
+     * 
+     * @param method
+     *            方法
+     * @param obj
+     *            对像
+     * @param args
+     *            参数
+     * @return boolean 执行结果
+     */
+    protected static boolean invoke(Method method, Object obj, Object... args) {
+        if (method != null) {
+            try {
+                method.invoke(obj, args);
+                return true;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * FROM FlymeAPI.Lib
+     * 判断设备是否支持smart bar
+     * 
+     * @return boolean true支持,false不支持
      */
     public static boolean hasSmartBar() {
         try {
-            // 新型号可用反射调用Build.hasSmartBar()
-            final Method method = Class.forName("android.os.Build").getMethod("hasSmartBar");
+            Method method = Class.forName("android.os.Build").getMethod("hasSmartBar");
             return ((Boolean) method.invoke(null)).booleanValue();
         } catch (Exception e) {
         }
+        return false;
+    }
 
-        // 反射不到 Build.hasSmartBar(), 则用 Build.DEVICE 判断
-        if (Build.DEVICE.equals("mx2")) {
-            return true;
-        } else if (Build.DEVICE.equals("mx") || Build.DEVICE.equals("m9")) {
-            return false;
+    private static Class<?> sIMMClass = InputMethodManager.class;
+    private static Method sSetMzInputThemeLight;
+
+    /**
+     * FROM FlymeAPI.Lib
+     * 
+     * 设置导航栏和输入法背景颜色，在App启动第一个Actiity onCreate方法中调用该方法，
+     * 执行成功后，App中使用系统输入法都是白色样式
+     * 
+     * @param context
+     *            上下文
+     * @param light
+     *            是否把导航栏和输入法背景设置为白色
+     * @return boolean 执行结果，成功执行返回true
+     */
+    public static boolean setInputThemeLight(Context context, boolean light) {
+        sSetMzInputThemeLight = getMethod(sSetMzInputThemeLight, sIMMClass, "setMzInputThemeLight",
+                boolean.class);
+        InputMethodManager imm = (InputMethodManager) context
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            return invoke(sSetMzInputThemeLight, imm, light);
         }
         return false;
+    }
+
+    /**
+     * FROM FlymeAPI.Lib
+     * 
+     * 设置状态栏图标为深色和魅族特定的文字风格
+     * 
+     * @param window
+     *            需要设置的窗口
+     * @param dark
+     *            是否把状态栏颜色设置为深色
+     * @return boolean 成功执行返回true
+     */
+    public static boolean setStatusBarDarkIcon(Window window, boolean dark) {
+        boolean result = false;
+        if (window != null) {
+            try {
+                WindowManager.LayoutParams lp = window.getAttributes();
+                Field darkFlag = WindowManager.LayoutParams.class
+                        .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+                Field meizuFlags = WindowManager.LayoutParams.class
+                        .getDeclaredField("meizuFlags");
+                darkFlag.setAccessible(true);
+                meizuFlags.setAccessible(true);
+                int bit = darkFlag.getInt(null);
+                int value = meizuFlags.getInt(lp);
+                if (dark) {
+                    value |= bit;
+                } else {
+                    value &= ~bit;
+                }
+                meizuFlags.setInt(lp, value);
+                window.setAttributes(lp);
+                result = true;
+            } catch (Exception e) {
+                Log.e(TAG, "setStatusBarDarkIcon: failed");
+            }
+        }
+        return result;
+    }
+
+    /**
+     * FROM FlymeAPI.Lib
+     * 设置沉浸式窗口，设置成功后，状态栏则透明显示
+     * 
+     * @param window
+     *            需要设置的窗口
+     * @param immersive
+     *            是否把窗口设置为沉浸
+     * @return boolean 成功执行返回true
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static boolean setImmersedWindow(Window window, boolean immersive) {
+        boolean result = false;
+        if (window != null) {
+            WindowManager.LayoutParams lp = window.getAttributes();
+            int trans_status = 0;
+            Field flags;
+            if (android.os.Build.VERSION.SDK_INT < 19) {
+                try {
+                    trans_status = 1 << 6;
+                    flags = lp.getClass().getDeclaredField("meizuFlags");
+                    flags.setAccessible(true);
+                    int value = flags.getInt(lp);
+                    if (immersive) {
+                        value = value | trans_status;
+                    } else {
+                        value = value & ~trans_status;
+                    }
+                    flags.setInt(lp, value);
+                    result = true;
+                } catch (Exception e) {
+                    Log.e(TAG, "setImmersedWindow: failed");
+                }
+            } else {
+                lp.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+                window.setAttributes(lp);
+                result = true;
+            }
+        }
+        return result;
     }
 }
