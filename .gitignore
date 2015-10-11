@@ -5,3 +5,8 @@
 /.idea/*
 /.gradle/*
 /tup.dota2recipe-release.apk
+/local.properties
+/local.properties
+/tup.dota2recipe.iml
+/.classpath
+/.project
