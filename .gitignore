@@ -1,3 +1,7 @@
 /.settings/*
 /bin/*
 /gen/*
+/build/*
+/.idea/*
+/.gradle/*
+/tup.dota2recipe-release.apk
