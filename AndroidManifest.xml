@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tup.dota2recipe"
     android:installLocation="auto"
-    android:versionCode="18"
-    android:versionName="0.6.10" >
+    android:versionCode="19"
+    android:versionName="0.6.11" >
 
     <uses-sdk
         android:minSdkVersion="7"
